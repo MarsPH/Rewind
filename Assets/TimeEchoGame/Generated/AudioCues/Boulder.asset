@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 241b89ed196ae1d40b6b44345b31445f, type: 3}
   m_Name: Boulder
   m_EditorClassIdentifier: Assembly-CSharp::TimeEcho.AudioCue
-  clips: []
+  clips:
+  - {fileID: 8300000, guid: fabfe0fed93bcd147b2e06f154a04eab, type: 3}
   output: {fileID: 0}
   volumeRange: {x: 0.9, y: 1}
   pitchRange: {x: 0.96, y: 1.04}
