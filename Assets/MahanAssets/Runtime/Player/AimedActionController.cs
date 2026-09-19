@@ -31,6 +31,14 @@ namespace TimeEcho
             if (worldCamera == null) worldCamera = Camera.main;
         }
 
+        private void OnEnable()
+        {
+            if (timeDirector != null)
+            {
+                timeDirector.ModeChanged += OnTimeModeChanged;
+            }
+        }
+
         private void Update()
         {
             if (input == null || timeDirector == null || motor == null)
@@ -106,7 +114,13 @@ namespace TimeEcho
             {
                 arrow?.Hide();
                 temporalAimActive = false;
-                if (!suppressRewindUntilSecondaryRelease && timeDirector.CanRewind)
+                bool canRewind = timeDirector.CanRewind;
+                if (!canRewind)
+                {
+                    suppressRewindUntilSecondaryRelease = true;
+                }
+
+                if (!suppressRewindUntilSecondaryRelease && canRewind)
                 {
                     timeDirector.SetMode(TimeMode.Rewinding);
                 }
@@ -133,6 +147,11 @@ namespace TimeEcho
 
         private void OnDisable()
         {
+            if (timeDirector != null)
+            {
+                timeDirector.ModeChanged -= OnTimeModeChanged;
+            }
+
             arrow?.Hide();
             if (timeDirector != null)
             {
@@ -158,6 +177,19 @@ namespace TimeEcho
             arrow = arrowView;
             worldCamera = camera;
             projectileLauncher = launcher;
+        }
+
+        private void OnTimeModeChanged(TimeMode previous, TimeMode current)
+        {
+            if (previous != TimeMode.Rewinding || current != TimeMode.Flowing || input == null)
+            {
+                return;
+            }
+
+            if (input.Current.SecondaryHeld)
+            {
+                suppressRewindUntilSecondaryRelease = true;
+            }
         }
 
         private void BeginPrimaryCycle()

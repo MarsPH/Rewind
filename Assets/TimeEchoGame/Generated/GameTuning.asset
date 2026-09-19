@@ -72,7 +72,7 @@ MonoBehaviour:
   rewind:
     historySeconds: 8
     playbackSpeed: 1.35
-    vitalityCostPerSecond: 8
+    vitalityCostPerSecond: 1
     stasisVitalityCostPerSecond: 0
     minimumVitalityToStart: 1
     maximumStasisSeconds: 0
@@ -82,7 +82,6 @@ MonoBehaviour:
   feedback:
     footstepInterval: 0.28
     landingSpeedThreshold: 3
-    cameraFollowSmoothTime: 0.12
     rewindOverlayAlpha: 0.16
     stasisOverlayAlpha: 0.12
   timer:
