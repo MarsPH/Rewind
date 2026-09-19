@@ -808,6 +808,7 @@ GameObject:
   - component: {fileID: 1695712653160817733}
   - component: {fileID: 1032265716021684663}
   - component: {fileID: 4726791362954264777}
+  - component: {fileID: 4641446391864030839}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -824,7 +825,7 @@ Transform:
   m_GameObject: {fileID: 4771283925349811573}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: -10}
+  m_LocalPosition: {x: 6.0521965, y: 0.47575444, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -865,7 +866,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 7.2553444
+  orthographic size: 7.25
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -905,6 +906,50 @@ MonoBehaviour:
   levelSize: {x: 24, y: 9}
   padding: 0.5
   cameraDepth: -10
+--- !u!114 &4641446391864030839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4771283925349811573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalCameraData
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_AllowHDROutput: 1
+  m_UseScreenCoordOverride: 0
+  m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_TaaSettings:
+    m_Quality: 3
+    m_FrameInfluence: 0.1
+    m_JitterScale: 1
+    m_MipBias: 0
+    m_VarianceClampScale: 0.9
+    m_ContrastAdaptiveSharpening: 0
+  m_Version: 2
 --- !u!1 &5371798305894152848
 GameObject:
   m_ObjectHideFlags: 0
@@ -1682,6 +1727,7 @@ GameObject:
   - component: {fileID: 1976686960576598347}
   - component: {fileID: 1089711024434609531}
   - component: {fileID: 6346651389377699152}
+  - component: {fileID: 7098367319345883419}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1756,7 +1802,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 3883298416164446047, guid: 90b218668030f944f8c6499655496e58, type: 3}
-  m_Color: {r: 0.96, g: 0.78, b: 0.24, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1914,7 +1960,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70bf5121749b0a447ad5ca71f34731d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TimeEcho.PlayerAnimationDriver
-  animator: {fileID: 0}
+  animator: {fileID: 7098367319345883419}
   spriteRenderer: {fileID: 7011040341307253371}
   motor: {fileID: 3431387423466328223}
   vitality: {fileID: 5237085733668685894}
@@ -1953,6 +1999,28 @@ MonoBehaviour:
   tickingLoop: {fileID: 11400000, guid: ffbc7872c8e68444fb427552762c72de, type: 2}
   stasisEnter: {fileID: 11400000, guid: 83be1398433048b418034b1b988767fc, type: 2}
   stasisLoop: {fileID: 11400000, guid: 9a99163ada35b2c48874052d2bb46fb5, type: 2}
+--- !u!95 &7098367319345883419
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8177790001245982566}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 29982f388dc2ba94a99842b166834505, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &8551516098523412668
 GameObject:
   m_ObjectHideFlags: 0

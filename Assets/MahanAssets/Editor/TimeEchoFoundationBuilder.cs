@@ -144,6 +144,12 @@ namespace TimeEcho.Editor
             PlayerMotor2D motor = prefabs.GameplayCore != null
                 ? prefabs.GameplayCore.GetComponentInChildren<PlayerMotor2D>(true)
                 : null;
+            PlayerAnimationDriver animationDriver = prefabs.GameplayCore != null
+                ? prefabs.GameplayCore.GetComponentInChildren<PlayerAnimationDriver>(true)
+                : null;
+            Animator playerAnimator = prefabs.GameplayCore != null
+                ? prefabs.GameplayCore.GetComponentInChildren<Animator>(true)
+                : null;
             AimedActionController aimedAction = prefabs.GameplayCore != null
                 ? prefabs.GameplayCore.GetComponentInChildren<AimedActionController>(true)
                 : null;
@@ -154,6 +160,8 @@ namespace TimeEcho.Editor
             if (prefabs.GameplayCore == null ||
                 prefabs.GameplayCore.GetComponentInChildren<GameInput>(true) == null ||
                 motor == null ||
+                playerAnimator == null || playerAnimator.runtimeAnimatorController == null ||
+                animationDriver == null || !HasObjectReference(animationDriver, "animator") ||
                 prefabs.GameplayCore.GetComponentInChildren<TimeDirector>(true) == null ||
                 hud == null ||
                 prefabs.GameplayCore.GetComponentInChildren<StaticLevelCamera2D>(true) == null)
@@ -204,7 +212,7 @@ namespace TimeEcho.Editor
             PresentationDirector presentation = systems.AddComponent<PresentationDirector>();
             AudioStateController audioState = systems.AddComponent<AudioStateController>();
 
-            GameObject player = CreateSpriteObject("Player", pixel, new Color(0.96f, 0.78f, 0.24f));
+            GameObject player = CreateSpriteObject("Player", pixel, Color.white);
             player.transform.SetParent(root.transform, false);
             player.transform.localPosition = new Vector3(0f, 0.05f, 0f);
             player.transform.localScale = new Vector3(0.8f, 1.05f, 1f);
@@ -220,6 +228,9 @@ namespace TimeEcho.Editor
             PlayerMotor2D motor = player.AddComponent<PlayerMotor2D>();
             player.AddComponent<RewindableRigidbody2D>();
             AimedActionController aimedAction = player.AddComponent<AimedActionController>();
+            Animator playerAnimator = player.AddComponent<Animator>();
+            playerAnimator.runtimeAnimatorController = TimeEchoAnimatorSetup.GetOrCreateController(pixel);
+            playerAnimator.applyRootMotion = false;
             PlayerAnimationDriver animation = player.AddComponent<PlayerAnimationDriver>();
             PlayerAudioFeedback playerAudio = player.AddComponent<PlayerAudioFeedback>();
 
@@ -253,7 +264,7 @@ namespace TimeEcho.Editor
             timeDirector.Configure(tuning, vitality);
             motor.Configure(tuning, gameInput, timeDirector, groundProbeObject.transform);
             aimedAction.Configure(tuning, gameInput, timeDirector, motor, vitality, arrow, worldCamera);
-            animation.Configure(null, player.GetComponent<SpriteRenderer>(), motor, vitality, timeDirector);
+            animation.Configure(playerAnimator, player.GetComponent<SpriteRenderer>(), motor, vitality, timeDirector);
             playerAudio.Configure(motor, vitality, timeDirector);
             staticCamera.Configure(new Vector2(0f, 0.5f), new Vector2(24f, 9f), 0.5f);
             runTimer.Configure(tuning, timeDirector);
