@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: RunStep
   m_EditorClassIdentifier: Assembly-CSharp::TimeEcho.AudioCue
   clips: []
+  audioResource: {fileID: 6418180475301049370, guid: eb2a76a236bed0947a35f42131bb375d, type: 2}
   output: {fileID: 0}
   volumeRange: {x: 0.9, y: 1}
   pitchRange: {x: 0.96, y: 1.04}
