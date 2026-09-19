@@ -151,7 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b8e94f2d27659a4ab943d700c561bd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TimeEcho.DamageDealer2D
-  damage: 25
+  damage: 100
   knockback: 7
   trigger: 1
   impactCue: {fileID: 11400000, guid: a19e9fcf2d1321e499c21b8e720e73e9, type: 2}

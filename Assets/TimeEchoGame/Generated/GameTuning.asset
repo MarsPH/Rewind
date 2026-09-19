@@ -74,7 +74,7 @@ MonoBehaviour:
     maximumProjectileSpeed: 24
   rewind:
     historySeconds: 8
-    playbackSpeed: 1.35
+    playbackSpeed: 0.5
     vitalityCostPerSecond: 16
     stasisVitalityCostPerSecond: 0
     minimumVitalityToStart: 1
