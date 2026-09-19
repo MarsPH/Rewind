@@ -1,9 +1,8 @@
-using System.Collections;
 using UnityEngine;
 
 public class GoDownAfterDelay : MonoBehaviour
 {
-    [Tooltip("Seconds to wait before the object starts going down")]
+    [Tooltip("Seconds to wait at the top before going down")]
     public float delay = 5f;
 
     [Tooltip("Seconds to wait at the bottom before going back up")]
@@ -15,6 +14,10 @@ public class GoDownAfterDelay : MonoBehaviour
     [Tooltip("How far down the object travels")]
     public float distance = 3f;
 
+    private enum State { WaitingAtTop, MovingDown, WaitingAtBottom, MovingUp }
+
+    private State state = State.WaitingAtTop;
+    private float timer;
     private Vector3 startPosition;
     private Vector3 downPosition;
 
@@ -22,27 +25,45 @@ public class GoDownAfterDelay : MonoBehaviour
     {
         startPosition = transform.position;
         downPosition = startPosition + Vector3.down * distance;
-        StartCoroutine(MoveSequence());
     }
 
-    IEnumerator MoveSequence()
+    void Update()
     {
-        yield return new WaitForSeconds(delay);          // wait 5 seconds
-        yield return MoveTo(downPosition);               // go down
-        yield return new WaitForSeconds(waitAtBottom);   // wait 2 seconds
-        yield return MoveTo(startPosition);              // go back up
-    }
-
-    IEnumerator MoveTo(Vector3 target)
-    {
-        while (transform.position != target)
+        switch (state)
         {
-            transform.position = Vector3.MoveTowards(
-                transform.position,
-                target,
-                speed * Time.deltaTime
-            );
-            yield return null;
+            case State.WaitingAtTop:
+                timer += Time.deltaTime;
+                if (timer >= delay)
+                {
+                    timer = 0f;
+                    state = State.MovingDown;
+                }
+                break;
+
+            case State.MovingDown:
+                transform.position = Vector3.MoveTowards(transform.position, downPosition, speed * Time.deltaTime);
+                if (transform.position == downPosition)
+                {
+                    state = State.WaitingAtBottom;
+                }
+                break;
+
+            case State.WaitingAtBottom:
+                timer += Time.deltaTime;
+                if (timer >= waitAtBottom)
+                {
+                    timer = 0f;
+                    state = State.MovingUp;
+                }
+                break;
+
+            case State.MovingUp:
+                transform.position = Vector3.MoveTowards(transform.position, startPosition, speed * Time.deltaTime);
+                if (transform.position == startPosition)
+                {
+                    state = State.WaitingAtTop;
+                }
+                break;
         }
     }
 }
