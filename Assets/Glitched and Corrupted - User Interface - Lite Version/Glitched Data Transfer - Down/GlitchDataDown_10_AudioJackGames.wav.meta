@@ -1,14 +1,14 @@
 fileFormatVersion: 2
-guid: fdc5554894bd94222bab70d95321353b
+guid: 1b2b8930692d5a941a4c9d67b691e382
 AudioImporter:
   externalObjects: {}
-  serializedVersion: 7
+  serializedVersion: 8
   defaultSettings:
     serializedVersion: 2
     loadType: 0
     sampleRateSetting: 0
     sampleRateOverride: 44100
-    compressionFormat: 0
+    compressionFormat: 1
     quality: 1
     conversionMode: 0
     preloadAudioData: 0
@@ -21,11 +21,3 @@ AudioImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 264074
-  packageName: Glitched and Corrupted - User Interface - Lite Version
-  packageVersion: 1.0
-  assetPath: Assets/Glitched and Corrupted - User Interface - Lite Version/Glitched
-    Data Transfer - Down/GlitchDataDown_10_AudioJackGames.wav
-  uploadId: 609648
