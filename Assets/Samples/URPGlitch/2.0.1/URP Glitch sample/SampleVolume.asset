@@ -15,10 +15,10 @@ MonoBehaviour:
   active: 1
   scanLineJitter:
     m_OverrideState: 1
-    m_Value: 0.233
+    m_Value: 0.373
   verticalJump:
     m_OverrideState: 1
-    m_Value: 0.145
+    m_Value: 0.589
   horizontalShake:
     m_OverrideState: 1
     m_Value: 0.138
@@ -54,5 +54,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   active: 1
   intensity:
-    m_OverrideState: 1
-    m_Value: 0.112
+    m_OverrideState: 0
+    m_Value: 0.301
