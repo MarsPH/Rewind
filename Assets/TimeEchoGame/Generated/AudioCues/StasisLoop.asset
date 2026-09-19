@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: StasisLoop
   m_EditorClassIdentifier: Assembly-CSharp::TimeEcho.AudioCue
   clips: []
+  audioResource: {fileID: 8300000, guid: c0164fee74057c84f8e1d6cf32b12852, type: 3}
   output: {fileID: 0}
   volumeRange: {x: 0.9, y: 1}
   pitchRange: {x: 0.96, y: 1.04}
