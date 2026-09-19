@@ -75,7 +75,7 @@ MonoBehaviour:
   rewind:
     historySeconds: 8
     playbackSpeed: 1.35
-    vitalityCostPerSecond: 1
+    vitalityCostPerSecond: 16
     stasisVitalityCostPerSecond: 0
     minimumVitalityToStart: 1
     maximumStasisSeconds: 0
