@@ -10,7 +10,7 @@ namespace TimeEcho
         Stasis
     }
 
-    [DefaultExecutionOrder(-800)]
+    [DefaultExecutionOrder(900)]
     public sealed class TimeDirector : MonoBehaviour
     {
         public static TimeDirector Instance { get; private set; }
@@ -59,9 +59,12 @@ namespace TimeEcho
                 return;
             }
 
+            // At the beginning of this FixedUpdate the Rigidbody poses represent the
+            // current timeline. Capture first, then advance the clock for the physics
+            // step that follows. The old order timestamped every pose one step late.
+            RewindRegistry.CaptureAll(timeline);
             timeline += Time.fixedDeltaTime;
             oldestAvailableTime = Mathf.Max(oldestAvailableTime, timeline - HistorySeconds);
-            RewindRegistry.CaptureAll(timeline);
             TimelineChanged?.Invoke(timeline);
         }
 
@@ -141,7 +144,12 @@ namespace TimeEcho
 
             if (previous == TimeMode.Rewinding)
             {
+                // Re-apply the exact selected instant before restoring simulation.
+                // This also covers release frames where no rewind Update ran yet.
+                RewindRegistry.RestoreAll(timeline);
+                Physics2D.SyncTransforms();
                 RewindRegistry.EndRewindAll();
+                Physics2D.SyncTransforms();
                 RewindRegistry.TrimFutureAll(timeline);
             }
 

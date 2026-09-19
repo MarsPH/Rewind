@@ -110,22 +110,33 @@ namespace TimeEcho
             float range = right.Time - left.Time;
             float t = range <= Mathf.Epsilon ? 0f : Mathf.Clamp01((timelineTime - left.Time) / range);
 
+            Vector2 restoredPosition = left.Simulated == right.Simulated
+                ? HermitePosition(left, right, t, range)
+                : Vector2.Lerp(left.Position, right.Position, t);
+
+            float unwrappedRightRotation = left.Rotation + Mathf.DeltaAngle(left.Rotation, right.Rotation);
+            float restoredRotation = range <= Mathf.Epsilon
+                ? left.Rotation
+                : Hermite(
+                    left.Rotation,
+                    left.AngularVelocity,
+                    unwrappedRightRotation,
+                    right.AngularVelocity,
+                    t,
+                    range);
+
             restoredFrame = new Frame
             {
                 Time = timelineTime,
-                Position = Vector2.Lerp(left.Position, right.Position, t),
-                Rotation = Mathf.LerpAngle(left.Rotation, right.Rotation, t),
+                Position = restoredPosition,
+                Rotation = restoredRotation,
                 Velocity = Vector2.Lerp(left.Velocity, right.Velocity, t),
                 AngularVelocity = Mathf.Lerp(left.AngularVelocity, right.AngularVelocity, t),
                 GravityScale = Mathf.Lerp(left.GravityScale, right.GravityScale, t),
                 Simulated = t < 0.5f ? left.Simulated : right.Simulated
             };
 
-            body.position = restoredFrame.Position;
-            body.rotation = restoredFrame.Rotation;
-            transform.SetPositionAndRotation(
-                new Vector3(restoredFrame.Position.x, restoredFrame.Position.y, transform.position.z),
-                Quaternion.Euler(0f, 0f, restoredFrame.Rotation));
+            ApplyPose(restoredFrame);
             body.linearVelocity = Vector2.zero;
             body.angularVelocity = 0f;
             hasRestoredFrame = true;
@@ -165,12 +176,55 @@ namespace TimeEcho
             body.simulated = hasRestoredFrame ? restoredFrame.Simulated : simulatedBeforeRewind;
             if (hasRestoredFrame)
             {
+                ApplyPose(restoredFrame);
                 body.gravityScale = restoredFrame.GravityScale;
                 body.linearVelocity = restoredFrame.Velocity;
                 body.angularVelocity = restoredFrame.AngularVelocity;
             }
 
             body.interpolation = interpolationBeforeRewind;
+            Physics2D.SyncTransforms();
+        }
+
+        private void ApplyPose(Frame frame)
+        {
+            body.position = frame.Position;
+            body.rotation = frame.Rotation;
+            transform.SetPositionAndRotation(
+                new Vector3(frame.Position.x, frame.Position.y, transform.position.z),
+                Quaternion.Euler(0f, 0f, frame.Rotation));
+        }
+
+        private static Vector2 HermitePosition(Frame left, Frame right, float t, float duration)
+        {
+            if (duration <= Mathf.Epsilon)
+            {
+                return left.Position;
+            }
+
+            return new Vector2(
+                Hermite(left.Position.x, left.Velocity.x, right.Position.x, right.Velocity.x, t, duration),
+                Hermite(left.Position.y, left.Velocity.y, right.Position.y, right.Velocity.y, t, duration));
+        }
+
+        private static float Hermite(
+            float startValue,
+            float startVelocity,
+            float endValue,
+            float endVelocity,
+            float t,
+            float duration)
+        {
+            float t2 = t * t;
+            float t3 = t2 * t;
+            float startBasis = 2f * t3 - 3f * t2 + 1f;
+            float startTangentBasis = t3 - 2f * t2 + t;
+            float endBasis = -2f * t3 + 3f * t2;
+            float endTangentBasis = t3 - t2;
+            return startBasis * startValue +
+                   startTangentBasis * duration * startVelocity +
+                   endBasis * endValue +
+                   endTangentBasis * duration * endVelocity;
         }
 
         private int FindFirstFrameAtOrAfter(float timelineTime)

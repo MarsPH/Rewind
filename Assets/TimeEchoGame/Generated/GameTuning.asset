@@ -34,7 +34,10 @@ MonoBehaviour:
     tapCharge: 0.55
     minimumImpulse: 8
     maximumImpulse: 18
-    retainedVelocity: 0.15
+    retainedVelocity: 1
+    boostVitalityCostFraction: 0.25
+    boostMomentumHoldSeconds: 0.2
+    boostControlRecoverySeconds: 0.25
     actionCooldown: 0.08
     pointerDeadZone: 0.1
     chargeCurve:
@@ -79,6 +82,7 @@ MonoBehaviour:
   vitality:
     maximum: 100
     rewindCanReduceToZero: 1
+    boostCanReduceToZero: 1
   feedback:
     footstepInterval: 0.28
     landingSpeedThreshold: 3

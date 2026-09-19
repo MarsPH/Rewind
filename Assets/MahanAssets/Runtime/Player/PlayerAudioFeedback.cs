@@ -15,7 +15,7 @@ namespace TimeEcho
         [SerializeField] private AudioCue land;
         [SerializeField] private AudioCue dashBoost;
 
-        [Header("Life and time")]
+        [Header("Energy and time")]
         [SerializeField] private AudioCue hurt;
         [SerializeField] private AudioCue death;
         [SerializeField] private AudioCue rewindStart;

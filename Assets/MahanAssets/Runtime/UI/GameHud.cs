@@ -14,12 +14,15 @@ namespace TimeEcho
 
         [Header("Views")]
         [SerializeField] private Image vitalityFill;
-        [SerializeField] private Image historyFill;
+        [SerializeField, HideInInspector] private Image historyFill;
         [SerializeField] private Image temporalOverlay;
         [SerializeField] private Text vitalityText;
         [SerializeField] private Text timerText;
         [SerializeField] private Text collectibleText;
         [SerializeField] private Text modeText;
+
+        private TimeMode presentedMode;
+        private bool hasPresentedMode;
 
         private void Awake()
         {
@@ -27,6 +30,7 @@ namespace TimeEcho
             if (timeDirector == null) timeDirector = FindObjectOfType<TimeDirector>();
             if (runTimer == null) runTimer = FindObjectOfType<RunTimer>();
             if (session == null) session = FindObjectOfType<GameSession>();
+            HideLegacyHistoryBar();
         }
 
         private void OnEnable()
@@ -35,10 +39,16 @@ namespace TimeEcho
             if (timeDirector != null)
             {
                 timeDirector.ModeChanged += OnModeChanged;
-                timeDirector.TimelineChanged += OnTimelineChanged;
             }
             if (runTimer != null) runTimer.Changed += OnTimerChanged;
             if (session != null) session.CollectibleCountChanged += OnCollectiblesChanged;
+
+            HideLegacyHistoryBar();
+            hasPresentedMode = false;
+            if (timeDirector != null)
+            {
+                OnModeChanged(timeDirector.Mode, timeDirector.Mode);
+            }
         }
 
         private void Start()
@@ -47,7 +57,6 @@ namespace TimeEcho
             if (timeDirector != null)
             {
                 OnModeChanged(timeDirector.Mode, timeDirector.Mode);
-                OnTimelineChanged(timeDirector.Timeline);
             }
             if (runTimer != null) OnTimerChanged(runTimer.Elapsed);
             if (session != null) OnCollectiblesChanged(session.CollectedCount, session.TotalCollectibles);
@@ -59,12 +68,41 @@ namespace TimeEcho
             if (timeDirector != null)
             {
                 timeDirector.ModeChanged -= OnModeChanged;
-                timeDirector.TimelineChanged -= OnTimelineChanged;
             }
             if (runTimer != null) runTimer.Changed -= OnTimerChanged;
             if (session != null) session.CollectibleCountChanged -= OnCollectiblesChanged;
+            hasPresentedMode = false;
         }
 
+        public void Configure(
+            GameTuning gameTuning,
+            PlayerVitality playerVitality,
+            TimeDirector director,
+            RunTimer timer,
+            GameSession gameSession,
+            Image vitalityBar,
+            Image overlay,
+            Text vitalityLabel,
+            Text timerLabel,
+            Text collectibleLabel,
+            Text modeLabel)
+        {
+            tuning = gameTuning;
+            vitality = playerVitality;
+            timeDirector = director;
+            runTimer = timer;
+            session = gameSession;
+            vitalityFill = vitalityBar;
+            historyFill = null;
+            temporalOverlay = overlay;
+            vitalityText = vitalityLabel;
+            timerText = timerLabel;
+            collectibleText = collectibleLabel;
+            modeText = modeLabel;
+        }
+
+        // Keeps projects with code that called the pre-1.0.7 setup API compiling.
+        // The legacy history bar is accepted only so it can be hidden.
         public void Configure(
             GameTuning gameTuning,
             PlayerVitality playerVitality,
@@ -79,24 +117,41 @@ namespace TimeEcho
             Text collectibleLabel,
             Text modeLabel)
         {
-            tuning = gameTuning;
-            vitality = playerVitality;
-            timeDirector = director;
-            runTimer = timer;
-            session = gameSession;
-            vitalityFill = vitalityBar;
+            Configure(
+                gameTuning,
+                playerVitality,
+                director,
+                timer,
+                gameSession,
+                vitalityBar,
+                overlay,
+                vitalityLabel,
+                timerLabel,
+                collectibleLabel,
+                modeLabel);
             historyFill = rewindHistoryBar;
-            temporalOverlay = overlay;
-            vitalityText = vitalityLabel;
-            timerText = timerLabel;
-            collectibleText = collectibleLabel;
-            modeText = modeLabel;
+            HideLegacyHistoryBar();
+        }
+
+        private void LateUpdate()
+        {
+            if (timeDirector == null)
+            {
+                return;
+            }
+
+            bool overlayShouldBeVisible = timeDirector.Mode != TimeMode.Flowing;
+            if (!hasPresentedMode || presentedMode != timeDirector.Mode ||
+                (temporalOverlay != null && temporalOverlay.enabled != overlayShouldBeVisible))
+            {
+                OnModeChanged(timeDirector.Mode, timeDirector.Mode);
+            }
         }
 
         private void OnVitalityChanged(float current, float maximum)
         {
             if (vitalityFill != null) vitalityFill.fillAmount = maximum <= 0f ? 0f : current / maximum;
-            if (vitalityText != null) vitalityText.text = $"LIFE  {Mathf.CeilToInt(current)} / {Mathf.CeilToInt(maximum)}";
+            if (vitalityText != null) vitalityText.text = $"ENERGY  {Mathf.CeilToInt(current)} / {Mathf.CeilToInt(maximum)}";
             if (modeText != null)
             {
                 if (current <= 0f)
@@ -107,14 +162,6 @@ namespace TimeEcho
                 {
                     OnModeChanged(timeDirector.Mode, timeDirector.Mode);
                 }
-            }
-        }
-
-        private void OnTimelineChanged(float value)
-        {
-            if (historyFill != null && timeDirector != null)
-            {
-                historyFill.fillAmount = timeDirector.AvailableHistory01;
             }
         }
 
@@ -139,6 +186,9 @@ namespace TimeEcho
 
         private void OnModeChanged(TimeMode previous, TimeMode current)
         {
+            presentedMode = current;
+            hasPresentedMode = true;
+
             if (modeText != null)
             {
                 modeText.text = vitality != null && vitality.IsDead
@@ -171,6 +221,24 @@ namespace TimeEcho
 
             temporalOverlay.color = color;
             temporalOverlay.enabled = current != TimeMode.Flowing;
+        }
+
+        private void HideLegacyHistoryBar()
+        {
+            if (historyFill == null)
+            {
+                return;
+            }
+
+            Transform barRoot = historyFill.transform.parent;
+            if (barRoot != null)
+            {
+                barRoot.gameObject.SetActive(false);
+            }
+            else
+            {
+                historyFill.gameObject.SetActive(false);
+            }
         }
     }
 }

@@ -271,7 +271,6 @@ namespace TimeEcho.Editor
                 runTimer,
                 session,
                 hud.VitalityFill,
-                hud.HistoryFill,
                 hud.Overlay,
                 hud.VitalityText,
                 hud.TimerText,
@@ -324,7 +323,7 @@ namespace TimeEcho.Editor
             guidanceCollider.size = new Vector2(2f, 3f);
             guidanceCollider.isTrigger = true;
             GuidanceTrigger2D guidanceTrigger = guidance.AddComponent<GuidanceTrigger2D>();
-            SetString(guidanceTrigger, "message", "RMB rewinds and spends life. Hold LMB + RMB to aim while time is frozen.");
+            SetString(guidanceTrigger, "message", "RMB rewinds and drains energy. Hold LMB + RMB to aim while time is frozen.");
             return guidance;
         }
 
@@ -423,13 +422,10 @@ namespace TimeEcho.Editor
             hud.Overlay.raycastTarget = false;
             hud.Overlay.enabled = false;
 
-            CreateBar(canvas, "Vitality Bar", new Vector2(220f, -42f), new Vector2(340f, 24f),
-                new Color(0f, 0f, 0f, 0.65f), new Color(0.95f, 0.28f, 0.36f), out hud.VitalityFill);
-            hud.VitalityText = CreateText(canvas, "Vitality Label", "LIFE  100 / 100", 22, TextAnchor.MiddleLeft);
+            CreateBar(canvas, "Shared Energy Bar", new Vector2(220f, -42f), new Vector2(340f, 24f),
+                new Color(0f, 0f, 0f, 0.65f), new Color(0.25f, 0.75f, 1f), out hud.VitalityFill);
+            hud.VitalityText = CreateText(canvas, "Energy Label", "ENERGY  100 / 100", 22, TextAnchor.MiddleLeft);
             SetTopLeft(hud.VitalityText.rectTransform, new Vector2(50f, -10f), new Vector2(360f, 32f));
-
-            CreateBar(canvas, "History Bar", new Vector2(220f, -84f), new Vector2(340f, 14f),
-                new Color(0f, 0f, 0f, 0.65f), new Color(0.25f, 0.75f, 1f), out hud.HistoryFill);
 
             hud.TimerText = CreateText(canvas, "Run Timer", "00:00.00", 34, TextAnchor.UpperCenter);
             SetTopCenter(hud.TimerText.rectTransform, new Vector2(0f, -24f), new Vector2(300f, 55f));
@@ -494,9 +490,14 @@ namespace TimeEcho.Editor
         private static GameTuning GetOrCreateTuning()
         {
             GameTuning tuning = AssetDatabase.LoadAssetAtPath<GameTuning>(TuningPath);
-            if (tuning != null) return tuning;
-            tuning = ScriptableObject.CreateInstance<GameTuning>();
-            AssetDatabase.CreateAsset(tuning, TuningPath);
+            if (tuning == null)
+            {
+                tuning = ScriptableObject.CreateInstance<GameTuning>();
+                AssetDatabase.CreateAsset(tuning, TuningPath);
+            }
+
+            tuning.Sanitize();
+            EditorUtility.SetDirty(tuning);
             return tuning;
         }
 
@@ -749,7 +750,6 @@ namespace TimeEcho.Editor
         private sealed class HudObjects
         {
             public Image VitalityFill;
-            public Image HistoryFill;
             public Image Overlay;
             public Text VitalityText;
             public Text TimerText;

@@ -34,6 +34,11 @@ namespace TimeEcho
 
         private void OnValidate()
         {
+            Sanitize();
+        }
+
+        public void Sanitize()
+        {
             movement.Sanitize();
             aim.Sanitize();
             rewind.Sanitize();
@@ -80,7 +85,14 @@ namespace TimeEcho
         [Range(0f, 1f)] public float tapCharge = 0.55f;
         [Min(0f)] public float minimumImpulse = 8f;
         [Min(0f)] public float maximumImpulse = 18f;
-        [Range(0f, 1f)] public float retainedVelocity = 0.15f;
+        [Min(1f), Tooltip("Multiplier applied to existing velocity before adding the launch impulse. One preserves all momentum.")]
+        public float retainedVelocity = 1f;
+        [Range(0f, 1f), Tooltip("Fraction of maximum vitality spent by each successful player boost.")]
+        public float boostVitalityCostFraction = 0.25f;
+        [Min(0f), Tooltip("Seconds after launch before ordinary movement begins changing boost momentum.")]
+        public float boostMomentumHoldSeconds = 0.2f;
+        [Min(0f), Tooltip("Seconds used to smoothly return ordinary movement control after the momentum hold.")]
+        public float boostControlRecoverySeconds = 0.25f;
         [Min(0f)] public float actionCooldown = 0.08f;
         [Min(0.01f)] public float pointerDeadZone = 0.1f;
         public AnimationCurve chargeCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
@@ -103,6 +115,10 @@ namespace TimeEcho
             fullChargeTime = Mathf.Max(0.01f, fullChargeTime);
             minimumImpulse = Mathf.Max(0f, minimumImpulse);
             maximumImpulse = Mathf.Max(minimumImpulse, maximumImpulse);
+            retainedVelocity = Mathf.Max(1f, retainedVelocity);
+            boostVitalityCostFraction = Mathf.Clamp01(boostVitalityCostFraction);
+            boostMomentumHoldSeconds = Mathf.Max(0f, boostMomentumHoldSeconds);
+            boostControlRecoverySeconds = Mathf.Max(0f, boostControlRecoverySeconds);
             actionCooldown = Mathf.Max(0f, actionCooldown);
             pointerDeadZone = Mathf.Max(0.01f, pointerDeadZone);
             minimumArrowLength = Mathf.Max(0.1f, minimumArrowLength);
@@ -140,6 +156,7 @@ namespace TimeEcho
     {
         [Min(1f)] public float maximum = 100f;
         public bool rewindCanReduceToZero = true;
+        public bool boostCanReduceToZero = true;
 
         internal void Sanitize()
         {

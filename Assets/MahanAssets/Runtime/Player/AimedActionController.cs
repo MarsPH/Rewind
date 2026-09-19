@@ -41,12 +41,26 @@ namespace TimeEcho
 
         private void Update()
         {
-            if (input == null || timeDirector == null || motor == null)
+            if (timeDirector == null || motor == null)
             {
                 return;
             }
 
+            if (input == null)
+            {
+                CancelInteraction();
+                return;
+            }
+
             InputFrame frame = input.Current;
+
+            // Rewind is hold-only. Release it before processing any other mouse action
+            // so time, audio, and the overlay all return to Flowing in this frame.
+            if (!frame.SecondaryHeld && timeDirector.Mode == TimeMode.Rewinding)
+            {
+                timeDirector.SetMode(TimeMode.Flowing);
+            }
+
             bool locked = PresentationDirector.Instance != null && PresentationDirector.Instance.InputLocked;
             if (locked || motor.IsDead)
             {
@@ -159,6 +173,22 @@ namespace TimeEcho
             }
         }
 
+        private void OnApplicationFocus(bool hasFocus)
+        {
+            if (!hasFocus)
+            {
+                CancelInteraction();
+            }
+        }
+
+        private void OnApplicationPause(bool pauseStatus)
+        {
+            if (pauseStatus)
+            {
+                CancelInteraction();
+            }
+        }
+
         public void Configure(
             GameTuning gameTuning,
             GameInput gameInput,
@@ -266,7 +296,28 @@ namespace TimeEcho
 
             float minimumImpulse = tuning != null ? tuning.aim.minimumImpulse : 8f;
             float maximumImpulse = tuning != null ? tuning.aim.maximumImpulse : 18f;
-            motor.TryLaunch(currentDirection, Mathf.Lerp(minimumImpulse, maximumImpulse, charge));
+            float boostCost = GetBoostVitalityCost();
+            bool canReachZero = tuning == null || tuning.vitality.boostCanReduceToZero;
+            if (vitality != null && !vitality.CanSpendTemporal(boostCost, canReachZero))
+            {
+                return;
+            }
+
+            if (motor.TryLaunch(currentDirection, Mathf.Lerp(minimumImpulse, maximumImpulse, charge)))
+            {
+                vitality?.TrySpendTemporal(boostCost, canReachZero);
+            }
+        }
+
+        private float GetBoostVitalityCost()
+        {
+            if (vitality == null)
+            {
+                return 0f;
+            }
+
+            float fraction = tuning != null ? tuning.aim.boostVitalityCostFraction : 0.25f;
+            return vitality.Maximum * Mathf.Clamp01(fraction);
         }
 
         private float GetTapCharge()

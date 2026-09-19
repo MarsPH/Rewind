@@ -29,6 +29,27 @@ namespace TimeEcho
             Current = ReadFrame();
         }
 
+        private void OnDisable()
+        {
+            Current = default;
+        }
+
+        private void OnApplicationFocus(bool hasFocus)
+        {
+            if (!hasFocus)
+            {
+                Current = default;
+            }
+        }
+
+        private void OnApplicationPause(bool pauseStatus)
+        {
+            if (pauseStatus)
+            {
+                Current = default;
+            }
+        }
+
         private static InputFrame ReadFrame()
         {
 #if ENABLE_INPUT_SYSTEM

@@ -81,6 +81,28 @@ namespace TimeEcho
             SetCurrent(Mathf.Max(minimum, Current - amount));
         }
 
+        public bool CanSpendTemporal(float amount, bool canReachZero)
+        {
+            if (amount <= 0f)
+            {
+                return !IsDead;
+            }
+
+            float minimum = canReachZero ? 0f : Mathf.Min(1f, Maximum);
+            return !IsDead && Current - amount >= minimum - 0.0001f;
+        }
+
+        public bool TrySpendTemporal(float amount, bool canReachZero)
+        {
+            if (!CanSpendTemporal(amount, canReachZero))
+            {
+                return false;
+            }
+
+            SpendTemporal(amount, canReachZero);
+            return true;
+        }
+
         public void RestoreToMaximum()
         {
             bool wasDead = IsDead;

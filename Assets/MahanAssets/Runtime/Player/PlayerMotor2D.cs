@@ -19,6 +19,8 @@ namespace TimeEcho
         private float lastGroundedTime = float.NegativeInfinity;
         private float lastJumpPressedTime = float.NegativeInfinity;
         private float nextLaunchTime;
+        private float launchControlLockedUntil;
+        private float launchControlFullyRestoredAt;
         private float stepTimer;
         private float previousVerticalVelocity;
         private bool wasGrounded;
@@ -140,9 +142,14 @@ namespace TimeEcho
                 return false;
             }
 
-            float retainedVelocity = tuning != null ? tuning.aim.retainedVelocity : 0f;
+            float retainedVelocity = tuning != null ? Mathf.Max(1f, tuning.aim.retainedVelocity) : 1f;
             body.linearVelocity = body.linearVelocity * retainedVelocity + direction.normalized * Mathf.Max(0f, impulse);
             nextLaunchTime = Time.unscaledTime + (tuning != null ? tuning.aim.actionCooldown : 0.08f);
+
+            float holdSeconds = tuning != null ? tuning.aim.boostMomentumHoldSeconds : 0.2f;
+            float recoverySeconds = tuning != null ? tuning.aim.boostControlRecoverySeconds : 0.25f;
+            launchControlLockedUntil = Time.time + Mathf.Max(0f, holdSeconds);
+            launchControlFullyRestoredAt = launchControlLockedUntil + Mathf.Max(0f, recoverySeconds);
             IsGrounded = false;
             wasGrounded = false;
             Launched?.Invoke(direction.normalized, impulse);
@@ -153,6 +160,10 @@ namespace TimeEcho
         {
             dead = value;
             desiredMove = Vector2.zero;
+            if (value)
+            {
+                ClearLaunchMomentumProtection();
+            }
         }
 
         private void OnDied()
@@ -171,6 +182,7 @@ namespace TimeEcho
             float acceleration = movement != null ? movement.acceleration : 60f;
             float deceleration = movement != null ? movement.deceleration : 75f;
             float control = IsGrounded ? 1f : (movement != null ? movement.airControl : 0.65f);
+            control *= GetLaunchControlMultiplier();
             float targetX = desiredMove.x * maxSpeed;
             float rate = Mathf.Abs(targetX) > 0.01f ? acceleration : deceleration;
             float nextX = Mathf.MoveTowards(body.linearVelocity.x, targetX, rate * control * Time.fixedDeltaTime);
@@ -196,7 +208,7 @@ namespace TimeEcho
             float acceleration = movement != null ? movement.acceleration : 60f;
             float deceleration = movement != null ? movement.deceleration : 75f;
             Vector2 target = desiredMove * maxSpeed;
-            float rate = target.sqrMagnitude > 0.001f ? acceleration : deceleration;
+            float rate = (target.sqrMagnitude > 0.001f ? acceleration : deceleration) * GetLaunchControlMultiplier();
             body.linearVelocity = Vector2.MoveTowards(body.linearVelocity, target, rate * Time.fixedDeltaTime);
         }
 
@@ -229,7 +241,13 @@ namespace TimeEcho
                 lastGroundedTime = Time.time;
             }
 
-            if (!wasGrounded && IsGrounded && previousVerticalVelocity < 0f)
+            bool justLanded = !wasGrounded && IsGrounded;
+            if (justLanded)
+            {
+                ClearLaunchMomentumProtection();
+            }
+
+            if (justLanded && previousVerticalVelocity < 0f)
             {
                 float landingSpeed = -previousVerticalVelocity;
                 float threshold = tuning != null ? tuning.feedback.landingSpeedThreshold : 3f;
@@ -256,6 +274,28 @@ namespace TimeEcho
                 stepTimer -= baseInterval;
                 Footstep?.Invoke();
             }
+        }
+
+        private float GetLaunchControlMultiplier()
+        {
+            if (Time.time < launchControlLockedUntil)
+            {
+                return 0f;
+            }
+
+            if (launchControlFullyRestoredAt <= launchControlLockedUntil ||
+                Time.time >= launchControlFullyRestoredAt)
+            {
+                return 1f;
+            }
+
+            return Mathf.InverseLerp(launchControlLockedUntil, launchControlFullyRestoredAt, Time.time);
+        }
+
+        private void ClearLaunchMomentumProtection()
+        {
+            launchControlLockedUntil = float.NegativeInfinity;
+            launchControlFullyRestoredAt = float.NegativeInfinity;
         }
 
         private void OnDrawGizmosSelected()
