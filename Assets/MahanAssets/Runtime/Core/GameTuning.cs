@@ -80,7 +80,8 @@ namespace TimeEcho
     public sealed class AimTuning
     {
         public AimedActionMode action = AimedActionMode.LaunchPlayer;
-        [Min(0f)] public float holdThreshold = 0.14f;
+        [Min(0.1f), Tooltip("Minimum time to hold LMB before releasing can boost. The arrow appears immediately; quick clicks cancel without spending energy.")]
+        public float holdThreshold = 0.18f;
         [Min(0.01f)] public float fullChargeTime = 0.75f;
         [Range(0f, 1f)] public float tapCharge = 0.55f;
         [Min(0f)] public float minimumImpulse = 8f;
@@ -111,7 +112,7 @@ namespace TimeEcho
 
         internal void Sanitize()
         {
-            holdThreshold = Mathf.Max(0f, holdThreshold);
+            holdThreshold = Mathf.Max(0.1f, holdThreshold);
             fullChargeTime = Mathf.Max(0.01f, fullChargeTime);
             minimumImpulse = Mathf.Max(0f, minimumImpulse);
             maximumImpulse = Mathf.Max(minimumImpulse, maximumImpulse);
@@ -136,7 +137,8 @@ namespace TimeEcho
         [Min(0.1f)] public float historySeconds = 8f;
         [Min(0.05f)] public float playbackSpeed = 1.35f;
         [Min(0f)] public float vitalityCostPerSecond = 8f;
-        [Min(0f)] public float stasisVitalityCostPerSecond = 0f;
+        [Min(0f), Tooltip("Legacy setting retained for existing assets. Stasis aiming is free; a successful stasis launch costs one normal boost.")]
+        public float stasisVitalityCostPerSecond = 0f;
         [Min(0f)] public float minimumVitalityToStart = 1f;
         [Min(0f)] public float maximumStasisSeconds = 0f;
 

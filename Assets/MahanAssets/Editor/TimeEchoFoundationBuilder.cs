@@ -323,7 +323,7 @@ namespace TimeEcho.Editor
             guidanceCollider.size = new Vector2(2f, 3f);
             guidanceCollider.isTrigger = true;
             GuidanceTrigger2D guidanceTrigger = guidance.AddComponent<GuidanceTrigger2D>();
-            SetString(guidanceTrigger, "message", "RMB rewinds and drains energy. Hold LMB + RMB to aim while time is frozen.");
+            SetString(guidanceTrigger, "message", "Hold LMB to aim, then release once the arrow brightens to boost. RMB rewinds; in stasis (LMB + RMB), release either button to boost along the arrow for the same energy cost.");
             return guidance;
         }
 
@@ -440,7 +440,7 @@ namespace TimeEcho.Editor
             Text controls = CreateText(
                 canvas,
                 "Controls",
-                "MOVE  WASD / ARROWS     AIM + LAUNCH  LMB     REWIND  RMB     STASIS AIM  LMB + RMB",
+                "MOVE  WASD / ARROWS     HOLD LMB > AIM > RELEASE TO BOOST     REWIND  RMB     STASIS  LMB + RMB",
                 18,
                 TextAnchor.MiddleCenter);
             SetBottomCenter(controls.rectTransform, new Vector2(0f, 24f), new Vector2(1200f, 40f));

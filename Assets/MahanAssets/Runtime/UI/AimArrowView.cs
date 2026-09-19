@@ -27,7 +27,7 @@ namespace TimeEcho
             Hide();
         }
 
-        public void Show(Vector2 origin, Vector2 direction, float charge01, bool stasis)
+        public void Show(Vector2 origin, Vector2 direction, float charge01, bool stasis, bool ready = true)
         {
             if (shaft == null || head == null)
             {
@@ -47,6 +47,12 @@ namespace TimeEcho
             Color color = stasis
                 ? (aim != null ? aim.stasisArrowColor : Color.yellow)
                 : (aim != null ? aim.normalArrowColor : Color.cyan);
+            if (!ready)
+            {
+                // A preview is visible immediately, but a dim arrow means
+                // releasing right now will cancel rather than launch.
+                color.a *= 0.4f;
+            }
 
             shaft.enabled = true;
             head.enabled = true;

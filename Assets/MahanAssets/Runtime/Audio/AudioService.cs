@@ -1,5 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
+#if UNITY_6000_0_OR_NEWER
+using UnityEngine.Audio;
+#endif
 
 namespace TimeEcho
 {
@@ -95,7 +98,7 @@ namespace TimeEcho
 
         private AudioSource StartVoice(AudioCue cue, Vector3 position, Transform follow, bool loop)
         {
-            if (cue == null || !cue.HasClip)
+            if (cue == null || !cue.HasAudio)
             {
                 return null;
             }
@@ -106,20 +109,31 @@ namespace TimeEcho
                 return null;
             }
 
+#if UNITY_6000_0_OR_NEWER
+            AudioResource resource = cue.PickResource();
+            if (resource == null) return null;
+#else
             AudioClip clip = cue.PickClip();
-            if (clip == null)
-            {
-                return null;
-            }
+            if (clip == null) return null;
+#endif
 
             AudioSource source = Acquire();
             source.transform.position = position;
+#if UNITY_6000_0_OR_NEWER
+            source.resource = resource;
+            // Container pitch/volume belong to the container; don't add a second random layer.
+            source.volume = cue.UsesRandomContainer ? 1f : cue.PickVolume();
+            source.pitch = cue.UsesRandomContainer ? 1f : cue.PickPitch();
+            // Audio Random Container looping is configured internally (Automatic + Infinite).
+            source.loop = loop && !cue.UsesRandomContainer;
+#else
             source.clip = clip;
-            source.outputAudioMixerGroup = cue.Output;
             source.volume = cue.PickVolume();
             source.pitch = cue.PickPitch();
-            source.spatialBlend = cue.SpatialBlend;
             source.loop = loop;
+#endif
+            source.outputAudioMixerGroup = cue.Output;
+            source.spatialBlend = cue.SpatialBlend;
             source.Play();
 
             active.Add(new ActiveVoice { Source = source, Follow = follow, Loop = loop });
@@ -149,7 +163,11 @@ namespace TimeEcho
             AudioSource source = active[index].Source;
             active.RemoveAt(index);
             source.Stop();
+#if UNITY_6000_0_OR_NEWER
+            source.resource = null;
+#else
             source.clip = null;
+#endif
             source.loop = false;
             source.outputAudioMixerGroup = null;
             source.transform.SetParent(transform, false);

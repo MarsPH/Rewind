@@ -15,6 +15,8 @@ namespace TimeEcho
         [SerializeField] private Camera worldCamera;
 
         private bool primaryCycleActive;
+        private bool aimPreviewShown;
+        private bool aimReady;
         private bool temporalAimActive;
         private bool stasisBlockedUntilButtonRelease;
         private bool suppressRewindUntilSecondaryRelease;
@@ -68,14 +70,24 @@ namespace TimeEcho
                 return;
             }
 
+            // The director may end stasis itself (duration limit / energy).
+            // Invalidate the aim before processing a simultaneous LMB release:
+            // otherwise that release could fire after the arrow disappears.
+            if (temporalAimActive && timeDirector.Mode != TimeMode.Stasis)
+            {
+                primaryCycleActive = false;
+                aimPreviewShown = false;
+                aimReady = false;
+                temporalAimActive = false;
+                suppressRewindUntilSecondaryRelease = frame.SecondaryHeld;
+                stasisBlockedUntilButtonRelease = frame.SecondaryHeld && frame.PrimaryHeld;
+                arrow?.Hide();
+            }
+
             bool bothAimButtonsHeld = frame.SecondaryHeld && frame.PrimaryHeld;
             if (!bothAimButtonsHeld)
             {
                 stasisBlockedUntilButtonRelease = false;
-            }
-            else if (temporalAimActive && timeDirector.Mode == TimeMode.Flowing)
-            {
-                stasisBlockedUntilButtonRelease = true;
             }
 
             if (frame.SecondaryReleased || !frame.SecondaryHeld)
@@ -88,19 +100,31 @@ namespace TimeEcho
                 BeginPrimaryCycle();
             }
 
-            if (frame.PrimaryReleased && primaryCycleActive)
+            // Stasis is committed by the FIRST release, LMB or RMB. Resolve
+            // this before the ordinary LMB release / RMB rewind branches so
+            // releasing RMB alone cannot leave the player stuck in normal aim.
+            if (temporalAimActive && timeDirector.Mode == TimeMode.Stasis &&
+                (frame.PrimaryReleased || frame.SecondaryReleased ||
+                 !frame.PrimaryHeld || !frame.SecondaryHeld))
             {
-                ExecuteCurrentAction();
-                primaryCycleActive = false;
-                temporalAimActive = false;
-                arrow?.Hide();
-
-                if (frame.SecondaryHeld)
+                if (aimReady)
                 {
-                    suppressRewindUntilSecondaryRelease = true;
+                    ExecuteCurrentAction(true);
                 }
 
-                timeDirector.SetMode(TimeMode.Flowing);
+                FinishAimCycle(frame.SecondaryHeld);
+                return;
+            }
+
+            if (frame.PrimaryReleased && primaryCycleActive)
+            {
+                // Quick clicks still cancel; only an armed arrow can launch.
+                if (aimReady)
+                {
+                    ExecuteCurrentAction(false);
+                }
+
+                FinishAimCycle(frame.SecondaryHeld);
                 return;
             }
 
@@ -108,6 +132,12 @@ namespace TimeEcho
             {
                 if (stasisBlockedUntilButtonRelease)
                 {
+                    // Stasis timed out while both buttons were held. Do not
+                    // allow a later release to fire an invisible, stale aim.
+                    primaryCycleActive = false;
+                    aimPreviewShown = false;
+                    aimReady = false;
+                    suppressRewindUntilSecondaryRelease = true;
                     arrow?.Hide();
                     timeDirector.SetMode(TimeMode.Flowing);
                     return;
@@ -115,7 +145,10 @@ namespace TimeEcho
 
                 if (!primaryCycleActive)
                 {
-                    BeginPrimaryCycle();
+                    // Only an actual LMB press may begin a new aiming cycle.
+                    arrow?.Hide();
+                    timeDirector.SetMode(TimeMode.Flowing);
+                    return;
                 }
 
                 temporalAimActive = true;
@@ -225,6 +258,8 @@ namespace TimeEcho
         private void BeginPrimaryCycle()
         {
             primaryCycleActive = true;
+            aimPreviewShown = false;
+            aimReady = false;
             primaryPressedAt = Time.unscaledTime;
             currentCharge = GetTapCharge();
             UpdateDirection();
@@ -234,7 +269,7 @@ namespace TimeEcho
         {
             UpdateDirection();
             float heldFor = Time.unscaledTime - primaryPressedAt;
-            float threshold = tuning != null ? tuning.aim.holdThreshold : 0.14f;
+            float threshold = tuning != null ? Mathf.Max(0.1f, tuning.aim.holdThreshold) : 0.18f;
             float chargeTime = tuning != null ? tuning.aim.fullChargeTime : 0.75f;
             float normalized = Mathf.Clamp01((heldFor - threshold) / Mathf.Max(0.01f, chargeTime));
             float curved = tuning != null && tuning.aim.chargeCurve != null
@@ -242,13 +277,19 @@ namespace TimeEcho
                 : normalized;
             currentCharge = Mathf.Lerp(GetTapCharge(), 1f, Mathf.Clamp01(curved));
 
-            if (inStasis || heldFor >= threshold)
+            // Two-button stasis is already an intentional aim: the arrow is
+            // ready as soon as it appears. Ordinary LMB still needs the hold
+            // threshold to avoid accidental boosts from a quick click.
+            bool heldLongEnough = inStasis || heldFor >= threshold;
+            if (arrow != null)
             {
-                arrow?.Show(transform.position, currentDirection, currentCharge, inStasis);
+                arrow.Show(transform.position, currentDirection, currentCharge, inStasis, heldLongEnough);
+                aimPreviewShown = true;
             }
-            else
+
+            if (aimPreviewShown && heldLongEnough)
             {
-                arrow?.Hide();
+                aimReady = true;
             }
         }
 
@@ -273,9 +314,16 @@ namespace TimeEcho
                 : new Vector2(motor.FacingSign, 0f);
         }
 
-        private void ExecuteCurrentAction()
+        private void ExecuteCurrentAction(bool fromStasis)
         {
-            UpdateDirection();
+            // Stasis commits the exact vector that the arrow last displayed.
+            // Do not recalculate it on the release frame or after time resumes.
+            if (!fromStasis)
+            {
+                UpdateDirection();
+            }
+
+            Vector2 launchDirection = currentDirection;
             float charge = Mathf.Clamp01(currentCharge <= 0f ? GetTapCharge() : currentCharge);
             timeDirector.SetMode(TimeMode.Flowing);
 
@@ -290,7 +338,7 @@ namespace TimeEcho
 
                 float minimumSpeed = tuning != null ? tuning.aim.minimumProjectileSpeed : 10f;
                 float maximumSpeed = tuning != null ? tuning.aim.maximumProjectileSpeed : 24f;
-                projectileLauncher.TryFire(currentDirection, Mathf.Lerp(minimumSpeed, maximumSpeed, charge));
+                projectileLauncher.TryFire(launchDirection, Mathf.Lerp(minimumSpeed, maximumSpeed, charge));
                 return;
             }
 
@@ -303,7 +351,7 @@ namespace TimeEcho
                 return;
             }
 
-            if (motor.TryLaunch(currentDirection, Mathf.Lerp(minimumImpulse, maximumImpulse, charge)))
+            if (motor.TryLaunch(launchDirection, Mathf.Lerp(minimumImpulse, maximumImpulse, charge), fromStasis))
             {
                 vitality?.TrySpendTemporal(boostCost, canReachZero);
             }
@@ -325,9 +373,28 @@ namespace TimeEcho
             return tuning != null ? tuning.aim.tapCharge : 0.55f;
         }
 
+        private void FinishAimCycle(bool secondaryStillHeld)
+        {
+            primaryCycleActive = false;
+            aimPreviewShown = false;
+            aimReady = false;
+            temporalAimActive = false;
+            if (secondaryStillHeld)
+            {
+                // Releasing LMB first must not immediately rewind the boost.
+                // Ignore the held RMB until the player releases and represses it.
+                suppressRewindUntilSecondaryRelease = true;
+            }
+
+            arrow?.Hide();
+            timeDirector.SetMode(TimeMode.Flowing);
+        }
+
         private void CancelInteraction()
         {
             primaryCycleActive = false;
+            aimPreviewShown = false;
+            aimReady = false;
             temporalAimActive = false;
             suppressRewindUntilSecondaryRelease = false;
             stasisBlockedUntilButtonRelease = false;

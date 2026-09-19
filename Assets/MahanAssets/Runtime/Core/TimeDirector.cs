@@ -94,8 +94,9 @@ namespace TimeEcho
             }
             else if (Mode == TimeMode.Stasis)
             {
+                // Stasis aiming itself is free: a successful launch pays the
+                // same single boost cost as an ordinary launch, never both.
                 stasisElapsed += unscaledDelta;
-                SpendTemporalVitality(tuning != null ? tuning.rewind.stasisVitalityCostPerSecond * unscaledDelta : 0f);
 
                 float maximumStasis = tuning != null ? tuning.rewind.maximumStasisSeconds : 0f;
                 if ((maximumStasis > 0f && stasisElapsed >= maximumStasis) ||

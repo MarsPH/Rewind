@@ -33,7 +33,7 @@ MonoBehaviour:
     fullChargeTime: 0.75
     tapCharge: 0.55
     minimumImpulse: 8
-    maximumImpulse: 18
+    maximumImpulse: 16.03
     retainedVelocity: 1
     boostVitalityCostFraction: 0.25
     boostMomentumHoldSeconds: 0.2
@@ -65,7 +65,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     minimumArrowLength: 0.8
-    maximumArrowLength: 4.5
+    maximumArrowLength: 0.8
     lineWidth: 0.08
     arrowHeadSize: 0.28
     normalArrowColor: {r: 0.35, g: 0.95, b: 1, a: 0.95}
