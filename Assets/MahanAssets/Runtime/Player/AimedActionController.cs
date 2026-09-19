@@ -254,14 +254,16 @@ namespace TimeEcho
             aimReady = false;
             primaryPressedAt = Time.unscaledTime;
             currentCharge = GetTapCharge();
-            UpdateDirection();
+            // Draw/arm the arrow on the press frame, so a zero threshold also
+            // works when press and release are reported within one input frame.
+            UpdateAim(false);
         }
 
         private void UpdateAim(bool inStasis)
         {
             UpdateDirection();
             float heldFor = Time.unscaledTime - primaryPressedAt;
-            float threshold = tuning != null ? Mathf.Max(0.1f, tuning.aim.holdThreshold) : 0.18f;
+            float threshold = tuning != null ? Mathf.Max(0f, tuning.aim.holdThreshold) : 0f;
             float chargeTime = tuning != null ? tuning.aim.fullChargeTime : 0.75f;
             float normalized = Mathf.Clamp01((heldFor - threshold) / Mathf.Max(0.01f, chargeTime));
             float curved = tuning != null && tuning.aim.chargeCurve != null
@@ -269,9 +271,9 @@ namespace TimeEcho
                 : normalized;
             currentCharge = Mathf.Lerp(GetTapCharge(), 1f, Mathf.Clamp01(curved));
 
-            // Two-button stasis is already an intentional aim: the arrow is
-            // ready as soon as it appears. Ordinary LMB still needs the hold
-            // threshold to avoid accidental boosts from a quick click.
+            // Stasis always arms immediately. Ordinary LMB uses the configured
+            // threshold: zero makes even a quick click ready; a positive value
+            // preserves the optional accidental-click protection.
             bool heldLongEnough = inStasis || heldFor >= threshold;
             if (arrow != null)
             {
