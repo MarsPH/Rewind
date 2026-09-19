@@ -140,6 +140,11 @@ namespace TimeEcho.Flow
             SceneManager.sceneLoaded -= OnSceneLoaded;
             SceneManager.sceneLoaded += OnSceneLoaded;
             HandleSceneReady(SceneManager.GetActiveScene(), FlowTransitionReason.Boot, true);
+            
+            if (config.automaticallyWatchPlayerVitality)
+            {
+                StartCoroutine(WatchVitalityNextFrame());
+            }
         }
 
         public void StartNewGame()
