@@ -32,8 +32,8 @@ MonoBehaviour:
     holdThreshold: 0
     fullChargeTime: 0.01
     tapCharge: 1
-    minimumImpulse: 8
-    maximumImpulse: 16.03
+    minimumImpulse: 16
+    maximumImpulse: 16
     retainedVelocity: 1
     boostVitalityCostFraction: 0.25
     boostMomentumHoldSeconds: 0.2
