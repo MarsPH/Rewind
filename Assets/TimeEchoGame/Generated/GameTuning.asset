@@ -29,7 +29,7 @@ MonoBehaviour:
       m_Bits: 4294967295
   aim:
     action: 0
-    holdThreshold: 0
+    holdThreshold: 0.1
     fullChargeTime: 0.01
     tapCharge: 1
     minimumImpulse: 8
@@ -38,7 +38,7 @@ MonoBehaviour:
     boostVitalityCostFraction: 0.25
     boostMomentumHoldSeconds: 0.2
     boostControlRecoverySeconds: 0.25
-    actionCooldown: 0
+    actionCooldown: 0.08
     pointerDeadZone: 0.1
     chargeCurve:
       serializedVersion: 2
