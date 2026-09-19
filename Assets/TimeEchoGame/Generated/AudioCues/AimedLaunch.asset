@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: AimedLaunch
   m_EditorClassIdentifier: Assembly-CSharp::TimeEcho.AudioCue
   clips: []
+  audioResource: {fileID: 8300000, guid: dfbb82b4c4fa51449a0d018ca91cca2e, type: 3}
   output: {fileID: 0}
   volumeRange: {x: 0.9, y: 1}
   pitchRange: {x: 0.96, y: 1.04}
