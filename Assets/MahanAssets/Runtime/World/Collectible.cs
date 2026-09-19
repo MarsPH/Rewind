@@ -135,6 +135,9 @@ namespace TimeEcho
 
         public void Restore(float timelineTime)
         {
+            // Collection is permanent.
+            // Rewind must not restore collected shards.
+            /*
             if (frames.Count == 0)
             {
                 return;
@@ -151,6 +154,7 @@ namespace TimeEcho
             }
 
             SetCollected(frames[index].Collected);
+            */
         }
 
         public void TrimFuture(float timelineTime)
