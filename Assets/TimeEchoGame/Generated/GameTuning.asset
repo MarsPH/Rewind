@@ -29,7 +29,7 @@ MonoBehaviour:
       m_Bits: 4294967295
   aim:
     action: 0
-    holdThreshold: 0.1
+    holdThreshold: 0
     fullChargeTime: 0.01
     tapCharge: 1
     minimumImpulse: 8
