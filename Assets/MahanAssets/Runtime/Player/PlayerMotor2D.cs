@@ -29,7 +29,7 @@ namespace TimeEcho
         private bool dead;
 
         public bool IsGrounded { get; private set; }
-        public Vector2 Velocity => body != null ? body.velocity : Vector2.zero;
+        public Vector2 Velocity => body != null ? body.linearVelocity : Vector2.zero;
         public float FacingSign { get; private set; } = 1f;
         public bool IsDead => dead;
 
@@ -125,7 +125,7 @@ namespace TimeEcho
             }
 
             UpdateFootsteps(movement);
-            previousVerticalVelocity = body.velocity.y;
+            previousVerticalVelocity = body.linearVelocity.y;
             wasGrounded = IsGrounded;
         }
 
@@ -161,9 +161,9 @@ namespace TimeEcho
             // launch along the actual aim arrow even if the player entered
             // stasis with velocity in a different direction.
             Vector2 boostVelocity = direction.normalized * Mathf.Max(0f, impulse);
-            body.velocity = alignVelocityToAim
+            body.linearVelocity = alignVelocityToAim
                 ? boostVelocity
-                : body.velocity * retainedVelocity + boostVelocity;
+                : body.linearVelocity * retainedVelocity + boostVelocity;
             nextLaunchTime = Time.unscaledTime + (tuning != null ? tuning.aim.actionCooldown : 0.08f);
 
             float holdSeconds = tuning != null ? tuning.aim.boostMomentumHoldSeconds : 0.2f;
@@ -209,7 +209,7 @@ namespace TimeEcho
             control *= GetLaunchControlMultiplier();
             float targetX = desiredMove.x * maxSpeed;
             float rate = Mathf.Abs(targetX) > 0.01f ? acceleration : deceleration;
-            float nextX = body.velocity.x;
+            float nextX = body.linearVelocity.x;
             bool airborneBoost = preserveLaunchMomentumInAir && !IsGrounded;
             bool steering = Mathf.Abs(desiredMove.x) > 0.01f;
             bool alreadyFasterInSteeringDirection = steering &&
@@ -225,7 +225,7 @@ namespace TimeEcho
                 nextX = Mathf.MoveTowards(nextX, targetX, rate * control * Time.fixedDeltaTime);
             }
 
-            body.velocity = new Vector2(nextX, body.velocity.y);
+            body.linearVelocity = new Vector2(nextX, body.linearVelocity.y);
 
             bool allowJump = movement == null || movement.allowKeyboardJump;
             float coyote = movement != null ? movement.coyoteTime : 0.1f;
@@ -233,7 +233,7 @@ namespace TimeEcho
             if (allowJump && Time.time - lastGroundedTime <= coyote && Time.time - lastJumpPressedTime <= buffer)
             {
                 float jumpSpeed = movement != null ? movement.keyboardJumpSpeed : 11f;
-                body.velocity = new Vector2(body.velocity.x, jumpSpeed);
+                body.linearVelocity = new Vector2(body.linearVelocity.x, jumpSpeed);
                 lastJumpPressedTime = float.NegativeInfinity;
                 lastGroundedTime = float.NegativeInfinity;
                 IsGrounded = false;
@@ -248,7 +248,7 @@ namespace TimeEcho
             float deceleration = movement != null ? movement.deceleration : 75f;
             Vector2 target = desiredMove * maxSpeed;
             float rate = (target.sqrMagnitude > 0.001f ? acceleration : deceleration) * GetLaunchControlMultiplier();
-            body.velocity = Vector2.MoveTowards(body.velocity, target, rate * Time.fixedDeltaTime);
+            body.linearVelocity = Vector2.MoveTowards(body.linearVelocity, target, rate * Time.fixedDeltaTime);
         }
 
         private void UpdateGroundedState()
@@ -312,14 +312,14 @@ namespace TimeEcho
 
         private void UpdateFootsteps(MovementTuning movement)
         {
-            if (!IsGrounded || Mathf.Abs(body.velocity.x) < 0.2f || desiredMove.sqrMagnitude < 0.01f)
+            if (!IsGrounded || Mathf.Abs(body.linearVelocity.x) < 0.2f || desiredMove.sqrMagnitude < 0.01f)
             {
                 stepTimer = 0f;
                 return;
             }
 
             float baseInterval = tuning != null ? tuning.feedback.footstepInterval : 0.28f;
-            float speedRatio = Mathf.Clamp(Mathf.Abs(body.velocity.x) / Mathf.Max(0.1f, movement != null ? movement.maximumSpeed : 7f), 0.35f, 1.5f);
+            float speedRatio = Mathf.Clamp(Mathf.Abs(body.linearVelocity.x) / Mathf.Max(0.1f, movement != null ? movement.maximumSpeed : 7f), 0.35f, 1.5f);
             stepTimer += Time.fixedDeltaTime * speedRatio;
             if (stepTimer >= baseInterval)
             {

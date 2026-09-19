@@ -66,7 +66,7 @@ namespace TimeEcho
                 Time = timelineTime,
                 Position = body.position,
                 Rotation = body.rotation,
-                Velocity = body.velocity,
+                Velocity = body.linearVelocity,
                 AngularVelocity = body.angularVelocity,
                 GravityScale = body.gravityScale,
                 Simulated = body.simulated
@@ -137,7 +137,7 @@ namespace TimeEcho
             };
 
             ApplyPose(restoredFrame);
-            body.velocity = Vector2.zero;
+            body.linearVelocity = Vector2.zero;
             body.angularVelocity = 0f;
             hasRestoredFrame = true;
         }
@@ -178,7 +178,7 @@ namespace TimeEcho
             {
                 ApplyPose(restoredFrame);
                 body.gravityScale = restoredFrame.GravityScale;
-                body.velocity = restoredFrame.Velocity;
+                body.linearVelocity = restoredFrame.Velocity;
                 body.angularVelocity = restoredFrame.AngularVelocity;
             }
 
