@@ -86,7 +86,7 @@ MonoBehaviour:
   collectible:
     energyRestoreFraction: 0.25
   feedback:
-    footstepInterval: 0.28
+    footstepInterval: 0.32
     landingSpeedThreshold: 3
     rewindOverlayAlpha: 0.16
     stasisOverlayAlpha: 0.12
