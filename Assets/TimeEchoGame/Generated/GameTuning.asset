@@ -32,8 +32,8 @@ MonoBehaviour:
     holdThreshold: 0
     fullChargeTime: 0.01
     tapCharge: 1
-    minimumImpulse: 16
-    maximumImpulse: 16
+    minimumImpulse: 8
+    maximumImpulse: 8
     retainedVelocity: 1
     boostVitalityCostFraction: 0.25
     boostMomentumHoldSeconds: 0.2
@@ -74,8 +74,8 @@ MonoBehaviour:
     maximumProjectileSpeed: 24
   rewind:
     historySeconds: 8
-    playbackSpeed: 0.5
-    vitalityCostPerSecond: 16
+    playbackSpeed: 0.1
+    vitalityCostPerSecond: 8
     stasisVitalityCostPerSecond: 0
     minimumVitalityToStart: 1
     maximumStasisSeconds: 1.35
