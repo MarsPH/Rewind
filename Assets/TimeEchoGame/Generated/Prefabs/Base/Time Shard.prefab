@@ -145,4 +145,5 @@ MonoBehaviour:
   visualRoot: {fileID: 4285985906916867992}
   trigger: {fileID: 7711320047394722496}
   pickupCue: {fileID: 11400000, guid: 869eca89586abe44eb0eb78ea6cbfb4d, type: 2}
-  pickupGuidance: Time shards remain part of the rewindable world.
+  pickupGuidance: Time shards restore energy and can be collected again after rewinding
+    past their pickup.

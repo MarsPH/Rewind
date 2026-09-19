@@ -300,7 +300,7 @@ namespace TimeEcho.Editor
             Collectible collectibleComponent = collectible.AddComponent<Collectible>();
             collectibleComponent.Configure(string.Empty, collectible, collectibleTrigger);
             SetObjectReference(collectibleComponent, "pickupCue", cues["Pickup"]);
-            SetString(collectibleComponent, "pickupGuidance", "Time shards remain part of the rewindable world.");
+            SetString(collectibleComponent, "pickupGuidance", "Time shards restore energy and can be collected again after rewinding past their pickup.");
             return collectible;
         }
 

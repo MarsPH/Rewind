@@ -689,6 +689,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1695712653160817733, guid: b8001293bd6e8464991ddb686af26ac3, type: 3}
+      propertyPath: orthographic size
+      value: 7.2553444
+      objectReference: {fileID: 0}
     - target: {fileID: 5744266510362139119, guid: b8001293bd6e8464991ddb686af26ac3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 6.0521965
@@ -1030,9 +1034,67 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1001 &2017774875
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3623683799734490551, guid: 99684f8853b1c3f47b304a9b7898fea7, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.8856318
+      objectReference: {fileID: 0}
+    - target: {fileID: 3623683799734490551, guid: 99684f8853b1c3f47b304a9b7898fea7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.7197747
+      objectReference: {fileID: 0}
+    - target: {fileID: 3623683799734490551, guid: 99684f8853b1c3f47b304a9b7898fea7, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3623683799734490551, guid: 99684f8853b1c3f47b304a9b7898fea7, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3623683799734490551, guid: 99684f8853b1c3f47b304a9b7898fea7, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3623683799734490551, guid: 99684f8853b1c3f47b304a9b7898fea7, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3623683799734490551, guid: 99684f8853b1c3f47b304a9b7898fea7, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3623683799734490551, guid: 99684f8853b1c3f47b304a9b7898fea7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3623683799734490551, guid: 99684f8853b1c3f47b304a9b7898fea7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3623683799734490551, guid: 99684f8853b1c3f47b304a9b7898fea7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4285985906916867992, guid: 99684f8853b1c3f47b304a9b7898fea7, type: 3}
+      propertyPath: m_Name
+      value: Time Shard
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 99684f8853b1c3f47b304a9b7898fea7, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 409573737}
   - {fileID: 1104423623}
+  - {fileID: 2017774875}

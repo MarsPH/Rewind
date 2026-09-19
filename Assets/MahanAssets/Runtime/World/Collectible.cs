@@ -69,12 +69,40 @@ namespace TimeEcho
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (collected || other.GetComponentInParent<PlayerMotor2D>() == null)
+            // A rewind restores the shard's visibility, but must never grant
+            // energy merely because the player's collider overlaps it mid-rewind.
+            if (collected || (TimeDirector.Instance != null && TimeDirector.Instance.Mode != TimeMode.Flowing))
             {
                 return;
             }
 
+            PlayerMotor2D player = other.GetComponentInParent<PlayerMotor2D>();
+            if (player == null)
+            {
+                return;
+            }
+
+            PlayerVitality playerVitality = player.GetComponent<PlayerVitality>();
+            // Read the shared tuning at pickup time so existing shard instances and prefab
+            // variants use the current value without requiring individual prefab edits.
+            GameTuning gameTuning = playerVitality != null ? playerVitality.Tuning : null;
+            float energyRestoreFraction = gameTuning != null && gameTuning.collectible != null
+                ? Mathf.Clamp01(gameTuning.collectible.energyRestoreFraction)
+                : 0.25f;
+            if (energyRestoreFraction > 0f && playerVitality == null)
+            {
+                Debug.LogWarning("This collectible restores energy, but the player has no PlayerVitality component.", this);
+                return;
+            }
+
             SetCollected(true);
+
+            if (playerVitality != null && energyRestoreFraction > 0f)
+            {
+                // PlayerVitality.Heal clamps to Maximum and notifies the HUD.
+                playerVitality.Heal(playerVitality.Maximum * energyRestoreFraction);
+            }
+
             AudioService.Instance?.Play(pickupCue, transform.position);
             if (!string.IsNullOrWhiteSpace(pickupGuidance))
             {

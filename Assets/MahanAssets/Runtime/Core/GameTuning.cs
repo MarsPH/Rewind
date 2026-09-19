@@ -29,6 +29,7 @@ namespace TimeEcho
         public AimTuning aim = new AimTuning();
         public RewindTuning rewind = new RewindTuning();
         public VitalityTuning vitality = new VitalityTuning();
+        public CollectibleTuning collectible = new CollectibleTuning();
         public FeedbackTuning feedback = new FeedbackTuning();
         public TimerTuning timer = new TimerTuning();
 
@@ -43,6 +44,9 @@ namespace TimeEcho
             aim.Sanitize();
             rewind.Sanitize();
             vitality.Sanitize();
+            // Upgrade pre-existing GameTuning assets that were created before shard rewards moved here.
+            if (collectible == null) collectible = new CollectibleTuning();
+            collectible.Sanitize();
             feedback.Sanitize();
         }
     }
@@ -163,6 +167,18 @@ namespace TimeEcho
         internal void Sanitize()
         {
             maximum = Mathf.Max(1f, maximum);
+        }
+    }
+
+    [Serializable]
+    public sealed class CollectibleTuning
+    {
+        [Range(0f, 1f), Tooltip("Fraction of maximum energy restored by each Time Shard. 0.25 restores 25 energy when max is 100; 0 disables restoration. Applies to all shards using the player's GameTuning.")]
+        public float energyRestoreFraction = 0.25f;
+
+        internal void Sanitize()
+        {
+            energyRestoreFraction = Mathf.Clamp01(energyRestoreFraction);
         }
     }
 
