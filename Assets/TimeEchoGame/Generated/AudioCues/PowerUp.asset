@@ -12,9 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 241b89ed196ae1d40b6b44345b31445f, type: 3}
   m_Name: PowerUp
   m_EditorClassIdentifier: Assembly-CSharp::TimeEcho.AudioCue
-  clips:
-  - {fileID: 8300000, guid: 8b7c4b8b5f839164f85d578fc0295dfb, type: 3}
-  audioResource: {fileID: 8300000, guid: 8b7c4b8b5f839164f85d578fc0295dfb, type: 3}
+  clips: []
+  audioResource: {fileID: 0}
   output: {fileID: 0}
   volumeRange: {x: 0.9, y: 1}
   pitchRange: {x: 0.96, y: 1.04}
