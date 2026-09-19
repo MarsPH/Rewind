@@ -1,0 +1,90 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9576007845e3b4648a6d28556e7e69e9, type: 3}
+  m_Name: GameTuning
+  m_EditorClassIdentifier: Assembly-CSharp::TimeEcho.GameTuning
+  movement:
+    style: 0
+    maximumSpeed: 7
+    acceleration: 60
+    deceleration: 75
+    airControl: 0.65
+    gravityScale: 3
+    allowKeyboardJump: 1
+    keyboardJumpSpeed: 11
+    coyoteTime: 0.1
+    jumpBufferTime: 0.12
+    groundProbeRadius: 0.12
+    groundLayers:
+      serializedVersion: 2
+      m_Bits: 4294967295
+  aim:
+    action: 0
+    holdThreshold: 0.14
+    fullChargeTime: 0.75
+    tapCharge: 0.55
+    minimumImpulse: 8
+    maximumImpulse: 18
+    retainedVelocity: 0.15
+    actionCooldown: 0.08
+    pointerDeadZone: 0.1
+    chargeCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minimumArrowLength: 0.8
+    maximumArrowLength: 4.5
+    lineWidth: 0.08
+    arrowHeadSize: 0.28
+    normalArrowColor: {r: 0.35, g: 0.95, b: 1, a: 0.95}
+    stasisArrowColor: {r: 1, g: 0.82, b: 0.25, a: 1}
+    minimumProjectileSpeed: 10
+    maximumProjectileSpeed: 24
+  rewind:
+    historySeconds: 8
+    playbackSpeed: 1.35
+    vitalityCostPerSecond: 8
+    stasisVitalityCostPerSecond: 0
+    minimumVitalityToStart: 1
+    maximumStasisSeconds: 0
+  vitality:
+    maximum: 100
+    rewindCanReduceToZero: 1
+  feedback:
+    footstepInterval: 0.28
+    landingSpeedThreshold: 3
+    cameraFollowSmoothTime: 0.12
+    rewindOverlayAlpha: 0.16
+    stasisOverlayAlpha: 0.12
+  timer:
+    policy: 0
+    beginOnSceneLoad: 1

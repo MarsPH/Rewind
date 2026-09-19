@@ -1,0 +1,272 @@
+using System;
+using UnityEngine;
+
+namespace TimeEcho
+{
+    [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
+    public sealed class PlayerMotor2D : MonoBehaviour
+    {
+        [SerializeField] private GameTuning tuning;
+        [SerializeField] private GameInput input;
+        [SerializeField] private TimeDirector timeDirector;
+        [SerializeField] private Transform groundProbe;
+
+        private readonly Collider2D[] groundResults = new Collider2D[8];
+        private Rigidbody2D body;
+        private Collider2D ownCollider;
+        private PlayerVitality vitality;
+        private Vector2 desiredMove;
+        private float lastGroundedTime = float.NegativeInfinity;
+        private float lastJumpPressedTime = float.NegativeInfinity;
+        private float nextLaunchTime;
+        private float stepTimer;
+        private float previousVerticalVelocity;
+        private bool wasGrounded;
+        private bool dead;
+
+        public bool IsGrounded { get; private set; }
+        public Vector2 Velocity => body != null ? body.linearVelocity : Vector2.zero;
+        public float FacingSign { get; private set; } = 1f;
+        public bool IsDead => dead;
+
+        public event Action Jumped;
+        public event Action<float> Landed;
+        public event Action<Vector2, float> Launched;
+        public event Action Footstep;
+        public event Action<float> FacingChanged;
+
+        private void Awake()
+        {
+            body = GetComponent<Rigidbody2D>();
+            ownCollider = GetComponent<Collider2D>();
+            vitality = GetComponent<PlayerVitality>();
+
+            if (tuning != null)
+            {
+                body.gravityScale = tuning.movement.style == MovementStyle.Platformer
+                    ? tuning.movement.gravityScale
+                    : 0f;
+            }
+
+            if (input == null)
+            {
+                input = FindObjectOfType<GameInput>();
+            }
+
+            if (timeDirector == null)
+            {
+                timeDirector = FindObjectOfType<TimeDirector>();
+            }
+        }
+
+        private void OnEnable()
+        {
+            if (vitality == null) vitality = GetComponent<PlayerVitality>();
+            if (vitality != null)
+            {
+                vitality.Died += OnDied;
+                vitality.Revived += OnRevived;
+            }
+        }
+
+        private void OnDisable()
+        {
+            if (vitality != null)
+            {
+                vitality.Died -= OnDied;
+                vitality.Revived -= OnRevived;
+            }
+        }
+
+        private void Update()
+        {
+            bool locked = PresentationDirector.Instance != null && PresentationDirector.Instance.InputLocked;
+            bool canMove = !dead && !locked && (timeDirector == null || timeDirector.Mode == TimeMode.Flowing);
+            desiredMove = canMove && input != null ? input.Current.Move : Vector2.zero;
+
+            if (desiredMove.x != 0f && Mathf.Sign(desiredMove.x) != FacingSign)
+            {
+                FacingSign = Mathf.Sign(desiredMove.x);
+                FacingChanged?.Invoke(FacingSign);
+            }
+
+            if (canMove && input != null && input.Current.JumpPressed)
+            {
+                lastJumpPressedTime = Time.time;
+            }
+        }
+
+        private void FixedUpdate()
+        {
+            if (timeDirector != null && timeDirector.Mode != TimeMode.Flowing)
+            {
+                return;
+            }
+
+            UpdateGroundedState();
+            if (dead)
+            {
+                return;
+            }
+
+            MovementTuning movement = tuning != null ? tuning.movement : null;
+            MovementStyle style = movement != null ? movement.style : MovementStyle.Platformer;
+            if (style == MovementStyle.TopDown)
+            {
+                ApplyTopDownMovement(movement);
+            }
+            else
+            {
+                ApplyPlatformerMovement(movement);
+            }
+
+            UpdateFootsteps(movement);
+            previousVerticalVelocity = body.linearVelocity.y;
+            wasGrounded = IsGrounded;
+        }
+
+        public void Configure(GameTuning gameTuning, GameInput gameInput, TimeDirector director, Transform probe)
+        {
+            tuning = gameTuning;
+            input = gameInput;
+            timeDirector = director;
+            groundProbe = probe;
+        }
+
+        public bool TryLaunch(Vector2 direction, float impulse)
+        {
+            if (dead || body == null || Time.unscaledTime < nextLaunchTime || direction.sqrMagnitude < 0.0001f)
+            {
+                return false;
+            }
+
+            float retainedVelocity = tuning != null ? tuning.aim.retainedVelocity : 0f;
+            body.linearVelocity = body.linearVelocity * retainedVelocity + direction.normalized * Mathf.Max(0f, impulse);
+            nextLaunchTime = Time.unscaledTime + (tuning != null ? tuning.aim.actionCooldown : 0.08f);
+            IsGrounded = false;
+            wasGrounded = false;
+            Launched?.Invoke(direction.normalized, impulse);
+            return true;
+        }
+
+        public void SetDead(bool value)
+        {
+            dead = value;
+            desiredMove = Vector2.zero;
+        }
+
+        private void OnDied()
+        {
+            SetDead(true);
+        }
+
+        private void OnRevived()
+        {
+            SetDead(false);
+        }
+
+        private void ApplyPlatformerMovement(MovementTuning movement)
+        {
+            float maxSpeed = movement != null ? movement.maximumSpeed : 7f;
+            float acceleration = movement != null ? movement.acceleration : 60f;
+            float deceleration = movement != null ? movement.deceleration : 75f;
+            float control = IsGrounded ? 1f : (movement != null ? movement.airControl : 0.65f);
+            float targetX = desiredMove.x * maxSpeed;
+            float rate = Mathf.Abs(targetX) > 0.01f ? acceleration : deceleration;
+            float nextX = Mathf.MoveTowards(body.linearVelocity.x, targetX, rate * control * Time.fixedDeltaTime);
+            body.linearVelocity = new Vector2(nextX, body.linearVelocity.y);
+
+            bool allowJump = movement == null || movement.allowKeyboardJump;
+            float coyote = movement != null ? movement.coyoteTime : 0.1f;
+            float buffer = movement != null ? movement.jumpBufferTime : 0.12f;
+            if (allowJump && Time.time - lastGroundedTime <= coyote && Time.time - lastJumpPressedTime <= buffer)
+            {
+                float jumpSpeed = movement != null ? movement.keyboardJumpSpeed : 11f;
+                body.linearVelocity = new Vector2(body.linearVelocity.x, jumpSpeed);
+                lastJumpPressedTime = float.NegativeInfinity;
+                lastGroundedTime = float.NegativeInfinity;
+                IsGrounded = false;
+                Jumped?.Invoke();
+            }
+        }
+
+        private void ApplyTopDownMovement(MovementTuning movement)
+        {
+            float maxSpeed = movement != null ? movement.maximumSpeed : 7f;
+            float acceleration = movement != null ? movement.acceleration : 60f;
+            float deceleration = movement != null ? movement.deceleration : 75f;
+            Vector2 target = desiredMove * maxSpeed;
+            float rate = target.sqrMagnitude > 0.001f ? acceleration : deceleration;
+            body.linearVelocity = Vector2.MoveTowards(body.linearVelocity, target, rate * Time.fixedDeltaTime);
+        }
+
+        private void UpdateGroundedState()
+        {
+            if (groundProbe == null)
+            {
+                IsGrounded = false;
+                return;
+            }
+
+            float radius = tuning != null ? tuning.movement.groundProbeRadius : 0.12f;
+            int mask = tuning != null ? tuning.movement.groundLayers.value : Physics2D.DefaultRaycastLayers;
+            int count = Physics2D.OverlapCircleNonAlloc(groundProbe.position, radius, groundResults, mask);
+            IsGrounded = false;
+            for (int i = 0; i < count; i++)
+            {
+                Collider2D candidate = groundResults[i];
+                if (candidate == null || candidate == ownCollider || candidate.isTrigger || candidate.attachedRigidbody == body)
+                {
+                    continue;
+                }
+
+                IsGrounded = true;
+                break;
+            }
+
+            if (IsGrounded)
+            {
+                lastGroundedTime = Time.time;
+            }
+
+            if (!wasGrounded && IsGrounded && previousVerticalVelocity < 0f)
+            {
+                float landingSpeed = -previousVerticalVelocity;
+                float threshold = tuning != null ? tuning.feedback.landingSpeedThreshold : 3f;
+                if (landingSpeed >= threshold)
+                {
+                    Landed?.Invoke(landingSpeed);
+                }
+            }
+        }
+
+        private void UpdateFootsteps(MovementTuning movement)
+        {
+            if (!IsGrounded || Mathf.Abs(body.linearVelocity.x) < 0.2f || desiredMove.sqrMagnitude < 0.01f)
+            {
+                stepTimer = 0f;
+                return;
+            }
+
+            float baseInterval = tuning != null ? tuning.feedback.footstepInterval : 0.28f;
+            float speedRatio = Mathf.Clamp(Mathf.Abs(body.linearVelocity.x) / Mathf.Max(0.1f, movement != null ? movement.maximumSpeed : 7f), 0.35f, 1.5f);
+            stepTimer += Time.fixedDeltaTime * speedRatio;
+            if (stepTimer >= baseInterval)
+            {
+                stepTimer -= baseInterval;
+                Footstep?.Invoke();
+            }
+        }
+
+        private void OnDrawGizmosSelected()
+        {
+            if (groundProbe == null)
+            {
+                return;
+            }
+
+            Gizmos.color = IsGrounded ? Color.green : Color.red;
+            Gizmos.DrawWireSphere(groundProbe.position, tuning != null ? tuning.movement.groundProbeRadius : 0.12f);
+        }
+    }
+}
