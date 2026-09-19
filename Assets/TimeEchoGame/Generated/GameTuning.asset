@@ -38,7 +38,7 @@ MonoBehaviour:
     boostVitalityCostFraction: 0.25
     boostMomentumHoldSeconds: 0.2
     boostControlRecoverySeconds: 0.25
-    actionCooldown: 0
+    actionCooldown: 0.08
     pointerDeadZone: 0.1
     chargeCurve:
       serializedVersion: 2

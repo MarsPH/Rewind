@@ -1,0 +1,2160 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1666a40eee70d2043b358761b713e72c, type: 3}
+  m_Name: TimeEchoFlowConfig
+  m_EditorClassIdentifier: Assembly-CSharp::TimeEcho.Flow.TimeEchoFlowConfig
+  menuScene: MainMenu
+  winScene: Win
+  levels:
+  - sceneName: Level_01
+    displayName: Map 1
+    nextSceneOverride: 
+    intro:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    nextLevel:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    death:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    restart:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    deathRule:
+      useOverride: 0
+      rule:
+        destination: 2
+        previousLevelChance: 0.35
+        specificScene: 
+        firstLevelFallback: 0
+        eraseForwardProgressWhenSentBack: 0
+  - sceneName: Level_02
+    displayName: Map 2
+    nextSceneOverride: 
+    intro:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    nextLevel:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    death:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    restart:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    deathRule:
+      useOverride: 0
+      rule:
+        destination: 2
+        previousLevelChance: 0.35
+        specificScene: 
+        firstLevelFallback: 0
+        eraseForwardProgressWhenSentBack: 0
+  - sceneName: Level_03
+    displayName: Map 3
+    nextSceneOverride: 
+    intro:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    nextLevel:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    death:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    restart:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    deathRule:
+      useOverride: 0
+      rule:
+        destination: 2
+        previousLevelChance: 0.35
+        specificScene: 
+        firstLevelFallback: 0
+        eraseForwardProgressWhenSentBack: 0
+  - sceneName: Level_04
+    displayName: Map 4
+    nextSceneOverride: 
+    intro:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    nextLevel:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    death:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    restart:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    deathRule:
+      useOverride: 0
+      rule:
+        destination: 2
+        previousLevelChance: 0.35
+        specificScene: 
+        firstLevelFallback: 0
+        eraseForwardProgressWhenSentBack: 0
+  - sceneName: Level_05
+    displayName: Map 5
+    nextSceneOverride: 
+    intro:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    nextLevel:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    death:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    restart:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    deathRule:
+      useOverride: 0
+      rule:
+        destination: 2
+        previousLevelChance: 0.35
+        specificScene: 
+        firstLevelFallback: 0
+        eraseForwardProgressWhenSentBack: 0
+  - sceneName: Level_06
+    displayName: Map 6
+    nextSceneOverride: 
+    intro:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    nextLevel:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    death:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    restart:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    deathRule:
+      useOverride: 0
+      rule:
+        destination: 2
+        previousLevelChance: 0.35
+        specificScene: 
+        firstLevelFallback: 0
+        eraseForwardProgressWhenSentBack: 0
+  - sceneName: Level_07
+    displayName: Map 7
+    nextSceneOverride: 
+    intro:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    nextLevel:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    death:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    restart:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    deathRule:
+      useOverride: 0
+      rule:
+        destination: 2
+        previousLevelChance: 0.35
+        specificScene: 
+        firstLevelFallback: 0
+        eraseForwardProgressWhenSentBack: 0
+  - sceneName: Level_08
+    displayName: Map 8
+    nextSceneOverride: 
+    intro:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    nextLevel:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    death:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    restart:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    deathRule:
+      useOverride: 0
+      rule:
+        destination: 2
+        previousLevelChance: 0.35
+        specificScene: 
+        firstLevelFallback: 0
+        eraseForwardProgressWhenSentBack: 0
+  - sceneName: Level_09
+    displayName: Map 9
+    nextSceneOverride: 
+    intro:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    nextLevel:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    death:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    restart:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    deathRule:
+      useOverride: 0
+      rule:
+        destination: 2
+        previousLevelChance: 0.35
+        specificScene: 
+        firstLevelFallback: 0
+        eraseForwardProgressWhenSentBack: 0
+  - sceneName: Level_10
+    displayName: Map 10
+    nextSceneOverride: 
+    intro:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    nextLevel:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    death:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    restart:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    deathRule:
+      useOverride: 0
+      rule:
+        destination: 2
+        previousLevelChance: 0.35
+        specificScene: 
+        firstLevelFallback: 0
+        eraseForwardProgressWhenSentBack: 0
+  - sceneName: Level_11
+    displayName: Map 11
+    nextSceneOverride: 
+    intro:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    nextLevel:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    death:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    restart:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    deathRule:
+      useOverride: 0
+      rule:
+        destination: 2
+        previousLevelChance: 0.35
+        specificScene: 
+        firstLevelFallback: 0
+        eraseForwardProgressWhenSentBack: 0
+  - sceneName: Level_12
+    displayName: Map 12
+    nextSceneOverride: 
+    intro:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    nextLevel:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    death:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    restart:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    deathRule:
+      useOverride: 0
+      rule:
+        destination: 2
+        previousLevelChance: 0.35
+        specificScene: 
+        firstLevelFallback: 0
+        eraseForwardProgressWhenSentBack: 0
+  - sceneName: Level_13
+    displayName: Map 13
+    nextSceneOverride: 
+    intro:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    nextLevel:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    death:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    restart:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    deathRule:
+      useOverride: 0
+      rule:
+        destination: 2
+        previousLevelChance: 0.35
+        specificScene: 
+        firstLevelFallback: 0
+        eraseForwardProgressWhenSentBack: 0
+  - sceneName: Level_14
+    displayName: Map 14
+    nextSceneOverride: 
+    intro:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    nextLevel:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    death:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    restart:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    deathRule:
+      useOverride: 0
+      rule:
+        destination: 2
+        previousLevelChance: 0.35
+        specificScene: 
+        firstLevelFallback: 0
+        eraseForwardProgressWhenSentBack: 0
+  - sceneName: Level_15
+    displayName: Map 15
+    nextSceneOverride: 
+    intro:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    nextLevel:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    death:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    restart:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    deathRule:
+      useOverride: 0
+      rule:
+        destination: 2
+        previousLevelChance: 0.35
+        specificScene: 
+        firstLevelFallback: 0
+        eraseForwardProgressWhenSentBack: 0
+  - sceneName: Level_16
+    displayName: Map 16
+    nextSceneOverride: 
+    intro:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    nextLevel:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    death:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    restart:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    deathRule:
+      useOverride: 0
+      rule:
+        destination: 2
+        previousLevelChance: 0.35
+        specificScene: 
+        firstLevelFallback: 0
+        eraseForwardProgressWhenSentBack: 0
+  - sceneName: Level_17
+    displayName: Map 17
+    nextSceneOverride: 
+    intro:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    nextLevel:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    death:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    restart:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    deathRule:
+      useOverride: 0
+      rule:
+        destination: 2
+        previousLevelChance: 0.35
+        specificScene: 
+        firstLevelFallback: 0
+        eraseForwardProgressWhenSentBack: 0
+  - sceneName: Level_18
+    displayName: Map 18
+    nextSceneOverride: 
+    intro:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    nextLevel:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    death:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    restart:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    deathRule:
+      useOverride: 0
+      rule:
+        destination: 2
+        previousLevelChance: 0.35
+        specificScene: 
+        firstLevelFallback: 0
+        eraseForwardProgressWhenSentBack: 0
+  - sceneName: Level_19
+    displayName: Map 19
+    nextSceneOverride: 
+    intro:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    nextLevel:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    death:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    restart:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    deathRule:
+      useOverride: 0
+      rule:
+        destination: 2
+        previousLevelChance: 0.35
+        specificScene: 
+        firstLevelFallback: 0
+        eraseForwardProgressWhenSentBack: 0
+  - sceneName: Level_20
+    displayName: Map 20
+    nextSceneOverride: 
+    intro:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    nextLevel:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    death:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    restart:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    deathRule:
+      useOverride: 0
+      rule:
+        destination: 2
+        previousLevelChance: 0.35
+        specificScene: 
+        firstLevelFallback: 0
+        eraseForwardProgressWhenSentBack: 0
+  menuToGame:
+    enabled: 1
+    style: 3
+    guidanceText: 
+    voiceClip: {fileID: 0}
+    soundEffect: {fileID: 0}
+    voiceVolume: 1
+    effectVolume: 1
+    delayBefore: 0.1
+    fadeIn: 0.3
+    minimumHold: 0.25
+    fadeOut: 0.3
+    waitForVoiceToFinish: 1
+    lockGameplay: 1
+    allowSkip: 0
+    skipKey: 32
+    coverColor: {r: 0, g: 0, b: 0, a: 1}
+    cutsceneDimAmount: 0.55
+    glitchBursts: 0
+    showLetterbox: 0
+  levelIntro:
+    enabled: 1
+    style: 2
+    guidanceText: You made it this far. Don't get comfortable.
+    voiceClip: {fileID: 0}
+    soundEffect: {fileID: 0}
+    voiceVolume: 1
+    effectVolume: 1
+    delayBefore: 0.1
+    fadeIn: 0.25
+    minimumHold: 1.4
+    fadeOut: 0.25
+    waitForVoiceToFinish: 1
+    lockGameplay: 1
+    allowSkip: 1
+    skipKey: 32
+    coverColor: {r: 0, g: 0, b: 0, a: 1}
+    cutsceneDimAmount: 0.55
+    glitchBursts: 0
+    showLetterbox: 1
+  nextLevel:
+    enabled: 1
+    style: 4
+    guidanceText: Oh, you thought that was the end? Let's fix that.
+    voiceClip: {fileID: 0}
+    soundEffect: {fileID: 0}
+    voiceVolume: 1
+    effectVolume: 1
+    delayBefore: 0.1
+    fadeIn: 0.35
+    minimumHold: 1.1
+    fadeOut: 0.35
+    waitForVoiceToFinish: 1
+    lockGameplay: 1
+    allowSkip: 0
+    skipKey: 32
+    coverColor: {r: 0, g: 0, b: 0, a: 1}
+    cutsceneDimAmount: 0.55
+    glitchBursts: 7
+    showLetterbox: 0
+  death:
+    enabled: 1
+    style: 2
+    guidanceText: No. That ending was too easy.
+    voiceClip: {fileID: 0}
+    soundEffect: {fileID: 0}
+    voiceVolume: 1
+    effectVolume: 1
+    delayBefore: 0.1
+    fadeIn: 0.2
+    minimumHold: 1.2
+    fadeOut: 0.2
+    waitForVoiceToFinish: 1
+    lockGameplay: 1
+    allowSkip: 1
+    skipKey: 32
+    coverColor: {r: 0, g: 0, b: 0, a: 1}
+    cutsceneDimAmount: 0.55
+    glitchBursts: 0
+    showLetterbox: 1
+  restart:
+    enabled: 1
+    style: 4
+    guidanceText: Back you go.
+    voiceClip: {fileID: 0}
+    soundEffect: {fileID: 0}
+    voiceVolume: 1
+    effectVolume: 1
+    delayBefore: 0.1
+    fadeIn: 0.25
+    minimumHold: 0.65
+    fadeOut: 0.25
+    waitForVoiceToFinish: 1
+    lockGameplay: 1
+    allowSkip: 0
+    skipKey: 32
+    coverColor: {r: 0, g: 0, b: 0, a: 1}
+    cutsceneDimAmount: 0.55
+    glitchBursts: 7
+    showLetterbox: 0
+  winning:
+    enabled: 1
+    style: 4
+    guidanceText: No... that was not supposed to happen.
+    voiceClip: {fileID: 0}
+    soundEffect: {fileID: 0}
+    voiceVolume: 1
+    effectVolume: 1
+    delayBefore: 0.1
+    fadeIn: 0.45
+    minimumHold: 1.8
+    fadeOut: 0.55
+    waitForVoiceToFinish: 1
+    lockGameplay: 1
+    allowSkip: 0
+    skipKey: 32
+    coverColor: {r: 0, g: 0, b: 0, a: 1}
+    cutsceneDimAmount: 0.55
+    glitchBursts: 7
+    showLetterbox: 0
+  returnToMenu:
+    enabled: 1
+    style: 3
+    guidanceText: 
+    voiceClip: {fileID: 0}
+    soundEffect: {fileID: 0}
+    voiceVolume: 1
+    effectVolume: 1
+    delayBefore: 0.1
+    fadeIn: 0.25
+    minimumHold: 0.25
+    fadeOut: 0.25
+    waitForVoiceToFinish: 1
+    lockGameplay: 1
+    allowSkip: 0
+    skipKey: 32
+    coverColor: {r: 0, g: 0, b: 0, a: 1}
+    cutsceneDimAmount: 0.55
+    glitchBursts: 0
+    showLetterbox: 0
+  defaultDeathRule:
+    destination: 2
+    previousLevelChance: 0.35
+    specificScene: 
+    firstLevelFallback: 0
+    eraseForwardProgressWhenSentBack: 0
+  automaticallyWatchPlayerVitality: 1
+  deathDelay: 0.1
+  playIntroWhenEnteringFromMenu: 1
+  playIntroAfterNextLevel: 1
+  playIntroAfterRestart: 0
+  playIntroAfterDeathSendsPlayerBack: 1
+  showGeneratedMainMenu: 1
+  gameTitle: TIME ECHO
+  newGameLabel: NEW GAME
+  continueLabel: CONTINUE
+  quitLabel: QUIT
+  winTitle: YOU ESCAPED
+  winSubtitle: The Game Master has lost control.
+  saveProgress: 1
+  playerPrefsKey: TimeEcho.Flow.Save.v1
+  enableContinueButton: 1
+  verboseLogging: 0
