@@ -161,9 +161,13 @@ namespace TimeEcho
             // launch along the actual aim arrow even if the player entered
             // stasis with velocity in a different direction.
             Vector2 boostVelocity = direction.normalized * Mathf.Max(0f, impulse);
-            body.linearVelocity = alignVelocityToAim
+
+            Vector2 previousVelocity = body.linearVelocity;
+            bool falling = !IsGrounded && previousVelocity.y < 0f;
+
+            body.linearVelocity = (alignVelocityToAim || falling)
                 ? boostVelocity
-                : body.linearVelocity * retainedVelocity + boostVelocity;
+                : previousVelocity * retainedVelocity + boostVelocity;
             nextLaunchTime = Time.unscaledTime + (tuning != null ? tuning.aim.actionCooldown : 0.08f);
 
             float holdSeconds = tuning != null ? tuning.aim.boostMomentumHoldSeconds : 0.2f;
