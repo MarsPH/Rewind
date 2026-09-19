@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: KeyboardJump
   m_EditorClassIdentifier: Assembly-CSharp::TimeEcho.AudioCue
   clips:
-  - {fileID: 8300000, guid: ed60cb77b3f4a6b448d98276daec9d6d, type: 3}
+  - {fileID: 8300000, guid: a30303895ee795942b7d27801f5deb1e, type: 3}
   output: {fileID: 0}
   volumeRange: {x: 0.9, y: 1}
   pitchRange: {x: 0.96, y: 1.04}
