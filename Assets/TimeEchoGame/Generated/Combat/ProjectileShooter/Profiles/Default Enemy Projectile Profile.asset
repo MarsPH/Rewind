@@ -1,0 +1,86 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0118841d0912972498fdc541e2021e02, type: 3}
+  m_Name: Default Enemy Projectile Profile
+  m_EditorClassIdentifier: Assembly-CSharp::TimeEcho.ProjectileProfile2D
+  displayName: Enemy Projectile
+  sprite: {fileID: -7174898199296445581, guid: c3c6692404e179b4eb2ee4fe21b87867, type: 3}
+  tint: {r: 1, g: 0.35, b: 0.2, a: 1}
+  visualScale: {x: 1, y: 1}
+  spriteMaterial: {fileID: 0}
+  sortingLayerName: Default
+  sortingOrder: 10
+  rotateVisualTowardsVelocity: 1
+  visualRotationOffset: 0
+  visualSpinSpeed: 0
+  useTrail: 1
+  trailTime: 0.22
+  trailStartWidth: 0.12
+  trailEndWidth: 0
+  trailColor:
+    serializedVersion: 2
+    key0: {r: 1, g: 0.55, b: 0.15, a: 0.85}
+    key1: {r: 1, g: 0.15, b: 0.05, a: 0}
+    key2: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_ColorSpace: -1
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
+  trailMaterial: {fileID: 2100000, guid: 9ad0837021d7f8a41a3547a8561fc4f3, type: 2}
+  speed: 8
+  acceleration: 0
+  maximumSpeed: 0
+  gravityScale: 0
+  lifetime: 6
+  homing: 0
+  homingDelay: 0
+  homingDuration: 0
+  homingTurnSpeed: 180
+  colliderShape: 0
+  circleRadius: 0.13
+  boxSize: {x: 0.28, y: 0.16}
+  colliderOffset: {x: 0, y: 0}
+  collisionLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  hitTriggerColliders: 0
+  targetRule: 0
+  damage: 100
+  knockback: 4
+  extraTargetPierces: 0
+  deactivateOnEnvironmentHit: 1
+  temporalResponse: 1
+  impactCue: {fileID: 11400000, guid: 82e4219e0b5af444b9d35da8f3b9ad7c, type: 2}
+  spawnEffectPrefab: {fileID: 0}
+  impactEffectPrefab: {fileID: 0}
+  spawnedEffectLifetime: 2

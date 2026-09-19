@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 241b89ed196ae1d40b6b44345b31445f, type: 3}
-  m_Name: PowerUp
+  m_Name: ShooterWindup
   m_EditorClassIdentifier: Assembly-CSharp::TimeEcho.AudioCue
   clips: []
   audioResource: {fileID: 0}

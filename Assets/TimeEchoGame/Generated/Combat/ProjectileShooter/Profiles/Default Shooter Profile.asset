@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4e1c772805d98c4491dad14758a83c7, type: 3}
+  m_Name: Default Shooter Profile
+  m_EditorClassIdentifier: Assembly-CSharp::TimeEcho.ShooterProfile2D
+  beginActive: 1
+  initialDelay: 0.5
+  pauseOutsideFlowingTime: 1
+  targetingMode: 2
+  targetRefreshInterval: 0.25
+  acquisitionRange: 18
+  loseTargetRange: 21
+  minimumFireRange: 0
+  maximumFireRange: 15
+  targetOffset: {x: 0, y: 0}
+  requireLineOfSight: 0
+  lineOfSightObstacleLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  turnSpeed: 540
+  visualForwardAngle: 0
+  requireAimAlignment: 1
+  aimTolerance: 4
+  fireAlongCurrentAim: 1
+  returnToIdleWithoutTarget: 0
+  idleLocalAngle: 0
+  predictTargetMovement: 0
+  maximumPredictionTime: 2
+  fireMode: 0
+  windupTime: 0.25
+  shotsPerBurst: 1
+  timeBetweenBurstShots: 0.12
+  cooldownAfterBurst: 1.25
+  additionalRandomCooldown: {x: 0, y: 0}
+  cancelWindupWhenTargetLost: 1
+  cancelBurstWhenTargetLost: 1
+  volleyPattern: 0
+  projectilesPerVolley: 1
+  spreadAngle: 25
+  randomizeSpread: 0
+  randomAimError: 0
+  inheritedShooterVelocity: 0
+  prewarmCount: 12
+  maximumPoolSize: 48
+  targetAcquiredCue: {fileID: 11400000, guid: e8eab119f2d3d24469c12df027b59f79, type: 2}
+  windupCue: {fileID: 11400000, guid: f1f7d24846e9f1146b65445781c1b0cc, type: 2}
+  fireCue: {fileID: 11400000, guid: 7dab4ea68990f0046842caf63d632335, type: 2}
+  muzzleFlashPrefab: {fileID: 0}
+  muzzleFlashLifetime: 1
+  windupAnimatorTrigger: Windup
+  fireAnimatorTrigger: Fire

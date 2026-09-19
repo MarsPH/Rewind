@@ -163,9 +163,9 @@ namespace TimeEcho
             Vector2 boostVelocity = direction.normalized * Mathf.Max(0f, impulse);
 
             Vector2 previousVelocity = body.linearVelocity;
-            bool falling = !IsGrounded && previousVelocity.y < 0f;
+            bool airborne = !IsGrounded;
 
-            body.linearVelocity = (alignVelocityToAim || falling)
+            body.linearVelocity = (alignVelocityToAim || airborne)
                 ? boostVelocity
                 : previousVelocity * retainedVelocity + boostVelocity;
             nextLaunchTime = Time.unscaledTime + (tuning != null ? tuning.aim.actionCooldown : 0.08f);
