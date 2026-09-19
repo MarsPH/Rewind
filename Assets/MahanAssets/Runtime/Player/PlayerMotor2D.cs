@@ -21,6 +21,8 @@ namespace TimeEcho
         private float nextLaunchTime;
         private float launchControlLockedUntil;
         private float launchControlFullyRestoredAt;
+        private bool preserveLaunchMomentumInAir;
+        private bool hasLeftGroundSinceLaunch;
         private float stepTimer;
         private float previousVerticalVelocity;
         private bool wasGrounded;
@@ -137,21 +139,37 @@ namespace TimeEcho
 
         public bool TryLaunch(Vector2 direction, float impulse)
         {
+            return TryLaunch(direction, impulse, false);
+        }
+
+        public bool TryLaunch(Vector2 direction, float impulse, bool alignVelocityToAim)
+        {
             if (dead || body == null || Time.unscaledTime < nextLaunchTime || direction.sqrMagnitude < 0.0001f)
             {
                 return false;
             }
 
+            bool launchedFromGround = IsGrounded;
             float retainedVelocity = tuning != null ? Mathf.Max(1f, tuning.aim.retainedVelocity) : 1f;
-            body.linearVelocity = body.linearVelocity * retainedVelocity + direction.normalized * Mathf.Max(0f, impulse);
+            // Ordinary boosts retain momentum. Frozen-time boosts instead
+            // launch along the actual aim arrow even if the player entered
+            // stasis with velocity in a different direction.
+            Vector2 boostVelocity = direction.normalized * Mathf.Max(0f, impulse);
+            body.linearVelocity = alignVelocityToAim
+                ? boostVelocity
+                : body.linearVelocity * retainedVelocity + boostVelocity;
             nextLaunchTime = Time.unscaledTime + (tuning != null ? tuning.aim.actionCooldown : 0.08f);
 
             float holdSeconds = tuning != null ? tuning.aim.boostMomentumHoldSeconds : 0.2f;
             float recoverySeconds = tuning != null ? tuning.aim.boostControlRecoverySeconds : 0.25f;
             launchControlLockedUntil = Time.time + Mathf.Max(0f, holdSeconds);
             launchControlFullyRestoredAt = launchControlLockedUntil + Mathf.Max(0f, recoverySeconds);
+            preserveLaunchMomentumInAir = true;
+            hasLeftGroundSinceLaunch = !launchedFromGround;
             IsGrounded = false;
-            wasGrounded = false;
+            // A probe may still overlap the ground during the first take-off
+            // frame. Do not mistake that overlap for a fresh landing.
+            wasGrounded = launchedFromGround;
             Launched?.Invoke(direction.normalized, impulse);
             return true;
         }
@@ -185,7 +203,22 @@ namespace TimeEcho
             control *= GetLaunchControlMultiplier();
             float targetX = desiredMove.x * maxSpeed;
             float rate = Mathf.Abs(targetX) > 0.01f ? acceleration : deceleration;
-            float nextX = Mathf.MoveTowards(body.linearVelocity.x, targetX, rate * control * Time.fixedDeltaTime);
+            float nextX = body.linearVelocity.x;
+            bool airborneBoost = preserveLaunchMomentumInAir && !IsGrounded;
+            bool steering = Mathf.Abs(desiredMove.x) > 0.01f;
+            bool alreadyFasterInSteeringDirection = steering &&
+                Mathf.Sign(desiredMove.x) == Mathf.Sign(nextX) &&
+                Mathf.Abs(nextX) >= maxSpeed;
+
+            // Do not brake a launched player back toward zero just because no
+            // movement key is pressed. A key in the existing travel direction
+            // must not clamp a fast boost back down to normal running speed.
+            // Opposite-direction input can still steer after control recovers.
+            if (!airborneBoost || (steering && !alreadyFasterInSteeringDirection))
+            {
+                nextX = Mathf.MoveTowards(nextX, targetX, rate * control * Time.fixedDeltaTime);
+            }
+
             body.linearVelocity = new Vector2(nextX, body.linearVelocity.y);
 
             bool allowJump = movement == null || movement.allowKeyboardJump;
@@ -242,8 +275,21 @@ namespace TimeEcho
             }
 
             bool justLanded = !wasGrounded && IsGrounded;
-            if (justLanded)
+            if (preserveLaunchMomentumInAir && !IsGrounded)
             {
+                hasLeftGroundSinceLaunch = true;
+            }
+
+            if (justLanded && (!preserveLaunchMomentumInAir || hasLeftGroundSinceLaunch))
+            {
+                ClearLaunchMomentumProtection();
+            }
+
+            else if (preserveLaunchMomentumInAir && IsGrounded &&
+                     !hasLeftGroundSinceLaunch && Time.time >= launchControlFullyRestoredAt)
+            {
+                // Horizontal boosts can remain grounded for their entire
+                // duration. Restore ordinary running after the launch window.
                 ClearLaunchMomentumProtection();
             }
 
@@ -294,6 +340,8 @@ namespace TimeEcho
 
         private void ClearLaunchMomentumProtection()
         {
+            preserveLaunchMomentumInAir = false;
+            hasLeftGroundSinceLaunch = false;
             launchControlLockedUntil = float.NegativeInfinity;
             launchControlFullyRestoredAt = float.NegativeInfinity;
         }

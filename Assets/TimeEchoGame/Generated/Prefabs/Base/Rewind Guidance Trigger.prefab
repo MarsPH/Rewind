@@ -91,6 +91,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bd73b3f396d43c49b8a31c302a2bdff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TimeEcho.GuidanceTrigger2D
-  message: RMB rewinds and drains energy. Hold LMB + RMB to aim while time is frozen.
+  message: Hold LMB to aim, then release once the arrow brightens to boost. RMB rewinds;
+    in stasis (LMB + RMB), release either button to boost along the arrow for the
+    same energy cost.
   duration: 3
   showOnlyOnce: 1
