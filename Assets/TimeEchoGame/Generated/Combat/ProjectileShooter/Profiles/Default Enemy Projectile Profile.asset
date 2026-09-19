@@ -15,7 +15,7 @@ MonoBehaviour:
   displayName: Enemy Projectile
   sprite: {fileID: -7174898199296445581, guid: c3c6692404e179b4eb2ee4fe21b87867, type: 3}
   tint: {r: 1, g: 0.35, b: 0.2, a: 1}
-  visualScale: {x: 0.32, y: 0.18}
+  visualScale: {x: 1, y: 1}
   spriteMaterial: {fileID: 0}
   sortingLayerName: Default
   sortingOrder: 10
