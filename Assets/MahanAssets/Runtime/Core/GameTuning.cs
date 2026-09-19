@@ -84,10 +84,10 @@ namespace TimeEcho
     public sealed class AimTuning
     {
         public AimedActionMode action = AimedActionMode.LaunchPlayer;
-        [Min(0.1f), Tooltip("Minimum time to hold LMB before releasing can boost. The arrow appears immediately; quick clicks cancel without spending energy.")]
-        public float holdThreshold = 0.18f;
-        [Min(0.01f)] public float fullChargeTime = 0.75f;
-        [Range(0f, 1f)] public float tapCharge = 0.55f;
+        [Min(0f), Tooltip("Minimum LMB aim time before release can boost. Set to 0 for an immediately ready arrow; raise it to prevent accidental clicks.")]
+        public float holdThreshold = 0f;
+        [Min(0.01f)] public float fullChargeTime = 0.01f;
+        [Range(0f, 1f)] public float tapCharge = 1f;
         [Min(0f)] public float minimumImpulse = 8f;
         [Min(0f)] public float maximumImpulse = 18f;
         [Min(1f), Tooltip("Multiplier applied to existing velocity before adding the launch impulse. One preserves all momentum.")]
@@ -98,7 +98,7 @@ namespace TimeEcho
         public float boostMomentumHoldSeconds = 0.2f;
         [Min(0f), Tooltip("Seconds used to smoothly return ordinary movement control after the momentum hold.")]
         public float boostControlRecoverySeconds = 0.25f;
-        [Min(0f)] public float actionCooldown = 0.08f;
+        [Min(0f)] public float actionCooldown = 0f;
         [Min(0.01f)] public float pointerDeadZone = 0.1f;
         public AnimationCurve chargeCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
 
@@ -116,7 +116,7 @@ namespace TimeEcho
 
         internal void Sanitize()
         {
-            holdThreshold = Mathf.Max(0.1f, holdThreshold);
+            holdThreshold = Mathf.Max(0f, holdThreshold);
             fullChargeTime = Mathf.Max(0.01f, fullChargeTime);
             minimumImpulse = Mathf.Max(0f, minimumImpulse);
             maximumImpulse = Mathf.Max(minimumImpulse, maximumImpulse);
