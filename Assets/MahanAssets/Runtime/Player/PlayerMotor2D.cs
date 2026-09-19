@@ -144,7 +144,13 @@ namespace TimeEcho
 
         public bool TryLaunch(Vector2 direction, float impulse, bool alignVelocityToAim)
         {
-            if (dead || body == null || Time.unscaledTime < nextLaunchTime || direction.sqrMagnitude < 0.0001f)
+            return TryLaunch(direction, impulse, alignVelocityToAim, false);
+        }
+
+        public bool TryLaunch(Vector2 direction, float impulse, bool alignVelocityToAim, bool ignoreCooldown)
+        {
+            if (dead || body == null || (!ignoreCooldown && Time.unscaledTime < nextLaunchTime) ||
+                direction.sqrMagnitude < 0.0001f)
             {
                 return false;
             }

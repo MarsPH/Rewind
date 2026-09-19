@@ -1,33 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8635721217624477839
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7530d9b1c28e471998cd8b99935d3b7, type: 3}
-  m_Name: AnalogGlitchRendererFeature
-  m_EditorClassIdentifier: KinoGlitch.Runtime::KinoGlitch.AnalogGlitchRendererFeature
-  m_Active: 1
-  _passEvent: 600
---- !u!114 &-2434280071328795066
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a38fee1e350c0419ab0131008ca74048, type: 3}
-  m_Name: DigitalGlitchRendererFeature
-  m_EditorClassIdentifier: KinoGlitch.Runtime::KinoGlitch.DigitalGlitchRendererFeature
-  m_Active: 1
-  _passEvent: 600
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52,12 +24,8 @@ MonoBehaviour:
     probeSamplingDebugMesh: {fileID: -3555484719484374845, guid: 57d7c4c16e2765b47a4d2069b311bffe, type: 3}
     probeSamplingDebugTexture: {fileID: 2800000, guid: 24ec0e140fb444a44ab96ee80844e18e, type: 3}
     probeVolumeBlendStatesCS: {fileID: 0}
-  m_RendererFeatures:
-  - {fileID: -8635721217624477839}
-  - {fileID: -2434280071328795066}
-  - {fileID: 228819175451220929}
-  - {fileID: 1378523014888686727}
-  m_RendererFeatureMap: 716f307c4ec127884676a2282cb337dec15b91e6d3ed2c03870424d9607f2113
+  m_RendererFeatures: []
+  m_RendererFeatureMap: 
   m_UseNativeRenderPass: 0
   m_LayerMask:
     serializedVersion: 2
@@ -88,34 +56,3 @@ MonoBehaviour:
   m_PostProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   m_DefaultMaterialType: 0
   m_DefaultCustomMaterial: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
---- !u!114 &228819175451220929
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7b51d34ff9fa60499f5f35735de5c90, type: 3}
-  m_Name: AnalogGlitchRenderFeature
-  m_EditorClassIdentifier: URPGlitch::URPGlitch.AnalogGlitchRenderFeature
-  m_Active: 1
-  anaglogGlitchShader: {fileID: 4800000, guid: 754922b6576fa498bbb2fbbebfe256ef, type: 3}
-  renderPassEvent: 550
---- !u!114 &1378523014888686727
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d97da06d1b4e6e64e837fe2d4f512162, type: 3}
-  m_Name: DigitalGlitchFeature
-  m_EditorClassIdentifier: URPGlitch::URPGlitch.DigitalGlitchFeature
-  m_Active: 1
-  shader: {fileID: 4800000, guid: c14e70ca31deb4b3dbecc8376c965e0c, type: 3}
-  compatShader: {fileID: 0}
-  renderPassEvent: 0

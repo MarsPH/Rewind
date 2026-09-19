@@ -70,18 +70,17 @@ namespace TimeEcho
                 return;
             }
 
-            // The director may end stasis itself (duration limit / energy).
-            // Invalidate the aim before processing a simultaneous LMB release:
-            // otherwise that release could fire after the arrow disappears.
-            if (temporalAimActive && timeDirector.Mode != TimeMode.Stasis)
+            // A Stasis action is latched when the two-button aim begins. Resolve
+            // its first release BEFORE ordinary aim/rewind cleanup, even if a
+            // TimeDirector timeout changed the mode between input frames.
+            // Never depend on Mode still being Stasis to deliver the launch.
+            if (temporalAimActive &&
+                (frame.PrimaryReleased || frame.SecondaryReleased ||
+                 !frame.PrimaryHeld || !frame.SecondaryHeld))
             {
-                primaryCycleActive = false;
-                aimPreviewShown = false;
-                aimReady = false;
-                temporalAimActive = false;
-                suppressRewindUntilSecondaryRelease = frame.SecondaryHeld;
-                stasisBlockedUntilButtonRelease = frame.SecondaryHeld && frame.PrimaryHeld;
-                arrow?.Hide();
+                ExecuteCurrentAction(true);
+                FinishAimCycle(frame.SecondaryHeld);
+                return;
             }
 
             bool bothAimButtonsHeld = frame.SecondaryHeld && frame.PrimaryHeld;
@@ -95,24 +94,17 @@ namespace TimeEcho
                 suppressRewindUntilSecondaryRelease = false;
             }
 
-            if (frame.PrimaryPressed)
+            if (frame.PrimaryPressed && !temporalAimActive)
             {
                 BeginPrimaryCycle();
             }
 
-            // Stasis is committed by the FIRST release, LMB or RMB. Resolve
-            // this before the ordinary LMB release / RMB rewind branches so
-            // releasing RMB alone cannot leave the player stuck in normal aim.
-            if (temporalAimActive && timeDirector.Mode == TimeMode.Stasis &&
-                (frame.PrimaryReleased || frame.SecondaryReleased ||
-                 !frame.PrimaryHeld || !frame.SecondaryHeld))
+            // If a configured Stasis duration ends before release, keep the
+            // already-aimed action pending rather than discarding the boost.
+            // Do not re-enter Stasis and restart its duration every frame.
+            if (temporalAimActive && bothAimButtonsHeld &&
+                timeDirector.Mode != TimeMode.Stasis)
             {
-                if (aimReady)
-                {
-                    ExecuteCurrentAction(true);
-                }
-
-                FinishAimCycle(frame.SecondaryHeld);
                 return;
             }
 
@@ -287,7 +279,9 @@ namespace TimeEcho
                 aimPreviewShown = true;
             }
 
-            if (aimPreviewShown && heldLongEnough)
+            // The arrow is feedback, not a gameplay dependency. Stasis is
+            // intentionally ready on entry even if its renderer is not assigned.
+            if (inStasis || (aimPreviewShown && heldLongEnough))
             {
                 aimReady = true;
             }
@@ -328,7 +322,9 @@ namespace TimeEcho
             timeDirector.SetMode(TimeMode.Flowing);
 
             AimedActionMode mode = tuning != null ? tuning.aim.action : AimedActionMode.LaunchPlayer;
-            if (mode == AimedActionMode.FireProjectile)
+            // Stasis always boosts the player as requested, independently of
+            // the normal-action projectile setting.
+            if (!fromStasis && mode == AimedActionMode.FireProjectile)
             {
                 if (projectileLauncher == null)
                 {
@@ -344,16 +340,36 @@ namespace TimeEcho
 
             float minimumImpulse = tuning != null ? tuning.aim.minimumImpulse : 8f;
             float maximumImpulse = tuning != null ? tuning.aim.maximumImpulse : 18f;
+            if (fromStasis && vitality == null)
+            {
+                Debug.LogWarning("Stasis boost blocked: PlayerVitality is missing. Assign or add it so the normal boost cost can be paid.", this);
+                return;
+            }
+
             float boostCost = GetBoostVitalityCost();
             bool canReachZero = tuning == null || tuning.vitality.boostCanReduceToZero;
             if (vitality != null && !vitality.CanSpendTemporal(boostCost, canReachZero))
             {
+                if (fromStasis)
+                {
+                    Debug.LogWarning($"Stasis boost blocked: insufficient energy ({vitality.Current:0.##} available, {boostCost:0.##} needed).", this);
+                }
                 return;
             }
 
-            if (motor.TryLaunch(launchDirection, Mathf.Lerp(minimumImpulse, maximumImpulse, charge), fromStasis))
+            // Stasis is a deliberate two-button action and must not silently fail
+            // during the ordinary boost's short cooldown. Normal boosts still
+            // respect the cooldown, and both actions charge the same amount.
+            bool launched = motor.TryLaunch(
+                launchDirection, Mathf.Lerp(minimumImpulse, maximumImpulse, charge),
+                fromStasis, fromStasis);
+            if (launched)
             {
                 vitality?.TrySpendTemporal(boostCost, canReachZero);
+            }
+            else if (fromStasis)
+            {
+                Debug.LogWarning("Stasis boost blocked by PlayerMotor2D: check that the player is alive, has a Rigidbody2D, and the arrow direction is valid.", this);
             }
         }
 

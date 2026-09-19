@@ -15,6 +15,7 @@ namespace TimeEcho
         [SerializeField] private float startingVitality = 100f;
 
         public float Current { get; private set; }
+        public GameTuning Tuning => tuning;
         public float Maximum => tuning != null ? tuning.vitality.maximum : Mathf.Max(1f, startingVitality);
         public float Normalized => Maximum <= 0f ? 0f : Current / Maximum;
         public bool IsDead => Current <= 0f;
