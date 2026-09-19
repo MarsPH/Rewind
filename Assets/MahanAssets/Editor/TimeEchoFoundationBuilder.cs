@@ -101,7 +101,7 @@ namespace TimeEcho.Editor
             worldCamera.orthographicSize = 5.5f;
             worldCamera.backgroundColor = new Color(0.035f, 0.055f, 0.09f);
             cameraObject.AddComponent<AudioListener>();
-            FollowCamera2D followCamera = cameraObject.AddComponent<FollowCamera2D>();
+            StaticLevelCamera2D staticCamera = cameraObject.AddComponent<StaticLevelCamera2D>();
             cameraObject.transform.position = new Vector3(0f, 1f, -10f);
 
             vitality.Configure(tuning);
@@ -110,7 +110,7 @@ namespace TimeEcho.Editor
             aimedAction.Configure(tuning, gameInput, timeDirector, motor, vitality, arrow, worldCamera);
             animation.Configure(null, player.GetComponent<SpriteRenderer>(), motor, vitality, timeDirector);
             playerAudio.Configure(motor, vitality, timeDirector);
-            followCamera.Configure(player.transform, tuning);
+            staticCamera.Configure(new Vector2(0f, 0.5f), new Vector2(24f, 9f), 0.5f);
             runTimer.Configure(tuning, timeDirector);
             audioState.Configure(timeDirector);
             AssignPlayerAudioCues(playerAudio, cues);

@@ -152,7 +152,6 @@ namespace TimeEcho
     {
         [Min(0.05f)] public float footstepInterval = 0.28f;
         [Min(0f)] public float landingSpeedThreshold = 3f;
-        [Min(0f)] public float cameraFollowSmoothTime = 0.12f;
         [Range(0f, 1f)] public float rewindOverlayAlpha = 0.16f;
         [Range(0f, 1f)] public float stasisOverlayAlpha = 0.12f;
 
@@ -160,7 +159,6 @@ namespace TimeEcho
         {
             footstepInterval = Mathf.Max(0.05f, footstepInterval);
             landingSpeedThreshold = Mathf.Max(0f, landingSpeedThreshold);
-            cameraFollowSmoothTime = Mathf.Max(0f, cameraFollowSmoothTime);
         }
     }
 

@@ -2,12 +2,10 @@ using UnityEngine;
 
 namespace TimeEcho
 {
-    [System.Obsolete("Use StaticLevelCamera2D. This compatibility component now frames a fixed level view and does not follow its target.")]
     [DisallowMultipleComponent]
     [RequireComponent(typeof(Camera))]
-    public sealed class FollowCamera2D : MonoBehaviour
+    public sealed class StaticLevelCamera2D : MonoBehaviour
     {
-        [SerializeField, HideInInspector] private Transform target;
         [SerializeField] private Vector2 levelCenter = new Vector2(0f, 0.5f);
         [SerializeField] private Vector2 levelSize = new Vector2(24f, 9f);
         [SerializeField, Min(0f)] private float padding = 0.5f;
@@ -21,6 +19,13 @@ namespace TimeEcho
             FrameWholeLevel();
         }
 
+        public void Configure(Vector2 center, Vector2 size, float framingPadding = 0.5f)
+        {
+            levelCenter = center;
+            levelSize = new Vector2(Mathf.Max(0.1f, size.x), Mathf.Max(0.1f, size.y));
+            padding = Mathf.Max(0f, framingPadding);
+        }
+
         [ContextMenu("Frame Whole Level")]
         public void FrameWholeLevel()
         {
@@ -31,7 +36,7 @@ namespace TimeEcho
 
             if (controlledCamera == null || !controlledCamera.orthographic)
             {
-                Debug.LogError("The static level camera requires an orthographic Camera.", this);
+                Debug.LogError("StaticLevelCamera2D requires an orthographic Camera.", this);
                 return;
             }
 
@@ -43,9 +48,11 @@ namespace TimeEcho
                 Quaternion.identity);
         }
 
-        public void Configure(Transform followTarget)
+        private void OnValidate()
         {
-            target = followTarget;
+            levelSize.x = Mathf.Max(0.1f, levelSize.x);
+            levelSize.y = Mathf.Max(0.1f, levelSize.y);
+            padding = Mathf.Max(0f, padding);
         }
 
         private void OnDrawGizmosSelected()
