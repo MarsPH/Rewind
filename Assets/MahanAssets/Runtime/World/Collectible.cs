@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,7 +12,8 @@ namespace TimeEcho
             public bool Collected;
         }
 
-        [SerializeField] private string stableId;
+        [SerializeField, Tooltip("Optional fixed ID. Leave empty on prefab assets to generate a unique ID from each scene instance.")]
+        private string stableId;
         [SerializeField] private GameObject visualRoot;
         [SerializeField] private Collider2D trigger;
         [SerializeField] private AudioCue pickupCue;
@@ -21,11 +21,25 @@ namespace TimeEcho
 
         private readonly List<Frame> frames = new List<Frame>(512);
         private bool collected;
+        private string runtimeId;
 
         public bool IsCollected => collected;
+        private string RuntimeId
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(runtimeId))
+                {
+                    runtimeId = ResolveRuntimeId();
+                }
+
+                return runtimeId;
+            }
+        }
 
         private void Awake()
         {
+            runtimeId = ResolveRuntimeId();
             if (trigger == null) trigger = GetComponent<Collider2D>();
             if (visualRoot == null) visualRoot = gameObject;
             trigger.isTrigger = true;
@@ -34,7 +48,7 @@ namespace TimeEcho
 
         private void Start()
         {
-            GameSession.Instance?.RegisterCollectible(stableId);
+            GameSession.Instance?.RegisterCollectible(RuntimeId);
         }
 
         private void OnEnable()
@@ -49,11 +63,6 @@ namespace TimeEcho
 
         private void OnValidate()
         {
-            if (string.IsNullOrWhiteSpace(stableId))
-            {
-                stableId = Guid.NewGuid().ToString("N");
-            }
-
             Collider2D ownCollider = GetComponent<Collider2D>();
             if (ownCollider != null) ownCollider.isTrigger = true;
         }
@@ -135,6 +144,7 @@ namespace TimeEcho
         public void Configure(string id, GameObject visuals, Collider2D targetTrigger)
         {
             stableId = id;
+            runtimeId = null;
             visualRoot = visuals;
             trigger = targetTrigger;
         }
@@ -148,7 +158,31 @@ namespace TimeEcho
 
             collected = value;
             ApplyState();
-            GameSession.Instance?.SetCollected(stableId, collected);
+            GameSession.Instance?.SetCollected(RuntimeId, collected);
+        }
+
+        private string ResolveRuntimeId()
+        {
+            if (!string.IsNullOrWhiteSpace(stableId))
+            {
+                return stableId;
+            }
+
+            string hierarchyPath = $"{transform.GetSiblingIndex()}:{name}";
+            Transform current = transform.parent;
+            while (current != null)
+            {
+                hierarchyPath = $"{current.GetSiblingIndex()}:{current.name}/{hierarchyPath}";
+                current = current.parent;
+            }
+
+            string sceneKey = gameObject.scene.path;
+            if (string.IsNullOrWhiteSpace(sceneKey))
+            {
+                sceneKey = gameObject.scene.name;
+            }
+
+            return $"{sceneKey}/{hierarchyPath}#{GetInstanceID()}";
         }
 
         private void ApplyState()

@@ -19,6 +19,12 @@ namespace TimeEcho.Editor
         private const string TuningPath = Generated + "/GameTuning.asset";
         private const string PixelPath = Generated + "/Pixel.png";
         private const string LineMaterialPath = Generated + "/AimLine.mat";
+        private const string BasePrefabs = Generated + "/Prefabs/Base";
+        private const string GameplayCorePrefabPath = BasePrefabs + "/Gameplay Core.prefab";
+        private const string PlatformPrefabPath = BasePrefabs + "/Platform.prefab";
+        private const string TimeShardPrefabPath = BasePrefabs + "/Time Shard.prefab";
+        private const string SpikeTrapPrefabPath = BasePrefabs + "/Spike Trap.prefab";
+        private const string RewindGuidancePrefabPath = BasePrefabs + "/Rewind Guidance Trigger.prefab";
 
         private static readonly string[] CueNames =
         {
@@ -34,7 +40,7 @@ namespace TimeEcho.Editor
             if (AssetDatabase.LoadAssetAtPath<SceneAsset>(ScenePath) != null &&
                 !EditorUtility.DisplayDialog(
                     "Replace demo scene?",
-                    "TimeEchoDemo.unity already exists. This replaces only that generated demo scene; your other scenes and assets stay untouched.",
+                    "TimeEchoDemo.unity already exists. This replaces the generated demo and refreshes the package-owned base prefabs. Your other scenes and prefab variants stay untouched.",
                     "Replace Demo",
                     "Cancel"))
             {
@@ -43,16 +49,153 @@ namespace TimeEcho.Editor
 
             EnsureFolder(Generated);
             EnsureFolder(Generated + "/AudioCues");
+            EnsureFolder(BasePrefabs);
             EnsureFolder(Demo);
 
             GameTuning tuning = GetOrCreateTuning();
             Dictionary<string, AudioCue> cues = GetOrCreateCues();
             Sprite pixel = GetOrCreatePixelSprite();
             Material lineMaterial = GetOrCreateLineMaterial();
+            PrefabAssets prefabs = CreateOrUpdateSharedPrefabs(tuning, cues, pixel, lineMaterial);
 
             Scene scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
+            GameObject gameplayCore = PrefabUtility.InstantiatePrefab(prefabs.GameplayCore, scene) as GameObject;
+            Transform playerTransform = gameplayCore != null ? gameplayCore.transform.Find("Player") : null;
+            if (gameplayCore == null || playerTransform == null)
+            {
+                throw new InvalidOperationException("Could not instantiate the validated Gameplay Core prefab.");
+            }
+
+            GameObject player = playerTransform.gameObject;
+
+            CreateWorld(prefabs);
+
+            EditorSceneManager.SaveScene(scene, ScenePath);
+            AddSceneToBuildSettings(ScenePath);
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+            Selection.activeGameObject = player;
+
+            EditorUtility.DisplayDialog(
+                "Time Echo foundation created",
+                "Open Assets/TimeEchoGame/Demo/TimeEchoDemo.unity and press Play. Shared base prefabs are in Generated/Prefabs/Base. Create variants for your game instead of editing those bases directly.",
+                "Open Demo");
+        }
+
+        [MenuItem("Tools/Time Echo/Prefabs/Create or Update Shared Prefabs")]
+        public static void UpdateSharedPrefabs()
+        {
+            if (EditorApplication.isPlayingOrWillChangePlaymode)
+            {
+                EditorUtility.DisplayDialog("Exit Play Mode", "Shared prefabs can only be updated outside Play Mode.", "OK");
+                return;
+            }
+
+            bool alreadyExists = AssetDatabase.LoadAssetAtPath<GameObject>(GameplayCorePrefabPath) != null;
+            if (alreadyExists && !EditorUtility.DisplayDialog(
+                    "Update shared base prefabs?",
+                    "This refreshes package-owned base prefabs. Prefab instances and variants keep their overrides, while non-overridden properties receive the update.",
+                    "Update Bases",
+                    "Cancel"))
+            {
+                return;
+            }
+
+            EnsureFolder(Generated);
+            EnsureFolder(Generated + "/AudioCues");
+            EnsureFolder(BasePrefabs);
+
+            GameTuning tuning = GetOrCreateTuning();
+            Dictionary<string, AudioCue> cues = GetOrCreateCues();
+            Sprite pixel = GetOrCreatePixelSprite();
+            Material lineMaterial = GetOrCreateLineMaterial();
+            PrefabAssets prefabs = CreateOrUpdateSharedPrefabs(tuning, cues, pixel, lineMaterial);
+
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+            Selection.activeObject = prefabs.GameplayCore;
+            EditorUtility.DisplayDialog(
+                "Shared prefabs updated",
+                "The base prefabs are ready in Assets/TimeEchoGame/Generated/Prefabs/Base.",
+                "OK");
+        }
+
+        private static PrefabAssets CreateOrUpdateSharedPrefabs(
+            GameTuning tuning,
+            Dictionary<string, AudioCue> cues,
+            Sprite pixel,
+            Material lineMaterial)
+        {
+            PrefabAssets prefabs = new PrefabAssets
+            {
+                GameplayCore = SaveBasePrefab(BuildGameplayCore(tuning, cues, pixel, lineMaterial), GameplayCorePrefabPath),
+                Platform = SaveBasePrefab(BuildPlatform(pixel), PlatformPrefabPath),
+                TimeShard = SaveBasePrefab(BuildTimeShard(pixel, cues), TimeShardPrefabPath),
+                SpikeTrap = SaveBasePrefab(BuildSpikeTrap(pixel, cues), SpikeTrapPrefabPath),
+                RewindGuidance = SaveBasePrefab(BuildRewindGuidance(), RewindGuidancePrefabPath)
+            };
+
+            ValidateSharedPrefabs(prefabs);
+            return prefabs;
+        }
+
+        private static void ValidateSharedPrefabs(PrefabAssets prefabs)
+        {
+            PlayerMotor2D motor = prefabs.GameplayCore != null
+                ? prefabs.GameplayCore.GetComponentInChildren<PlayerMotor2D>(true)
+                : null;
+            AimedActionController aimedAction = prefabs.GameplayCore != null
+                ? prefabs.GameplayCore.GetComponentInChildren<AimedActionController>(true)
+                : null;
+            GameHud hud = prefabs.GameplayCore != null
+                ? prefabs.GameplayCore.GetComponentInChildren<GameHud>(true)
+                : null;
+
+            if (prefabs.GameplayCore == null ||
+                prefabs.GameplayCore.GetComponentInChildren<GameInput>(true) == null ||
+                motor == null ||
+                prefabs.GameplayCore.GetComponentInChildren<TimeDirector>(true) == null ||
+                hud == null ||
+                prefabs.GameplayCore.GetComponentInChildren<StaticLevelCamera2D>(true) == null)
+            {
+                throw new InvalidOperationException("Gameplay Core prefab validation failed.");
+            }
+
+            if (!HasObjectReference(motor, "tuning") ||
+                !HasObjectReference(motor, "input") ||
+                !HasObjectReference(motor, "timeDirector") ||
+                !HasObjectReference(motor, "groundProbe") ||
+                aimedAction == null ||
+                !HasObjectReference(aimedAction, "motor") ||
+                !HasObjectReference(aimedAction, "arrow") ||
+                !HasObjectReference(aimedAction, "worldCamera") ||
+                !HasObjectReference(hud, "vitality") ||
+                !HasObjectReference(hud, "timeDirector") ||
+                !HasObjectReference(hud, "vitalityFill") ||
+                !HasObjectReference(hud, "timerText"))
+            {
+                throw new InvalidOperationException("Gameplay Core prefab contains a missing internal reference.");
+            }
+
+            if (prefabs.Platform == null || prefabs.Platform.GetComponent<BoxCollider2D>() == null ||
+                prefabs.TimeShard == null || prefabs.TimeShard.GetComponent<Collectible>() == null ||
+                prefabs.SpikeTrap == null || prefabs.SpikeTrap.GetComponent<DamageDealer2D>() == null ||
+                prefabs.RewindGuidance == null || prefabs.RewindGuidance.GetComponent<GuidanceTrigger2D>() == null)
+            {
+                throw new InvalidOperationException("One or more level-piece prefabs failed validation.");
+            }
+        }
+
+        private static GameObject BuildGameplayCore(
+            GameTuning tuning,
+            Dictionary<string, AudioCue> cues,
+            Sprite pixel,
+            Material lineMaterial)
+        {
+            GameObject root = new GameObject("Gameplay Core");
 
             GameObject systems = new GameObject("Game Systems");
+            systems.transform.SetParent(root.transform, false);
             GameInput gameInput = systems.AddComponent<GameInput>();
             GameSession session = systems.AddComponent<GameSession>();
             systems.AddComponent<AudioService>();
@@ -62,7 +205,8 @@ namespace TimeEcho.Editor
             AudioStateController audioState = systems.AddComponent<AudioStateController>();
 
             GameObject player = CreateSpriteObject("Player", pixel, new Color(0.96f, 0.78f, 0.24f));
-            player.transform.position = new Vector3(0f, 0.05f, 0f);
+            player.transform.SetParent(root.transform, false);
+            player.transform.localPosition = new Vector3(0f, 0.05f, 0f);
             player.transform.localScale = new Vector3(0.8f, 1.05f, 1f);
             Rigidbody2D playerBody = player.AddComponent<Rigidbody2D>();
             playerBody.gravityScale = tuning.movement.style == MovementStyle.Platformer ? tuning.movement.gravityScale : 0f;
@@ -95,6 +239,7 @@ namespace TimeEcho.Editor
             arrow.Configure(tuning, shaft, head);
 
             GameObject cameraObject = new GameObject("Main Camera");
+            cameraObject.transform.SetParent(root.transform, false);
             cameraObject.tag = "MainCamera";
             Camera worldCamera = cameraObject.AddComponent<Camera>();
             worldCamera.orthographic = true;
@@ -115,9 +260,8 @@ namespace TimeEcho.Editor
             audioState.Configure(timeDirector);
             AssignPlayerAudioCues(playerAudio, cues);
 
-            CreateWorld(pixel, cues);
-
             Canvas canvas = CreateCanvas();
+            canvas.transform.SetParent(root.transform, false);
             HudObjects hud = CreateHud(canvas.transform, tuning);
             GameHud gameHud = canvas.gameObject.AddComponent<GameHud>();
             gameHud.Configure(
@@ -137,70 +281,124 @@ namespace TimeEcho.Editor
             GuidanceDirector guidance = hud.GuidanceGroup.gameObject.AddComponent<GuidanceDirector>();
             guidance.Configure(hud.GuidanceGroup, hud.GuidanceText);
             presentation.Configure(hud.LetterboxGroup);
-
-            EditorSceneManager.SaveScene(scene, ScenePath);
-            AddSceneToBuildSettings(ScenePath);
-            AssetDatabase.SaveAssets();
-            AssetDatabase.Refresh();
-            Selection.activeGameObject = player;
-
-            EditorUtility.DisplayDialog(
-                "Time Echo foundation created",
-                "Open Assets/TimeEchoGame/Demo/TimeEchoDemo.unity and press Play. Adjust every mechanic in Generated/GameTuning.asset. Add clips to the named AudioCue assets when audio is ready.",
-                "Open Demo");
+            return root;
         }
 
-        private static void CreateWorld(Sprite pixel, Dictionary<string, AudioCue> cues)
+        private static GameObject BuildPlatform(Sprite pixel)
         {
-            GameObject world = new GameObject("World");
+            GameObject platform = CreateSpriteObject("Platform", pixel, new Color(0.18f, 0.28f, 0.3f));
+            platform.transform.localScale = new Vector3(4f, 0.45f, 1f);
+            platform.AddComponent<BoxCollider2D>();
+            return platform;
+        }
 
-            GameObject ground = CreateSpriteObject("Ground", pixel, new Color(0.15f, 0.21f, 0.25f));
-            ground.transform.SetParent(world.transform);
-            ground.transform.position = new Vector3(0f, -1f, 0f);
-            ground.transform.localScale = new Vector3(24f, 1f, 1f);
-            ground.AddComponent<BoxCollider2D>();
-
-            CreatePlatform(world.transform, pixel, new Vector2(-5f, 1f), new Vector2(4f, 0.45f));
-            CreatePlatform(world.transform, pixel, new Vector2(4.5f, 2f), new Vector2(4f, 0.45f));
-
+        private static GameObject BuildTimeShard(Sprite pixel, Dictionary<string, AudioCue> cues)
+        {
             GameObject collectible = CreateSpriteObject("Time Shard", pixel, new Color(0.35f, 0.95f, 1f));
-            collectible.transform.SetParent(world.transform);
-            collectible.transform.position = new Vector3(3.5f, 0.25f, 0f);
             collectible.transform.localScale = new Vector3(0.35f, 0.55f, 1f);
             CircleCollider2D collectibleTrigger = collectible.AddComponent<CircleCollider2D>();
             collectibleTrigger.isTrigger = true;
             Collectible collectibleComponent = collectible.AddComponent<Collectible>();
-            collectibleComponent.Configure("demo-time-shard-01", collectible, collectibleTrigger);
+            collectibleComponent.Configure(string.Empty, collectible, collectibleTrigger);
             SetObjectReference(collectibleComponent, "pickupCue", cues["Pickup"]);
             SetString(collectibleComponent, "pickupGuidance", "Time shards remain part of the rewindable world.");
+            return collectible;
+        }
 
+        private static GameObject BuildSpikeTrap(Sprite pixel, Dictionary<string, AudioCue> cues)
+        {
             GameObject spike = CreateSpriteObject("Spike Trap", pixel, new Color(0.95f, 0.25f, 0.32f));
-            spike.transform.SetParent(world.transform);
-            spike.transform.position = new Vector3(7f, -0.25f, 0f);
             spike.transform.localScale = new Vector3(1.2f, 0.5f, 1f);
             BoxCollider2D spikeCollider = spike.AddComponent<BoxCollider2D>();
             spikeCollider.isTrigger = true;
             DamageDealer2D damage = spike.AddComponent<DamageDealer2D>();
             SetFloat(damage, "damage", 25f);
             SetObjectReference(damage, "impactCue", cues["Spike"]);
+            return spike;
+        }
 
+        private static GameObject BuildRewindGuidance()
+        {
             GameObject guidance = new GameObject("Rewind Guidance Trigger");
-            guidance.transform.SetParent(world.transform);
-            guidance.transform.position = new Vector3(1.5f, 0.5f, 0f);
             BoxCollider2D guidanceCollider = guidance.AddComponent<BoxCollider2D>();
             guidanceCollider.size = new Vector2(2f, 3f);
             guidanceCollider.isTrigger = true;
             GuidanceTrigger2D guidanceTrigger = guidance.AddComponent<GuidanceTrigger2D>();
             SetString(guidanceTrigger, "message", "RMB rewinds and spends life. Hold LMB + RMB to aim while time is frozen.");
+            return guidance;
         }
 
-        private static void CreatePlatform(Transform parent, Sprite pixel, Vector2 position, Vector2 scale)
+        private static GameObject SaveBasePrefab(GameObject source, string path)
         {
-            GameObject platform = CreateSpriteObject("Platform", pixel, new Color(0.18f, 0.28f, 0.3f));
-            platform.transform.SetParent(parent);
-            platform.transform.position = position;
-            platform.transform.localScale = scale;
-            platform.AddComponent<BoxCollider2D>();
+            try
+            {
+                GameObject saved = PrefabUtility.SaveAsPrefabAsset(source, path);
+                if (saved == null)
+                {
+                    throw new InvalidOperationException($"Could not save the shared prefab at {path}.");
+                }
+
+                return saved;
+            }
+            finally
+            {
+                UnityEngine.Object.DestroyImmediate(source);
+            }
+        }
+
+        private static void CreateWorld(PrefabAssets prefabs)
+        {
+            GameObject world = new GameObject("World");
+
+            PlacePrefab(prefabs.Platform, world.transform, "Ground", new Vector2(0f, -1f), new Vector2(24f, 1f));
+            PlacePrefab(prefabs.Platform, world.transform, "Platform", new Vector2(-5f, 1f), new Vector2(4f, 0.45f));
+            PlacePrefab(prefabs.Platform, world.transform, "Platform", new Vector2(4.5f, 2f), new Vector2(4f, 0.45f));
+
+            GameObject collectible = PlacePrefab(
+                prefabs.TimeShard,
+                world.transform,
+                "Time Shard",
+                new Vector2(3.5f, 0.25f),
+                new Vector2(0.35f, 0.55f));
+            Collectible collectibleComponent = collectible.GetComponent<Collectible>();
+            SetString(collectibleComponent, "stableId", "demo-time-shard-01");
+            PrefabUtility.RecordPrefabInstancePropertyModifications(collectibleComponent);
+
+            PlacePrefab(
+                prefabs.SpikeTrap,
+                world.transform,
+                "Spike Trap",
+                new Vector2(7f, -0.25f),
+                new Vector2(1.2f, 0.5f));
+
+            PlacePrefab(
+                prefabs.RewindGuidance,
+                world.transform,
+                "Rewind Guidance Trigger",
+                new Vector2(1.5f, 0.5f),
+                Vector2.one);
+        }
+
+        private static GameObject PlacePrefab(
+            GameObject prefab,
+            Transform parent,
+            string instanceName,
+            Vector2 position,
+            Vector2 scale)
+        {
+            GameObject instance = PrefabUtility.InstantiatePrefab(prefab, parent) as GameObject;
+            if (instance == null)
+            {
+                throw new InvalidOperationException($"Could not instantiate shared prefab {prefab.name}.");
+            }
+
+            instance.name = instanceName;
+            instance.transform.localPosition = new Vector3(position.x, position.y, 0f);
+            instance.transform.localRotation = Quaternion.identity;
+            instance.transform.localScale = new Vector3(scale.x, scale.y, 1f);
+            PrefabUtility.RecordPrefabInstancePropertyModifications(instance);
+            PrefabUtility.RecordPrefabInstancePropertyModifications(instance.transform);
+            return instance;
         }
 
         private static Canvas CreateCanvas()
@@ -523,6 +721,17 @@ namespace TimeEcho.Editor
             serialized.ApplyModifiedPropertiesWithoutUndo();
         }
 
+        private static bool HasObjectReference(UnityEngine.Object target, string propertyName)
+        {
+            if (target == null)
+            {
+                return false;
+            }
+
+            SerializedProperty property = new SerializedObject(target).FindProperty(propertyName);
+            return property != null && property.objectReferenceValue != null;
+        }
+
         private static void SetString(UnityEngine.Object target, string propertyName, string value)
         {
             SerializedObject serialized = new SerializedObject(target);
@@ -549,6 +758,15 @@ namespace TimeEcho.Editor
             public CanvasGroup GuidanceGroup;
             public Text GuidanceText;
             public CanvasGroup LetterboxGroup;
+        }
+
+        private sealed class PrefabAssets
+        {
+            public GameObject GameplayCore;
+            public GameObject Platform;
+            public GameObject TimeShard;
+            public GameObject SpikeTrap;
+            public GameObject RewindGuidance;
         }
     }
 }

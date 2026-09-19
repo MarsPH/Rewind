@@ -3,6 +3,7 @@ using UnityEngine;
 namespace TimeEcho
 {
     [System.Obsolete("Use StaticLevelCamera2D. This compatibility component now frames a fixed level view and does not follow its target.")]
+    [ExecuteAlways]
     [DisallowMultipleComponent]
     [RequireComponent(typeof(Camera))]
     public sealed class FollowCamera2D : MonoBehaviour
@@ -15,14 +16,24 @@ namespace TimeEcho
 
         private Camera controlledCamera;
 
-        private void Awake()
+        private void OnEnable()
         {
             controlledCamera = GetComponent<Camera>();
             FrameWholeLevel();
         }
 
+        private void LateUpdate()
+        {
+            ApplyFrame(false);
+        }
+
         [ContextMenu("Frame Whole Level")]
         public void FrameWholeLevel()
+        {
+            ApplyFrame(true);
+        }
+
+        private void ApplyFrame(bool reportConfigurationErrors)
         {
             if (controlledCamera == null)
             {
@@ -31,21 +42,43 @@ namespace TimeEcho
 
             if (controlledCamera == null || !controlledCamera.orthographic)
             {
-                Debug.LogError("The static level camera requires an orthographic Camera.", this);
+                if (reportConfigurationErrors)
+                {
+                    Debug.LogError("The static level camera requires an orthographic Camera.", this);
+                }
+
                 return;
             }
 
             float aspect = Mathf.Max(0.01f, controlledCamera.aspect);
             float verticalHalfSize = Mathf.Max(levelSize.y * 0.5f, levelSize.x * 0.5f / aspect);
-            controlledCamera.orthographicSize = verticalHalfSize + padding;
-            transform.SetPositionAndRotation(
-                new Vector3(levelCenter.x, levelCenter.y, cameraDepth),
-                Quaternion.identity);
+            float desiredSize = verticalHalfSize + padding;
+            Vector3 desiredPosition = new Vector3(levelCenter.x, levelCenter.y, cameraDepth);
+
+            if (!Mathf.Approximately(controlledCamera.orthographicSize, desiredSize))
+            {
+                controlledCamera.orthographicSize = desiredSize;
+            }
+
+            if ((transform.position - desiredPosition).sqrMagnitude > 0.000001f ||
+                Quaternion.Angle(transform.rotation, Quaternion.identity) > 0.001f)
+            {
+                transform.SetPositionAndRotation(desiredPosition, Quaternion.identity);
+            }
         }
 
         public void Configure(Transform followTarget)
         {
             target = followTarget;
+            FrameWholeLevel();
+        }
+
+        private void OnValidate()
+        {
+            levelSize.x = Mathf.Max(0.1f, levelSize.x);
+            levelSize.y = Mathf.Max(0.1f, levelSize.y);
+            padding = Mathf.Max(0f, padding);
+            ApplyFrame(false);
         }
 
         private void OnDrawGizmosSelected()
