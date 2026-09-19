@@ -25,7 +25,7 @@ namespace TimeEcho
             transform.position = position;
             transform.right = direction;
             gameObject.SetActive(true);
-            body.linearVelocity = direction * speed;
+            body.velocity = direction * speed;
 
             if (lifetimeRoutine != null) StopCoroutine(lifetimeRoutine);
             lifetimeRoutine = StartCoroutine(DisableAfterLifetime());
@@ -39,7 +39,7 @@ namespace TimeEcho
             }
 
             IDamageable damageable = FindDamageable(other);
-            damageable?.ApplyDamage(damage, transform.position, body.linearVelocity.normalized);
+            damageable?.ApplyDamage(damage, transform.position, body.velocity.normalized);
             AudioService.Instance?.Play(impactCue, transform.position);
             Deactivate();
         }
@@ -58,7 +58,7 @@ namespace TimeEcho
                 lifetimeRoutine = null;
             }
 
-            body.linearVelocity = Vector2.zero;
+            body.velocity = Vector2.zero;
             gameObject.SetActive(false);
         }
 
