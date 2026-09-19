@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: RewindLoop
   m_EditorClassIdentifier: Assembly-CSharp::TimeEcho.AudioCue
   clips: []
+  audioResource: {fileID: 8300000, guid: afca8b7b022da1b4eafafc9a03eb27fe, type: 3}
   output: {fileID: 0}
   volumeRange: {x: 0.9, y: 1}
   pitchRange: {x: 0.96, y: 1.04}

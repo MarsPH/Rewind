@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: TickingLoop
   m_EditorClassIdentifier: Assembly-CSharp::TimeEcho.AudioCue
   clips: []
+  audioResource: {fileID: 8300000, guid: 903bc4523157c474383e531644268e97, type: 3}
   output: {fileID: 0}
   volumeRange: {x: 0.9, y: 1}
   pitchRange: {x: 0.96, y: 1.04}
