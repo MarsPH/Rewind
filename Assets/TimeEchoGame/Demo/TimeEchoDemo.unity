@@ -871,6 +871,30 @@ PrefabInstance:
       propertyPath: vitality
       value: 
       objectReference: {fileID: 1899312319}
+    - target: {fileID: 3823148120670961630, guid: 17230bc092b89fa4ab780e6ed0ccb817, type: 3}
+      propertyPath: boostCount
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3823148120670961630, guid: 17230bc092b89fa4ab780e6ed0ccb817, type: 3}
+      propertyPath: stasisCount
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3823148120670961630, guid: 17230bc092b89fa4ab780e6ed0ccb817, type: 3}
+      propertyPath: 'stasisIcons.Array.data[0]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3823148120670961630, guid: 17230bc092b89fa4ab780e6ed0ccb817, type: 3}
+      propertyPath: 'stasisIcons.Array.data[1]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3823148120670961630, guid: 17230bc092b89fa4ab780e6ed0ccb817, type: 3}
+      propertyPath: 'stasisIcons.Array.data[2]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3823148120670961630, guid: 17230bc092b89fa4ab780e6ed0ccb817, type: 3}
+      propertyPath: 'stasisIcons.Array.data[3]'
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 6850195040467420618, guid: 17230bc092b89fa4ab780e6ed0ccb817, type: 3}
       propertyPath: m_LocalScale.x
       value: 2.2021
@@ -891,7 +915,8 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -16
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8588421749931087143, guid: 17230bc092b89fa4ab780e6ed0ccb817, type: 3}
     m_RemovedGameObjects:
     - {fileID: 8934014896177817134, guid: 17230bc092b89fa4ab780e6ed0ccb817, type: 3}
     - {fileID: 6549264740504677940, guid: 17230bc092b89fa4ab780e6ed0ccb817, type: 3}

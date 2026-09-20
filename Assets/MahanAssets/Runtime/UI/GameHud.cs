@@ -160,7 +160,7 @@ namespace TimeEcho
             if (vitalityText != null) vitalityText.text = $"ENERGY  {Mathf.CeilToInt(current)} / {Mathf.CeilToInt(maximum)}";
             if (modeText != null)
             {
-                if (current <= 0f)
+                if (vitality != null && vitality.IsDead)
                 {
                     modeText.text = "OUT OF TIME";
                 }
