@@ -77,7 +77,7 @@ MonoBehaviour:
     playbackSpeed: 1.5
     vitalityCostPerSecond: 0.5
     stasisVitalityCostPerSecond: 0
-    minimumVitalityToStart: 1
+    minimumVitalityToStart: 0
     maximumStasisSeconds: 1.35
   vitality:
     maximum: 100

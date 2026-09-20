@@ -46,6 +46,12 @@ namespace TimeEcho
 
         public bool ApplyDamage(float amount, Vector2 hitPoint, Vector2 hitDirection)
         {
+            if (TimeDirector.Instance != null &&
+                TimeDirector.Instance.Mode == TimeMode.Rewinding)
+            {
+                return false;
+            }
+            
             if (amount <= 0f || IsDead)
             {
                 return false;
