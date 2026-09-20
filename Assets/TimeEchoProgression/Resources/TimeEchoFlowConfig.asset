@@ -19,11 +19,11 @@ MonoBehaviour:
     displayName: Map 1
     nextSceneOverride: 
     intro:
-      useOverride: 0
+      useOverride: 1
       sequence:
         enabled: 1
         style: 4
-        guidanceText: 
+        guidanceText: Is someone there ..? Reveal yourself thief !!
         voiceClip: {fileID: 0}
         soundEffect: {fileID: 0}
         voiceVolume: 1
@@ -41,11 +41,11 @@ MonoBehaviour:
         glitchBursts: 7
         showLetterbox: 1
     nextLevel:
-      useOverride: 0
+      useOverride: 1
       sequence:
         enabled: 1
         style: 4
-        guidanceText: 
+        guidanceText: Who goes there... Reveal yourself thief!
         voiceClip: {fileID: 0}
         soundEffect: {fileID: 0}
         voiceVolume: 1
@@ -122,7 +122,7 @@ MonoBehaviour:
       sequence:
         enabled: 1
         style: 4
-        guidanceText: 
+        guidanceText: hello
         voiceClip: {fileID: 0}
         soundEffect: {fileID: 0}
         voiceVolume: 1
@@ -140,11 +140,11 @@ MonoBehaviour:
         glitchBursts: 7
         showLetterbox: 1
     nextLevel:
-      useOverride: 0
+      useOverride: 1
       sequence:
         enabled: 1
         style: 4
-        guidanceText: 
+        guidanceText: Back in time you go ! Keep out of my chambers
         voiceClip: {fileID: 0}
         soundEffect: {fileID: 0}
         voiceVolume: 1
@@ -184,11 +184,11 @@ MonoBehaviour:
         glitchBursts: 7
         showLetterbox: 1
     restart:
-      useOverride: 0
+      useOverride: 1
       sequence:
         enabled: 1
         style: 4
-        guidanceText: 
+        guidanceText: Bruh
         voiceClip: {fileID: 0}
         soundEffect: {fileID: 0}
         voiceVolume: 1
@@ -239,11 +239,11 @@ MonoBehaviour:
         glitchBursts: 7
         showLetterbox: 1
     nextLevel:
-      useOverride: 0
+      useOverride: 1
       sequence:
         enabled: 1
         style: 4
-        guidanceText: 
+        guidanceText: It won't be that easy, I made the hole bigger
         voiceClip: {fileID: 0}
         soundEffect: {fileID: 0}
         voiceVolume: 1
@@ -338,11 +338,11 @@ MonoBehaviour:
         glitchBursts: 7
         showLetterbox: 1
     nextLevel:
-      useOverride: 0
+      useOverride: 1
       sequence:
         enabled: 1
         style: 4
-        guidanceText: 
+        guidanceText: Fine! Try getting past this!
         voiceClip: {fileID: 0}
         soundEffect: {fileID: 0}
         voiceVolume: 1
@@ -437,11 +437,11 @@ MonoBehaviour:
         glitchBursts: 7
         showLetterbox: 1
     nextLevel:
-      useOverride: 0
+      useOverride: 1
       sequence:
         enabled: 1
         style: 4
-        guidanceText: 
+        guidanceText: Hah... everything looks the same doesn't it...
         voiceClip: {fileID: 0}
         soundEffect: {fileID: 0}
         voiceVolume: 1
@@ -536,11 +536,11 @@ MonoBehaviour:
         glitchBursts: 7
         showLetterbox: 1
     nextLevel:
-      useOverride: 0
+      useOverride: 1
       sequence:
         enabled: 1
         style: 4
-        guidanceText: 
+        guidanceText: There is nothing you can do against my spike traps!
         voiceClip: {fileID: 0}
         soundEffect: {fileID: 0}
         voiceVolume: 1
@@ -635,11 +635,11 @@ MonoBehaviour:
         glitchBursts: 7
         showLetterbox: 1
     nextLevel:
-      useOverride: 0
+      useOverride: 1
       sequence:
         enabled: 1
         style: 4
-        guidanceText: 
+        guidanceText: Ugh... I'll just reuse the boulder..
         voiceClip: {fileID: 0}
         soundEffect: {fileID: 0}
         voiceVolume: 1
@@ -734,11 +734,11 @@ MonoBehaviour:
         glitchBursts: 7
         showLetterbox: 1
     nextLevel:
-      useOverride: 0
+      useOverride: 1
       sequence:
         enabled: 1
         style: 4
-        guidanceText: 
+        guidanceText: Try using your Rewind here, fool
         voiceClip: {fileID: 0}
         soundEffect: {fileID: 0}
         voiceVolume: 1
@@ -833,11 +833,11 @@ MonoBehaviour:
         glitchBursts: 7
         showLetterbox: 1
     nextLevel:
-      useOverride: 0
+      useOverride: 1
       sequence:
         enabled: 1
         style: 4
-        guidanceText: 
+        guidanceText: I have blocked your path, enough!
         voiceClip: {fileID: 0}
         soundEffect: {fileID: 0}
         voiceVolume: 1
@@ -932,11 +932,11 @@ MonoBehaviour:
         glitchBursts: 7
         showLetterbox: 1
     nextLevel:
-      useOverride: 0
+      useOverride: 1
       sequence:
         enabled: 1
         style: 4
-        guidanceText: 
+        guidanceText: No one has ever survived this gauntlet!
         voiceClip: {fileID: 0}
         soundEffect: {fileID: 0}
         voiceVolume: 1
@@ -1031,11 +1031,11 @@ MonoBehaviour:
         glitchBursts: 7
         showLetterbox: 1
     nextLevel:
-      useOverride: 0
+      useOverride: 1
       sequence:
         enabled: 1
         style: 4
-        guidanceText: 
+        guidanceText: FIREBALL!
         voiceClip: {fileID: 0}
         soundEffect: {fileID: 0}
         voiceVolume: 1
@@ -1130,11 +1130,11 @@ MonoBehaviour:
         glitchBursts: 7
         showLetterbox: 1
     nextLevel:
-      useOverride: 0
+      useOverride: 1
       sequence:
         enabled: 1
         style: 4
-        guidanceText: 
+        guidanceText: Give me back my Ring!
         voiceClip: {fileID: 0}
         soundEffect: {fileID: 0}
         voiceVolume: 1
@@ -1229,11 +1229,13 @@ MonoBehaviour:
         glitchBursts: 7
         showLetterbox: 1
     nextLevel:
-      useOverride: 0
+      useOverride: 1
       sequence:
         enabled: 1
         style: 4
-        guidanceText: 
+        guidanceText: 'Spikes and Fireballs! DIE!
+
+'
         voiceClip: {fileID: 0}
         soundEffect: {fileID: 0}
         voiceVolume: 1
@@ -1328,11 +1330,11 @@ MonoBehaviour:
         glitchBursts: 7
         showLetterbox: 1
     nextLevel:
-      useOverride: 0
+      useOverride: 1
       sequence:
         enabled: 1
         style: 4
-        guidanceText: 
+        guidanceText: Fine... you win... come...
         voiceClip: {fileID: 0}
         soundEffect: {fileID: 0}
         voiceVolume: 1
@@ -1471,11 +1473,11 @@ MonoBehaviour:
         glitchBursts: 7
         showLetterbox: 1
     restart:
-      useOverride: 0
+      useOverride: 1
       sequence:
         enabled: 1
         style: 4
-        guidanceText: 
+        guidanceText: Heheh...
         voiceClip: {fileID: 0}
         soundEffect: {fileID: 0}
         voiceVolume: 1
@@ -1503,7 +1505,7 @@ MonoBehaviour:
   menuToGame:
     enabled: 1
     style: 3
-    guidanceText: 
+    guidanceText: Blabla
     voiceClip: {fileID: 0}
     soundEffect: {fileID: 0}
     voiceVolume: 1
