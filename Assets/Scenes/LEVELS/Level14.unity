@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 40128705}
   - component: {fileID: 40128704}
   - component: {fileID: 40128703}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Square (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1055,7 +1055,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 301900809539052383, guid: c3d2431db2ff3b34ba083e8ba38b6cfd, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1020928476104874391, guid: c3d2431db2ff3b34ba083e8ba38b6cfd, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 64
       objectReference: {fileID: 0}
     - target: {fileID: 3389752994454032596, guid: c3d2431db2ff3b34ba083e8ba38b6cfd, type: 3}
       propertyPath: m_Radius
@@ -1065,25 +1069,33 @@ PrefabInstance:
       propertyPath: m_Offset.x
       value: -0.0000026774849
       objectReference: {fileID: 0}
+    - target: {fileID: 3389752994454032596, guid: c3d2431db2ff3b34ba083e8ba38b6cfd, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
     - target: {fileID: 4015253638041872725, guid: c3d2431db2ff3b34ba083e8ba38b6cfd, type: 3}
       propertyPath: m_Name
       value: Boulder_prefab
       objectReference: {fileID: 0}
     - target: {fileID: 4335829436191213282, guid: c3d2431db2ff3b34ba083e8ba38b6cfd, type: 3}
       propertyPath: m_Radius
-      value: 4.813686
+      value: 5.7553396
       objectReference: {fileID: 0}
     - target: {fileID: 4335829436191213282, guid: c3d2431db2ff3b34ba083e8ba38b6cfd, type: 3}
       propertyPath: m_Offset.x
-      value: 0.05464568
+      value: 0.34891197
       objectReference: {fileID: 0}
     - target: {fileID: 4335829436191213282, guid: c3d2431db2ff3b34ba083e8ba38b6cfd, type: 3}
       propertyPath: m_Offset.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7339579076024658739, guid: c3d2431db2ff3b34ba083e8ba38b6cfd, type: 3}
+      propertyPath: m_GravityScale
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8229492562514385368, guid: c3d2431db2ff3b34ba083e8ba38b6cfd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 15.270781
+      value: 18.09
       objectReference: {fileID: 0}
     - target: {fileID: 8229492562514385368, guid: c3d2431db2ff3b34ba083e8ba38b6cfd, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1091,7 +1103,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8229492562514385368, guid: c3d2431db2ff3b34ba083e8ba38b6cfd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8229492562514385368, guid: c3d2431db2ff3b34ba083e8ba38b6cfd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2391,7 +2403,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PushCircleTrigger
   target: {fileID: 2044603773}
-  pushForce: 1000
+  pushForce: 10
 --- !u!61 &1669075715
 BoxCollider2D:
   m_ObjectHideFlags: 0

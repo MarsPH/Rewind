@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6750991271923632328}
   - component: {fileID: 2629007714029822941}
-  - component: {fileID: 7339579076024658739}
   - component: {fileID: 3389752994454032596}
   m_Layer: 0
   m_Name: killbox
@@ -50,33 +49,6 @@ MonoBehaviour:
   knockback: 7
   trigger: 1
   impactCue: {fileID: 0}
---- !u!50 &7339579076024658739
-Rigidbody2D:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 301900809539052383}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!58 &3389752994454032596
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -93,7 +65,7 @@ CircleCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -111,8 +83,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Radius: 0.5522191
+  m_Offset: {x: -0.0000026774849, y: 0}
+  m_Radius: 5.9080606
 --- !u!1 &4015253638041872725
 GameObject:
   m_ObjectHideFlags: 0
@@ -143,7 +115,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 15.08, y: 4.4, z: 0}
   m_LocalScale: {x: 0.26713717, y: 0.23640133, z: 2.6529}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6750991271923632328}
   m_Father: {fileID: 0}
@@ -241,8 +213,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.00000017974185, y: 0}
-  m_Radius: 0.6055271
+  m_Offset: {x: -0.0855867, y: -0.024548704}
+  m_Radius: 5.1253176
 --- !u!50 &1020928476104874391
 Rigidbody2D:
   serializedVersion: 5
@@ -265,7 +237,7 @@ Rigidbody2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
