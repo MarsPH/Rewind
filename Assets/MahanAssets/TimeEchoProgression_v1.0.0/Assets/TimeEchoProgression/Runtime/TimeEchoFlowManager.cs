@@ -35,6 +35,7 @@ namespace TimeEcho.Flow
         private Coroutine activeRoutine;
         private Coroutine passiveGuidanceRoutine;
         private Coroutine ambienceFadeRoutine;
+        private Coroutine vitalityWatchRoutine;
         private IDisposable gameplayLock;
         private TimeEcho.PlayerVitality watchedVitality;
         private GameObject generatedEventSystem;
@@ -117,6 +118,11 @@ namespace TimeEcho.Flow
 
         private void OnDestroy()
         {
+            if (vitalityWatchRoutine != null)
+            {
+                StopCoroutine(vitalityWatchRoutine);
+                vitalityWatchRoutine = null;
+            }
             CancelPassiveGuidance();
             UnwatchVitality();
             ReleaseGameplayLock();
@@ -158,6 +164,7 @@ namespace TimeEcho.Flow
             SceneManager.sceneLoaded -= OnSceneLoaded;
             SceneManager.sceneLoaded += OnSceneLoaded;
             HandleSceneReady(SceneManager.GetActiveScene(), FlowTransitionReason.Boot, true);
+            BeginVitalityWatch();
         }
 
         public void StartNewGame()
@@ -661,10 +668,7 @@ namespace TimeEcho.Flow
             deathQueued = false;
             currentLevelIndex = config != null ? config.FindLevelIndex(scene.name) : -1;
             UnwatchVitality();
-            if (config != null && config.automaticallyWatchPlayerVitality)
-            {
-                StartCoroutine(WatchVitalityNextFrame());
-            }
+            BeginVitalityWatch();
 
             if (!isChangingScene && config != null && overlay != null)
             {
@@ -681,12 +685,40 @@ namespace TimeEcho.Flow
             }
         }
 
-        private IEnumerator WatchVitalityNextFrame()
+        private void BeginVitalityWatch()
+        {
+            if (vitalityWatchRoutine != null)
+            {
+                StopCoroutine(vitalityWatchRoutine);
+                vitalityWatchRoutine = null;
+            }
+
+            if (config != null && config.automaticallyWatchPlayerVitality)
+            {
+                vitalityWatchRoutine = StartCoroutine(WatchVitalityWhenAvailable());
+            }
+        }
+
+        private IEnumerator WatchVitalityWhenAvailable()
         {
             yield return null;
-            if (config == null || !config.automaticallyWatchPlayerVitality) yield break;
-            TimeEcho.PlayerVitality vitality = FindObjectOfType<TimeEcho.PlayerVitality>();
-            WatchVitality(vitality);
+            float elapsed = 0f;
+            const float searchDuration = 3f;
+            while (elapsed < searchDuration && config != null && config.automaticallyWatchPlayerVitality)
+            {
+                TimeEcho.PlayerVitality vitality = FindObjectOfType<TimeEcho.PlayerVitality>();
+                if (vitality != null)
+                {
+                    WatchVitality(vitality);
+                    vitalityWatchRoutine = null;
+                    yield break;
+                }
+
+                elapsed += Time.unscaledDeltaTime;
+                yield return null;
+            }
+
+            vitalityWatchRoutine = null;
         }
 
         public void WatchVitality(TimeEcho.PlayerVitality vitality)
