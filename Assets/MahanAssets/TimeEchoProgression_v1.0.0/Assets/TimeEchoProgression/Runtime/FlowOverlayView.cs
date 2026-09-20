@@ -29,8 +29,14 @@ namespace TimeEcho.Flow
         private CanvasGroup winGroup;
         private Text winTitle;
         private Text winSubtitle;
+        private CanvasGroup openingGroup;
+        private Image openingBackground;
+        private Image openingImage;
+        private Text openingText;
+        private Text openingSkipHint;
         private AudioSource voiceSource;
         private AudioSource effectSource;
+        private AudioSource openingMusicSource;
         private Font runtimeFont;
         private int activeGlitchBars = GlitchBarCount;
 
@@ -63,6 +69,9 @@ namespace TimeEcho.Flow
             effectSource = gameObject.AddComponent<AudioSource>();
             effectSource.playOnAwake = false;
             effectSource.ignoreListenerPause = true;
+            openingMusicSource = gameObject.AddComponent<AudioSource>();
+            openingMusicSource.playOnAwake = false;
+            openingMusicSource.ignoreListenerPause = true;
 
             cover = CreateImage("Cover", transform, Color.black, StretchAll());
             cover.raycastTarget = false;
@@ -94,6 +103,7 @@ namespace TimeEcho.Flow
 
             BuildMenu();
             BuildWinScreen();
+            BuildOpeningScreen();
             SetVisualAlpha(0f, Color.black, false);
         }
 
@@ -127,6 +137,124 @@ namespace TimeEcho.Flow
             replay.onClick.AddListener(() => TimeEchoFlowManager.Instance?.StartNewGame());
             menu.onClick.AddListener(() => TimeEchoFlowManager.Instance?.ReturnToMenu());
             SetGroup(winGroup, false, true);
+        }
+
+        private void BuildOpeningScreen()
+        {
+            openingGroup = CreateGroup("Opening Cutscene", transform, StretchAll());
+            openingBackground = CreateImage("Background", openingGroup.transform, Color.black, StretchAll());
+            openingImage = CreateImage("Image", openingGroup.transform, Color.white, Anchor(0.08f, 0.14f, 0.92f, 0.92f));
+            openingImage.preserveAspect = true;
+            openingImage.raycastTarget = false;
+            openingText = CreateText("Text", openingGroup.transform, string.Empty, 38, TextAnchor.LowerCenter, Anchor(0.1f, 0.05f, 0.9f, 0.25f));
+            openingText.fontStyle = FontStyle.Bold;
+            openingSkipHint = CreateText("Skip Hint", openingGroup.transform, string.Empty, 20, TextAnchor.LowerRight, Anchor(0.68f, 0.02f, 0.98f, 0.08f));
+            openingSkipHint.color = new Color(1f, 1f, 1f, 0.72f);
+            SetGroup(openingGroup, false, false);
+        }
+
+        public IEnumerator PlayOpeningCutscene(OpeningCutsceneAsset cutscene)
+        {
+            if (cutscene == null || !cutscene.CanPlay) yield break;
+
+            HideScreens();
+            EndSequence();
+            openingGroup.gameObject.SetActive(true);
+            openingGroup.alpha = 0f;
+            openingGroup.blocksRaycasts = true;
+            rootGroup.blocksRaycasts = true;
+            openingSkipHint.text = cutscene.allowSkip ? cutscene.skipHint : string.Empty;
+            openingSkipHint.gameObject.SetActive(cutscene.allowSkip);
+
+            if (cutscene.music != null)
+            {
+                openingMusicSource.clip = cutscene.music;
+                openingMusicSource.volume = cutscene.musicVolume;
+                openingMusicSource.loop = cutscene.loopMusic;
+                openingMusicSource.Play();
+            }
+
+            bool skipRequested = false;
+            for (int i = 0; i < cutscene.slides.Count && !skipRequested; i++)
+            {
+                OpeningCutsceneSlide slide = cutscene.slides[i];
+                if (slide == null) continue;
+
+                openingBackground.color = slide.backgroundColor;
+                openingImage.sprite = slide.image;
+                openingImage.preserveAspect = slide.preserveImageAspect;
+                openingImage.gameObject.SetActive(slide.image != null);
+                openingText.text = slide.text ?? string.Empty;
+                openingText.color = slide.textColor;
+                openingText.gameObject.SetActive(!string.IsNullOrWhiteSpace(slide.text));
+
+                voiceSource.Stop();
+                if (slide.voiceClip != null)
+                {
+                    voiceSource.clip = slide.voiceClip;
+                    voiceSource.volume = 1f;
+                    voiceSource.Play();
+                }
+
+                yield return AnimateOpeningAlpha(0f, 1f, cutscene.fadeInSeconds, cutscene, value => skipRequested = value);
+                if (skipRequested) break;
+
+                float elapsed = 0f;
+                float duration = slide.RequiredDuration(cutscene.waitForVoiceToFinish);
+                while (elapsed < duration)
+                {
+                    if (cutscene.allowSkip && WasKeyPressed(cutscene.skipKey))
+                    {
+                        skipRequested = true;
+                        break;
+                    }
+                    elapsed += Time.unscaledDeltaTime;
+                    yield return null;
+                }
+
+                if (!skipRequested)
+                {
+                    yield return AnimateOpeningAlpha(1f, 0f, cutscene.fadeOutSeconds, cutscene, value => skipRequested = value);
+                }
+            }
+
+            StopOpeningCutscene();
+        }
+
+        public void StopOpeningCutscene()
+        {
+            openingMusicSource.Stop();
+            voiceSource.Stop();
+            if (openingGroup != null)
+            {
+                openingGroup.alpha = 0f;
+                openingGroup.blocksRaycasts = false;
+                openingGroup.gameObject.SetActive(false);
+            }
+            rootGroup.blocksRaycasts = cover.gameObject.activeSelf || menuGroup.interactable || winGroup.interactable;
+        }
+
+        private IEnumerator AnimateOpeningAlpha(float from, float to, float duration, OpeningCutsceneAsset cutscene, Action<bool> setSkipped)
+        {
+            if (duration <= 0f)
+            {
+                openingGroup.alpha = to;
+                yield break;
+            }
+
+            float elapsed = 0f;
+            while (elapsed < duration)
+            {
+                if (cutscene.allowSkip && WasKeyPressed(cutscene.skipKey))
+                {
+                    setSkipped(true);
+                    yield break;
+                }
+                elapsed += Time.unscaledDeltaTime;
+                openingGroup.alpha = Mathf.Lerp(from, to, Mathf.Clamp01(elapsed / duration));
+                yield return null;
+            }
+            openingGroup.alpha = to;
         }
 
         public void ConfigureMenu(TimeEchoFlowConfig config, bool hasContinue)
@@ -169,42 +297,68 @@ namespace TimeEcho.Flow
             rootGroup.blocksRaycasts = cover.gameObject.activeSelf;
         }
 
-        public void BeginSequence(FlowSequence sequence)
+        public void BeginSequence(FlowSequence sequence, bool includeGuidance = true)
         {
             if (sequence == null) return;
             activeGlitchBars = Mathf.Clamp(sequence.glitchBursts, 0, GlitchBarCount);
-            subtitle.text = sequence.guidanceText ?? string.Empty;
-            SetGroup(subtitleGroup, !string.IsNullOrWhiteSpace(sequence.guidanceText), false);
-            skipHint.text = sequence.allowSkip ? "Press " + sequence.skipKey + " to skip" : string.Empty;
-            skipHint.gameObject.SetActive(sequence.allowSkip);
             SetGroup(letterboxGroup, sequence.showLetterbox && sequence.style == FlowSequenceStyle.Cutscene, false);
 
-            voiceSource.Stop();
             effectSource.Stop();
-            if (sequence.voiceClip != null)
-            {
-                voiceSource.clip = sequence.voiceClip;
-                voiceSource.volume = sequence.voiceVolume;
-                voiceSource.Play();
-            }
             if (sequence.soundEffect != null)
             {
                 effectSource.clip = sequence.soundEffect;
                 effectSource.volume = sequence.effectVolume;
                 effectSource.Play();
             }
+
+            if (includeGuidance)
+            {
+                BeginGuidance(sequence);
+            }
+            else
+            {
+                EndGuidance();
+            }
         }
 
-        public void EndSequence()
+        public void BeginGuidance(FlowSequence sequence)
+        {
+            if (sequence == null) return;
+            subtitle.text = sequence.guidanceText ?? string.Empty;
+            SetGroup(subtitleGroup, !string.IsNullOrWhiteSpace(sequence.guidanceText), false);
+            skipHint.text = sequence.allowSkip ? "Press " + sequence.skipKey + " to skip" : string.Empty;
+            skipHint.gameObject.SetActive(sequence.allowSkip);
+
+            voiceSource.Stop();
+            if (sequence.voiceClip != null)
+            {
+                voiceSource.clip = sequence.voiceClip;
+                voiceSource.volume = sequence.voiceVolume;
+                voiceSource.Play();
+            }
+        }
+
+        public void EndGuidance()
         {
             voiceSource.Stop();
-            effectSource.Stop();
             SetGroup(subtitleGroup, false, false);
+            skipHint.gameObject.SetActive(false);
+        }
+
+        public void EndTransitionVisual()
+        {
+            effectSource.Stop();
             SetGroup(letterboxGroup, false, false);
             skipHint.gameObject.SetActive(false);
             glitchRoot.gameObject.SetActive(false);
             cover.gameObject.SetActive(false);
             rootGroup.blocksRaycasts = menuGroup.interactable || winGroup.interactable;
+        }
+
+        public void EndSequence()
+        {
+            EndGuidance();
+            EndTransitionVisual();
         }
 
         public IEnumerator AnimateToCover(FlowSequence sequence)
@@ -220,13 +374,30 @@ namespace TimeEcho.Flow
             float duration = sequence.RequiredHold;
             while (elapsed < duration)
             {
-                if (sequence.allowSkip && WasSkipPressed(sequence.skipKey))
+                if (sequence.allowSkip && WasKeyPressed(sequence.skipKey))
                 {
                     break;
                 }
 
                 elapsed += Time.unscaledDeltaTime;
                 UpdateGlitch(sequence, TargetCoverAlpha(sequence));
+                yield return null;
+            }
+        }
+
+        public IEnumerator HoldGuidance(FlowSequence sequence)
+        {
+            if (sequence == null) yield break;
+            float elapsed = 0f;
+            float duration = sequence.RequiredHold;
+            while (elapsed < duration)
+            {
+                if (sequence.allowSkip && WasKeyPressed(sequence.skipKey))
+                {
+                    break;
+                }
+
+                elapsed += Time.unscaledDeltaTime;
                 yield return null;
             }
         }
@@ -265,7 +436,7 @@ namespace TimeEcho.Flow
             float elapsed = 0f;
             while (elapsed < duration)
             {
-                if (sequence != null && sequence.allowSkip && WasSkipPressed(sequence.skipKey))
+                if (sequence != null && sequence.allowSkip && WasKeyPressed(sequence.skipKey))
                 {
                     break;
                 }
@@ -338,14 +509,19 @@ namespace TimeEcho.Flow
             }
         }
 
-        private static bool WasSkipPressed(KeyCode legacyKey)
+        internal static bool WasKeyPressed(KeyCode legacyKey)
         {
 #if ENABLE_INPUT_SYSTEM
             Keyboard keyboard = Keyboard.current;
             if (keyboard == null) return false;
-            if (legacyKey == KeyCode.Escape) return keyboard.escapeKey.wasPressedThisFrame;
-            if (legacyKey == KeyCode.Return || legacyKey == KeyCode.KeypadEnter) return keyboard.enterKey.wasPressedThisFrame;
-            return keyboard.spaceKey.wasPressedThisFrame;
+            string keyName = legacyKey == KeyCode.Return || legacyKey == KeyCode.KeypadEnter
+                ? "Enter"
+                : legacyKey.ToString();
+            if (Enum.TryParse(keyName, true, out Key inputKey) && inputKey != Key.None)
+            {
+                return keyboard[inputKey].wasPressedThisFrame;
+            }
+            return false;
 #else
             return Input.GetKeyDown(legacyKey);
 #endif

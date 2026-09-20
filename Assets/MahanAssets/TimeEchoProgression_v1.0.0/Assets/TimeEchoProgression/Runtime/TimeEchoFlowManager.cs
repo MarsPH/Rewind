@@ -33,12 +33,19 @@ namespace TimeEcho.Flow
         private FlowOverlayView overlay;
         private FlowSaveData save;
         private Coroutine activeRoutine;
+        private Coroutine passiveGuidanceRoutine;
+        private Coroutine ambienceFadeRoutine;
         private IDisposable gameplayLock;
         private TimeEcho.PlayerVitality watchedVitality;
         private GameObject generatedEventSystem;
         private bool isChangingScene;
         private bool deathQueued;
+        private bool returnToMenuQueued;
+        private bool primaryAmbienceActive = true;
         private int currentLevelIndex = -1;
+        private AudioSource globalSoundSource;
+        private AudioSource primaryAmbienceSource;
+        private AudioSource secondaryAmbienceSource;
 
         public TimeEchoFlowConfig Config => config;
         public FlowState State { get; private set; } = FlowState.Booting;
@@ -99,8 +106,18 @@ namespace TimeEcho.Flow
             }
         }
 
+        private void Update()
+        {
+            if (config != null && config.enableReturnToMenuHotkey &&
+                FlowOverlayView.WasKeyPressed(config.returnToMenuKey))
+            {
+                RequestReturnToMenu();
+            }
+        }
+
         private void OnDestroy()
         {
+            CancelPassiveGuidance();
             UnwatchVitality();
             ReleaseGameplayLock();
             SceneManager.sceneLoaded -= OnSceneLoaded;
@@ -135,16 +152,12 @@ namespace TimeEcho.Flow
             }
 
             save = FlowSaveStore.Load(config);
+            CreateGlobalAudioSources();
             overlay = FlowOverlayView.Create(transform);
             overlay.ConfigureMenu(config, save.hasStarted);
             SceneManager.sceneLoaded -= OnSceneLoaded;
             SceneManager.sceneLoaded += OnSceneLoaded;
             HandleSceneReady(SceneManager.GetActiveScene(), FlowTransitionReason.Boot, true);
-            
-            if (config.automaticallyWatchPlayerVitality)
-            {
-                StartCoroutine(WatchVitalityNextFrame());
-            }
         }
 
         public void StartNewGame()
@@ -161,6 +174,28 @@ namespace TimeEcho.Flow
             FlowSaveStore.Delete(config);
             FlowSaveStore.Save(config, save);
             overlay.ConfigureMenu(config, false);
+            if (config.openingCutscene != null && config.openingCutscene.CanPlay)
+            {
+                activeRoutine = StartCoroutine(NewGameOpeningRoutine());
+            }
+            else
+            {
+                LoadWithSequence(config.FirstLevelScene, config.menuToGame, FlowTransitionReason.NewGame, config.playIntroWhenEnteringFromMenu);
+            }
+        }
+
+        private IEnumerator NewGameOpeningRoutine()
+        {
+            ChangeState(FlowState.Presenting);
+            StopTemporalControl();
+            StopAmbienceImmediate();
+            AcquireGameplayLock(false);
+            overlay.HideScreens();
+            yield return overlay.PlayOpeningCutscene(config.openingCutscene);
+            ReleaseGameplayLock();
+            activeRoutine = null;
+
+            if (TryExecuteQueuedReturnToMenu()) yield break;
             LoadWithSequence(config.FirstLevelScene, config.menuToGame, FlowTransitionReason.NewGame, config.playIntroWhenEnteringFromMenu);
         }
 
@@ -241,6 +276,7 @@ namespace TimeEcho.Flow
                 deathQueued = true;
                 return;
             }
+            CancelPassiveGuidance();
             activeRoutine = StartCoroutine(DeathRoutine());
         }
 
@@ -258,6 +294,29 @@ namespace TimeEcho.Flow
             LoadWithSequence(config.menuScene, config.returnToMenu, FlowTransitionReason.ReturnToMenu, false);
         }
 
+        public void RequestReturnToMenu()
+        {
+            if (config == null) return;
+
+            if (isChangingScene)
+            {
+                returnToMenuQueued = true;
+                return;
+            }
+
+            bool alreadyInMenu = string.Equals(SceneManager.GetActiveScene().name, config.menuScene, StringComparison.Ordinal);
+            if (alreadyInMenu)
+            {
+                AbortNonLoadingPresentation();
+                returnToMenuQueued = false;
+                HandleSceneReady(SceneManager.GetActiveScene(), FlowTransitionReason.ReturnToMenu, false);
+                return;
+            }
+
+            AbortNonLoadingPresentation();
+            ReturnToMenu();
+        }
+
         public void LoadCustomScene(string sceneName)
         {
             if (IsBusy || string.IsNullOrWhiteSpace(sceneName)) return;
@@ -267,6 +326,7 @@ namespace TimeEcho.Flow
         public void PlaySequence(FlowSequence sequence)
         {
             if (IsBusy || sequence == null || !sequence.enabled) return;
+            CancelPassiveGuidance();
             activeRoutine = StartCoroutine(OneShotSequenceRoutine(sequence));
         }
 
@@ -432,14 +492,18 @@ namespace TimeEcho.Flow
                 return;
             }
 
+            CancelPassiveGuidance();
             activeRoutine = StartCoroutine(LoadRoutine(sceneName, sequence, reason, playIntroAfterLoad));
         }
 
         private IEnumerator LoadRoutine(string sceneName, FlowSequence sequence, FlowTransitionReason reason, bool playIntroAfterLoad)
         {
+            bool guidanceAfterReveal = sequence != null && sequence.enabled &&
+                                       sequence.guidanceAfterSceneReveal && sequence.HasGuidance;
             isChangingScene = true;
             ChangeState(FlowState.Presenting);
             TransitionStarted?.Invoke(reason, sceneName);
+            PlayGlobalChangeSound(reason);
             StopTemporalControl();
             AcquireGameplayLock(sequence == null || sequence.showLetterbox);
             overlay.HideScreens();
@@ -447,7 +511,7 @@ namespace TimeEcho.Flow
             if (sequence != null && sequence.enabled)
             {
                 if (sequence.delayBefore > 0f) yield return WaitUnscaled(sequence.delayBefore);
-                overlay.BeginSequence(sequence);
+                overlay.BeginSequence(sequence, !guidanceAfterReveal);
             }
 
             ChangeState(FlowState.Loading);
@@ -490,9 +554,19 @@ namespace TimeEcho.Flow
 
             if (sequence != null && sequence.enabled)
             {
-                yield return overlay.Hold(sequence);
+                if (!guidanceAfterReveal)
+                {
+                    yield return overlay.Hold(sequence);
+                }
                 yield return overlay.AnimateFromCover(sequence);
-                overlay.EndSequence();
+                if (guidanceAfterReveal)
+                {
+                    overlay.EndTransitionVisual();
+                }
+                else
+                {
+                    overlay.EndSequence();
+                }
             }
 
             ReleaseGameplayLock();
@@ -501,10 +575,41 @@ namespace TimeEcho.Flow
             HandleSceneReady(SceneManager.GetActiveScene(), reason, false);
             TransitionFinished?.Invoke(reason, sceneName);
 
-            if (playIntroAfterLoad && currentLevelIndex >= 0)
+            if (TryExecuteQueuedReturnToMenu()) yield break;
+
+            if (guidanceAfterReveal)
+            {
+                StartPassiveGuidance(sequence);
+            }
+            else if (playIntroAfterLoad && currentLevelIndex >= 0)
             {
                 PlayCurrentLevelIntro();
             }
+        }
+
+        private void StartPassiveGuidance(FlowSequence sequence)
+        {
+            CancelPassiveGuidance();
+            if (sequence == null || !sequence.HasGuidance) return;
+            overlay.BeginGuidance(sequence);
+            passiveGuidanceRoutine = StartCoroutine(PassiveGuidanceRoutine(sequence));
+        }
+
+        private IEnumerator PassiveGuidanceRoutine(FlowSequence sequence)
+        {
+            yield return overlay.HoldGuidance(sequence);
+            overlay.EndGuidance();
+            passiveGuidanceRoutine = null;
+        }
+
+        private void CancelPassiveGuidance()
+        {
+            if (passiveGuidanceRoutine != null)
+            {
+                StopCoroutine(passiveGuidanceRoutine);
+                passiveGuidanceRoutine = null;
+            }
+            overlay?.EndGuidance();
         }
 
         private IEnumerator PlayPresentation(FlowSequence sequence)
@@ -609,6 +714,7 @@ namespace TimeEcho.Flow
             if (config == null || overlay == null) return;
             currentLevelIndex = config.FindLevelIndex(scene.name);
             overlay.HideScreens();
+            ApplyAmbienceForScene(scene);
 
             if (string.Equals(scene.name, config.menuScene, StringComparison.Ordinal))
             {
@@ -709,6 +815,190 @@ namespace TimeEcho.Flow
             isChangingScene = false;
             activeRoutine = null;
             ChangeState(currentLevelIndex >= 0 ? FlowState.Playing : FlowState.Menu);
+        }
+
+        private void AbortNonLoadingPresentation()
+        {
+            if (isChangingScene) return;
+            if (activeRoutine != null)
+            {
+                StopCoroutine(activeRoutine);
+                activeRoutine = null;
+            }
+            deathQueued = false;
+            CancelPassiveGuidance();
+            overlay?.StopOpeningCutscene();
+            overlay?.EndSequence();
+            ReleaseGameplayLock();
+            StopTemporalControl();
+        }
+
+        private bool TryExecuteQueuedReturnToMenu()
+        {
+            if (!returnToMenuQueued) return false;
+            returnToMenuQueued = false;
+            if (string.Equals(SceneManager.GetActiveScene().name, config.menuScene, StringComparison.Ordinal))
+            {
+                return false;
+            }
+            ReturnToMenu();
+            return true;
+        }
+
+        private void CreateGlobalAudioSources()
+        {
+            if (globalSoundSource != null) return;
+            globalSoundSource = CreateGlobalAudioSource("Global Level Change Sound");
+            primaryAmbienceSource = CreateGlobalAudioSource("Global Ambience A");
+            secondaryAmbienceSource = CreateGlobalAudioSource("Global Ambience B");
+        }
+
+        private AudioSource CreateGlobalAudioSource(string sourceName)
+        {
+            GameObject audioObject = new GameObject(sourceName);
+            audioObject.transform.SetParent(transform, false);
+            AudioSource source = audioObject.AddComponent<AudioSource>();
+            source.playOnAwake = false;
+            source.spatialBlend = 0f;
+            source.ignoreListenerPause = true;
+            return source;
+        }
+
+        private void PlayGlobalChangeSound(FlowTransitionReason reason)
+        {
+            if (config.levelChangeSound == null || globalSoundSource == null) return;
+            bool shouldPlay = reason == FlowTransitionReason.NextLevel && config.playChangeSoundOnNextLevel ||
+                              (reason == FlowTransitionReason.Restart || reason == FlowTransitionReason.Death) && config.playChangeSoundOnRestart ||
+                              (reason == FlowTransitionReason.NewGame || reason == FlowTransitionReason.Continue) && config.playChangeSoundOnNewGame ||
+                              reason == FlowTransitionReason.ReturnToMenu && config.playChangeSoundOnMenu ||
+                              reason == FlowTransitionReason.Win && config.playChangeSoundOnWin;
+            if (shouldPlay)
+            {
+                globalSoundSource.PlayOneShot(config.levelChangeSound, config.levelChangeSoundVolume);
+            }
+        }
+
+        private void ApplyAmbienceForScene(Scene scene)
+        {
+            AmbienceSettings settings = null;
+            if (string.Equals(scene.name, config.menuScene, StringComparison.Ordinal))
+            {
+                settings = config.menuAmbience;
+            }
+            else if (string.Equals(scene.name, config.winScene, StringComparison.Ordinal))
+            {
+                settings = config.winAmbience;
+            }
+            else
+            {
+                int levelIndex = config.FindLevelIndex(scene.name);
+                LevelFlowDefinition level = config.GetLevel(levelIndex);
+                settings = level != null ? level.ambience.Resolve(config.defaultLevelAmbience) : null;
+            }
+
+            if (ambienceFadeRoutine != null)
+            {
+                StopCoroutine(ambienceFadeRoutine);
+            }
+            ambienceFadeRoutine = StartCoroutine(CrossfadeAmbience(settings));
+        }
+
+        private IEnumerator CrossfadeAmbience(AmbienceSettings settings)
+        {
+            AudioSource current = primaryAmbienceActive ? primaryAmbienceSource : secondaryAmbienceSource;
+            AudioSource next = primaryAmbienceActive ? secondaryAmbienceSource : primaryAmbienceSource;
+            bool hasTarget = settings != null && settings.enabled && settings.clip != null;
+            float duration = settings != null ? settings.crossfadeSeconds : 0.5f;
+            float targetVolume = hasTarget ? settings.volume : 0f;
+
+            if (hasTarget && current.isPlaying && current.clip == settings.clip)
+            {
+                next.Stop();
+                next.volume = 0f;
+                float start = current.volume;
+                yield return FadeSource(current, start, targetVolume, duration);
+                current.loop = settings.loop;
+                ambienceFadeRoutine = null;
+                yield break;
+            }
+
+            if (hasTarget)
+            {
+                next.Stop();
+                next.clip = settings.clip;
+                next.loop = settings.loop;
+                next.volume = 0f;
+                next.Play();
+            }
+
+            float currentStart = current != null ? current.volume : 0f;
+            float elapsed = 0f;
+            if (duration <= 0f)
+            {
+                elapsed = duration;
+            }
+            while (elapsed < duration)
+            {
+                elapsed += Time.unscaledDeltaTime;
+                float t = Mathf.Clamp01(elapsed / duration);
+                if (current != null) current.volume = Mathf.Lerp(currentStart, 0f, t);
+                if (hasTarget) next.volume = Mathf.Lerp(0f, targetVolume, t);
+                yield return null;
+            }
+
+            if (current != null)
+            {
+                current.Stop();
+                current.volume = 0f;
+            }
+            if (hasTarget)
+            {
+                next.volume = targetVolume;
+                primaryAmbienceActive = !primaryAmbienceActive;
+            }
+            else if (next != null)
+            {
+                next.Stop();
+                next.volume = 0f;
+            }
+            ambienceFadeRoutine = null;
+        }
+
+        private void StopAmbienceImmediate()
+        {
+            if (ambienceFadeRoutine != null)
+            {
+                StopCoroutine(ambienceFadeRoutine);
+                ambienceFadeRoutine = null;
+            }
+            if (primaryAmbienceSource != null)
+            {
+                primaryAmbienceSource.Stop();
+                primaryAmbienceSource.volume = 0f;
+            }
+            if (secondaryAmbienceSource != null)
+            {
+                secondaryAmbienceSource.Stop();
+                secondaryAmbienceSource.volume = 0f;
+            }
+        }
+
+        private static IEnumerator FadeSource(AudioSource source, float from, float to, float duration)
+        {
+            if (source == null) yield break;
+            if (duration <= 0f)
+            {
+                source.volume = to;
+                yield break;
+            }
+            float elapsed = 0f;
+            while (elapsed < duration)
+            {
+                elapsed += Time.unscaledDeltaTime;
+                source.volume = Mathf.Lerp(from, to, Mathf.Clamp01(elapsed / duration));
+                yield return null;
+            }
+            source.volume = to;
         }
 
         private void StartQueuedDeathIfNeeded()

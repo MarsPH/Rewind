@@ -59,6 +59,9 @@ namespace TimeEcho.Flow
         public bool allowSkip = false;
         public KeyCode skipKey = KeyCode.Space;
 
+        [Tooltip("For scene-loading transitions: finish the glitch/fade, reveal the new scene, then play the guidance while gameplay continues.")]
+        public bool guidanceAfterSceneReveal;
+
         [Header("Placeholder visuals")]
         public Color coverColor = Color.black;
         [Range(0f, 1f)] public float cutsceneDimAmount = 0.55f;
@@ -73,6 +76,8 @@ namespace TimeEcho.Flow
                 return Mathf.Max(minimumHold, voiceLength);
             }
         }
+
+        public bool HasGuidance => !string.IsNullOrWhiteSpace(guidanceText) || voiceClip != null;
 
     }
 
@@ -133,6 +138,29 @@ namespace TimeEcho.Flow
         public FlowSequenceOverride death = new FlowSequenceOverride();
         public FlowSequenceOverride restart = new FlowSequenceOverride();
         public DeathRuleOverride deathRule = new DeathRuleOverride();
+        public AmbienceOverride ambience = new AmbienceOverride();
+    }
+
+    [Serializable]
+    public sealed class AmbienceSettings
+    {
+        public bool enabled = true;
+        public AudioClip clip;
+        [Range(0f, 1f)] public float volume = 0.65f;
+        public bool loop = true;
+        [Min(0f)] public float crossfadeSeconds = 1f;
+    }
+
+    [Serializable]
+    public sealed class AmbienceOverride
+    {
+        public bool useOverride;
+        public AmbienceSettings settings = new AmbienceSettings();
+
+        public AmbienceSettings Resolve(AmbienceSettings fallback)
+        {
+            return useOverride && settings != null ? settings : fallback;
+        }
     }
 
     [CreateAssetMenu(fileName = ResourceName, menuName = "Time Echo/Progression/Flow Config")]
@@ -153,6 +181,28 @@ namespace TimeEcho.Flow
         public FlowSequence restart = new FlowSequence();
         public FlowSequence winning = new FlowSequence();
         public FlowSequence returnToMenu = new FlowSequence();
+
+        [Header("Opening cutscene")]
+        [Tooltip("Played after New Game is pressed and before the first level loads. Continue does not replay it.")]
+        public OpeningCutsceneAsset openingCutscene;
+
+        [Header("Global return to menu")]
+        public bool enableReturnToMenuHotkey = true;
+        public KeyCode returnToMenuKey = KeyCode.P;
+
+        [Header("Global level-change sound")]
+        public AudioClip levelChangeSound;
+        [Range(0f, 1f)] public float levelChangeSoundVolume = 1f;
+        public bool playChangeSoundOnNextLevel = true;
+        public bool playChangeSoundOnRestart = true;
+        public bool playChangeSoundOnNewGame = true;
+        public bool playChangeSoundOnMenu;
+        public bool playChangeSoundOnWin = true;
+
+        [Header("Persistent ambience")]
+        public AmbienceSettings menuAmbience = new AmbienceSettings();
+        public AmbienceSettings defaultLevelAmbience = new AmbienceSettings();
+        public AmbienceSettings winAmbience = new AmbienceSettings();
 
         [Header("Death")]
         public DeathRule defaultDeathRule = new DeathRule();
