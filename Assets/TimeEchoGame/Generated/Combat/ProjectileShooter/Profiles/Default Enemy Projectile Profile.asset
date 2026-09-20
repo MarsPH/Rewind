@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Default Enemy Projectile Profile
   m_EditorClassIdentifier: Assembly-CSharp::TimeEcho.ProjectileProfile2D
   displayName: Enemy Projectile
-  sprite: {fileID: -7174898199296445581, guid: c3c6692404e179b4eb2ee4fe21b87867, type: 3}
+  sprite: {fileID: 0}
   tint: {r: 1, g: 0.35, b: 0.2, a: 1}
   visualScale: {x: 1, y: 1}
   spriteMaterial: {fileID: 0}
@@ -22,7 +22,7 @@ MonoBehaviour:
   rotateVisualTowardsVelocity: 1
   visualRotationOffset: 0
   visualSpinSpeed: 0
-  useTrail: 1
+  useTrail: 0
   trailTime: 0.22
   trailStartWidth: 0.12
   trailEndWidth: 0
@@ -82,5 +82,5 @@ MonoBehaviour:
   temporalResponse: 1
   impactCue: {fileID: 11400000, guid: 82e4219e0b5af444b9d35da8f3b9ad7c, type: 2}
   spawnEffectPrefab: {fileID: 0}
-  impactEffectPrefab: {fileID: 0}
-  spawnedEffectLifetime: 2
+  impactEffectPrefab: {fileID: 6928517623499682543, guid: 89370fd54e41a4c4a94db8fbbb4378a5, type: 3}
+  spawnedEffectLifetime: 0.35
