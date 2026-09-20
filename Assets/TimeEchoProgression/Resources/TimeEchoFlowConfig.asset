@@ -36,6 +36,7 @@ MonoBehaviour:
         lockGameplay: 1
         allowSkip: 0
         skipKey: 32
+        guidanceAfterSceneReveal: 0
         coverColor: {r: 0, g: 0, b: 0, a: 1}
         cutsceneDimAmount: 0.55
         glitchBursts: 7
@@ -58,6 +59,7 @@ MonoBehaviour:
         lockGameplay: 1
         allowSkip: 0
         skipKey: 32
+        guidanceAfterSceneReveal: 0
         coverColor: {r: 0, g: 0, b: 0, a: 1}
         cutsceneDimAmount: 0.55
         glitchBursts: 7
@@ -80,6 +82,7 @@ MonoBehaviour:
         lockGameplay: 1
         allowSkip: 0
         skipKey: 32
+        guidanceAfterSceneReveal: 0
         coverColor: {r: 0, g: 0, b: 0, a: 1}
         cutsceneDimAmount: 0.55
         glitchBursts: 7
@@ -102,6 +105,7 @@ MonoBehaviour:
         lockGameplay: 1
         allowSkip: 0
         skipKey: 32
+        guidanceAfterSceneReveal: 0
         coverColor: {r: 0, g: 0, b: 0, a: 1}
         cutsceneDimAmount: 0.55
         glitchBursts: 7
@@ -114,6 +118,14 @@ MonoBehaviour:
         specificScene: 
         firstLevelFallback: 0
         eraseForwardProgressWhenSentBack: 0
+    ambience:
+      useOverride: 0
+      settings:
+        enabled: 1
+        clip: {fileID: 0}
+        volume: 0.65
+        loop: 1
+        crossfadeSeconds: 1
   - sceneName: Level1
     displayName: Map 2
     nextSceneOverride: 
@@ -135,6 +147,7 @@ MonoBehaviour:
         lockGameplay: 1
         allowSkip: 0
         skipKey: 32
+        guidanceAfterSceneReveal: 0
         coverColor: {r: 0, g: 0, b: 0, a: 1}
         cutsceneDimAmount: 0.55
         glitchBursts: 7
@@ -157,6 +170,7 @@ MonoBehaviour:
         lockGameplay: 1
         allowSkip: 0
         skipKey: 32
+        guidanceAfterSceneReveal: 0
         coverColor: {r: 0, g: 0, b: 0, a: 1}
         cutsceneDimAmount: 0.55
         glitchBursts: 7
@@ -179,6 +193,7 @@ MonoBehaviour:
         lockGameplay: 1
         allowSkip: 0
         skipKey: 32
+        guidanceAfterSceneReveal: 0
         coverColor: {r: 0, g: 0, b: 0, a: 1}
         cutsceneDimAmount: 0.55
         glitchBursts: 7
@@ -201,6 +216,7 @@ MonoBehaviour:
         lockGameplay: 1
         allowSkip: 0
         skipKey: 32
+        guidanceAfterSceneReveal: 0
         coverColor: {r: 0, g: 0, b: 0, a: 1}
         cutsceneDimAmount: 0.55
         glitchBursts: 7
@@ -213,6 +229,14 @@ MonoBehaviour:
         specificScene: 
         firstLevelFallback: 0
         eraseForwardProgressWhenSentBack: 0
+    ambience:
+      useOverride: 0
+      settings:
+        enabled: 1
+        clip: {fileID: 0}
+        volume: 0.65
+        loop: 1
+        crossfadeSeconds: 1
   - sceneName: Level2
     displayName: Map 3
     nextSceneOverride: 
@@ -234,6 +258,7 @@ MonoBehaviour:
         lockGameplay: 1
         allowSkip: 0
         skipKey: 32
+        guidanceAfterSceneReveal: 0
         coverColor: {r: 0, g: 0, b: 0, a: 1}
         cutsceneDimAmount: 0.55
         glitchBursts: 7
@@ -256,6 +281,7 @@ MonoBehaviour:
         lockGameplay: 1
         allowSkip: 0
         skipKey: 32
+        guidanceAfterSceneReveal: 0
         coverColor: {r: 0, g: 0, b: 0, a: 1}
         cutsceneDimAmount: 0.55
         glitchBursts: 7
@@ -278,6 +304,7 @@ MonoBehaviour:
         lockGameplay: 1
         allowSkip: 0
         skipKey: 32
+        guidanceAfterSceneReveal: 0
         coverColor: {r: 0, g: 0, b: 0, a: 1}
         cutsceneDimAmount: 0.55
         glitchBursts: 7
@@ -300,6 +327,7 @@ MonoBehaviour:
         lockGameplay: 1
         allowSkip: 0
         skipKey: 32
+        guidanceAfterSceneReveal: 0
         coverColor: {r: 0, g: 0, b: 0, a: 1}
         cutsceneDimAmount: 0.55
         glitchBursts: 7
@@ -312,6 +340,14 @@ MonoBehaviour:
         specificScene: 
         firstLevelFallback: 0
         eraseForwardProgressWhenSentBack: 0
+    ambience:
+      useOverride: 0
+      settings:
+        enabled: 1
+        clip: {fileID: 0}
+        volume: 0.65
+        loop: 1
+        crossfadeSeconds: 1
   - sceneName: Level3
     displayName: Map 4
     nextSceneOverride: 
@@ -333,6 +369,7 @@ MonoBehaviour:
         lockGameplay: 1
         allowSkip: 0
         skipKey: 32
+        guidanceAfterSceneReveal: 0
         coverColor: {r: 0, g: 0, b: 0, a: 1}
         cutsceneDimAmount: 0.55
         glitchBursts: 7
@@ -355,6 +392,7 @@ MonoBehaviour:
         lockGameplay: 1
         allowSkip: 0
         skipKey: 32
+        guidanceAfterSceneReveal: 0
         coverColor: {r: 0, g: 0, b: 0, a: 1}
         cutsceneDimAmount: 0.55
         glitchBursts: 7
@@ -377,6 +415,7 @@ MonoBehaviour:
         lockGameplay: 1
         allowSkip: 0
         skipKey: 32
+        guidanceAfterSceneReveal: 0
         coverColor: {r: 0, g: 0, b: 0, a: 1}
         cutsceneDimAmount: 0.55
         glitchBursts: 7
@@ -399,6 +438,7 @@ MonoBehaviour:
         lockGameplay: 1
         allowSkip: 0
         skipKey: 32
+        guidanceAfterSceneReveal: 0
         coverColor: {r: 0, g: 0, b: 0, a: 1}
         cutsceneDimAmount: 0.55
         glitchBursts: 7
@@ -411,6 +451,14 @@ MonoBehaviour:
         specificScene: 
         firstLevelFallback: 0
         eraseForwardProgressWhenSentBack: 0
+    ambience:
+      useOverride: 0
+      settings:
+        enabled: 1
+        clip: {fileID: 0}
+        volume: 0.65
+        loop: 1
+        crossfadeSeconds: 1
   - sceneName: Level4
     displayName: Map 5
     nextSceneOverride: 
@@ -432,6 +480,7 @@ MonoBehaviour:
         lockGameplay: 1
         allowSkip: 0
         skipKey: 32
+        guidanceAfterSceneReveal: 0
         coverColor: {r: 0, g: 0, b: 0, a: 1}
         cutsceneDimAmount: 0.55
         glitchBursts: 7
@@ -454,6 +503,7 @@ MonoBehaviour:
         lockGameplay: 1
         allowSkip: 0
         skipKey: 32
+        guidanceAfterSceneReveal: 0
         coverColor: {r: 0, g: 0, b: 0, a: 1}
         cutsceneDimAmount: 0.55
         glitchBursts: 7
@@ -476,6 +526,7 @@ MonoBehaviour:
         lockGameplay: 1
         allowSkip: 0
         skipKey: 32
+        guidanceAfterSceneReveal: 0
         coverColor: {r: 0, g: 0, b: 0, a: 1}
         cutsceneDimAmount: 0.55
         glitchBursts: 7
@@ -498,6 +549,7 @@ MonoBehaviour:
         lockGameplay: 1
         allowSkip: 0
         skipKey: 32
+        guidanceAfterSceneReveal: 0
         coverColor: {r: 0, g: 0, b: 0, a: 1}
         cutsceneDimAmount: 0.55
         glitchBursts: 7
@@ -510,6 +562,14 @@ MonoBehaviour:
         specificScene: 
         firstLevelFallback: 0
         eraseForwardProgressWhenSentBack: 0
+    ambience:
+      useOverride: 0
+      settings:
+        enabled: 1
+        clip: {fileID: 0}
+        volume: 0.65
+        loop: 1
+        crossfadeSeconds: 1
   - sceneName: Level5
     displayName: Map 6
     nextSceneOverride: 
@@ -531,6 +591,7 @@ MonoBehaviour:
         lockGameplay: 1
         allowSkip: 0
         skipKey: 32
+        guidanceAfterSceneReveal: 0
         coverColor: {r: 0, g: 0, b: 0, a: 1}
         cutsceneDimAmount: 0.55
         glitchBursts: 7
@@ -553,6 +614,7 @@ MonoBehaviour:
         lockGameplay: 1
         allowSkip: 0
         skipKey: 32
+        guidanceAfterSceneReveal: 0
         coverColor: {r: 0, g: 0, b: 0, a: 1}
         cutsceneDimAmount: 0.55
         glitchBursts: 7
@@ -575,6 +637,7 @@ MonoBehaviour:
         lockGameplay: 1
         allowSkip: 0
         skipKey: 32
+        guidanceAfterSceneReveal: 0
         coverColor: {r: 0, g: 0, b: 0, a: 1}
         cutsceneDimAmount: 0.55
         glitchBursts: 7
@@ -597,6 +660,7 @@ MonoBehaviour:
         lockGameplay: 1
         allowSkip: 0
         skipKey: 32
+        guidanceAfterSceneReveal: 0
         coverColor: {r: 0, g: 0, b: 0, a: 1}
         cutsceneDimAmount: 0.55
         glitchBursts: 7
@@ -609,6 +673,14 @@ MonoBehaviour:
         specificScene: 
         firstLevelFallback: 0
         eraseForwardProgressWhenSentBack: 0
+    ambience:
+      useOverride: 0
+      settings:
+        enabled: 1
+        clip: {fileID: 0}
+        volume: 0.65
+        loop: 1
+        crossfadeSeconds: 1
   - sceneName: Level6
     displayName: Map 7
     nextSceneOverride: 
@@ -630,6 +702,7 @@ MonoBehaviour:
         lockGameplay: 1
         allowSkip: 0
         skipKey: 32
+        guidanceAfterSceneReveal: 0
         coverColor: {r: 0, g: 0, b: 0, a: 1}
         cutsceneDimAmount: 0.55
         glitchBursts: 7
@@ -652,6 +725,7 @@ MonoBehaviour:
         lockGameplay: 1
         allowSkip: 0
         skipKey: 32
+        guidanceAfterSceneReveal: 0
         coverColor: {r: 0, g: 0, b: 0, a: 1}
         cutsceneDimAmount: 0.55
         glitchBursts: 7
@@ -674,6 +748,7 @@ MonoBehaviour:
         lockGameplay: 1
         allowSkip: 0
         skipKey: 32
+        guidanceAfterSceneReveal: 0
         coverColor: {r: 0, g: 0, b: 0, a: 1}
         cutsceneDimAmount: 0.55
         glitchBursts: 7
@@ -696,6 +771,7 @@ MonoBehaviour:
         lockGameplay: 1
         allowSkip: 0
         skipKey: 32
+        guidanceAfterSceneReveal: 0
         coverColor: {r: 0, g: 0, b: 0, a: 1}
         cutsceneDimAmount: 0.55
         glitchBursts: 7
@@ -708,6 +784,14 @@ MonoBehaviour:
         specificScene: 
         firstLevelFallback: 0
         eraseForwardProgressWhenSentBack: 0
+    ambience:
+      useOverride: 0
+      settings:
+        enabled: 1
+        clip: {fileID: 0}
+        volume: 0.65
+        loop: 1
+        crossfadeSeconds: 1
   - sceneName: Level7
     displayName: Map 8
     nextSceneOverride: 
@@ -729,6 +813,7 @@ MonoBehaviour:
         lockGameplay: 1
         allowSkip: 0
         skipKey: 32
+        guidanceAfterSceneReveal: 0
         coverColor: {r: 0, g: 0, b: 0, a: 1}
         cutsceneDimAmount: 0.55
         glitchBursts: 7
@@ -751,6 +836,7 @@ MonoBehaviour:
         lockGameplay: 1
         allowSkip: 0
         skipKey: 32
+        guidanceAfterSceneReveal: 0
         coverColor: {r: 0, g: 0, b: 0, a: 1}
         cutsceneDimAmount: 0.55
         glitchBursts: 7
@@ -773,6 +859,7 @@ MonoBehaviour:
         lockGameplay: 1
         allowSkip: 0
         skipKey: 32
+        guidanceAfterSceneReveal: 0
         coverColor: {r: 0, g: 0, b: 0, a: 1}
         cutsceneDimAmount: 0.55
         glitchBursts: 7
@@ -795,6 +882,7 @@ MonoBehaviour:
         lockGameplay: 1
         allowSkip: 0
         skipKey: 32
+        guidanceAfterSceneReveal: 0
         coverColor: {r: 0, g: 0, b: 0, a: 1}
         cutsceneDimAmount: 0.55
         glitchBursts: 7
@@ -807,6 +895,14 @@ MonoBehaviour:
         specificScene: 
         firstLevelFallback: 0
         eraseForwardProgressWhenSentBack: 0
+    ambience:
+      useOverride: 0
+      settings:
+        enabled: 1
+        clip: {fileID: 0}
+        volume: 0.65
+        loop: 1
+        crossfadeSeconds: 1
   - sceneName: Level8
     displayName: Map 9
     nextSceneOverride: 
@@ -828,6 +924,7 @@ MonoBehaviour:
         lockGameplay: 1
         allowSkip: 0
         skipKey: 32
+        guidanceAfterSceneReveal: 0
         coverColor: {r: 0, g: 0, b: 0, a: 1}
         cutsceneDimAmount: 0.55
         glitchBursts: 7
@@ -850,6 +947,7 @@ MonoBehaviour:
         lockGameplay: 1
         allowSkip: 0
         skipKey: 32
+        guidanceAfterSceneReveal: 0
         coverColor: {r: 0, g: 0, b: 0, a: 1}
         cutsceneDimAmount: 0.55
         glitchBursts: 7
@@ -872,6 +970,7 @@ MonoBehaviour:
         lockGameplay: 1
         allowSkip: 0
         skipKey: 32
+        guidanceAfterSceneReveal: 0
         coverColor: {r: 0, g: 0, b: 0, a: 1}
         cutsceneDimAmount: 0.55
         glitchBursts: 7
@@ -894,6 +993,7 @@ MonoBehaviour:
         lockGameplay: 1
         allowSkip: 0
         skipKey: 32
+        guidanceAfterSceneReveal: 0
         coverColor: {r: 0, g: 0, b: 0, a: 1}
         cutsceneDimAmount: 0.55
         glitchBursts: 7
@@ -906,6 +1006,14 @@ MonoBehaviour:
         specificScene: 
         firstLevelFallback: 0
         eraseForwardProgressWhenSentBack: 0
+    ambience:
+      useOverride: 0
+      settings:
+        enabled: 1
+        clip: {fileID: 0}
+        volume: 0.65
+        loop: 1
+        crossfadeSeconds: 1
   - sceneName: Level9
     displayName: Map 10
     nextSceneOverride: 
@@ -927,6 +1035,7 @@ MonoBehaviour:
         lockGameplay: 1
         allowSkip: 0
         skipKey: 32
+        guidanceAfterSceneReveal: 0
         coverColor: {r: 0, g: 0, b: 0, a: 1}
         cutsceneDimAmount: 0.55
         glitchBursts: 7
@@ -949,6 +1058,7 @@ MonoBehaviour:
         lockGameplay: 1
         allowSkip: 0
         skipKey: 32
+        guidanceAfterSceneReveal: 0
         coverColor: {r: 0, g: 0, b: 0, a: 1}
         cutsceneDimAmount: 0.55
         glitchBursts: 7
@@ -971,6 +1081,7 @@ MonoBehaviour:
         lockGameplay: 1
         allowSkip: 0
         skipKey: 32
+        guidanceAfterSceneReveal: 0
         coverColor: {r: 0, g: 0, b: 0, a: 1}
         cutsceneDimAmount: 0.55
         glitchBursts: 7
@@ -993,6 +1104,7 @@ MonoBehaviour:
         lockGameplay: 1
         allowSkip: 0
         skipKey: 32
+        guidanceAfterSceneReveal: 0
         coverColor: {r: 0, g: 0, b: 0, a: 1}
         cutsceneDimAmount: 0.55
         glitchBursts: 7
@@ -1005,6 +1117,14 @@ MonoBehaviour:
         specificScene: 
         firstLevelFallback: 0
         eraseForwardProgressWhenSentBack: 0
+    ambience:
+      useOverride: 0
+      settings:
+        enabled: 1
+        clip: {fileID: 0}
+        volume: 0.65
+        loop: 1
+        crossfadeSeconds: 1
   - sceneName: Level10
     displayName: Map 11
     nextSceneOverride: 
@@ -1026,6 +1146,7 @@ MonoBehaviour:
         lockGameplay: 1
         allowSkip: 0
         skipKey: 32
+        guidanceAfterSceneReveal: 0
         coverColor: {r: 0, g: 0, b: 0, a: 1}
         cutsceneDimAmount: 0.55
         glitchBursts: 7
@@ -1048,6 +1169,7 @@ MonoBehaviour:
         lockGameplay: 1
         allowSkip: 0
         skipKey: 32
+        guidanceAfterSceneReveal: 0
         coverColor: {r: 0, g: 0, b: 0, a: 1}
         cutsceneDimAmount: 0.55
         glitchBursts: 7
@@ -1070,6 +1192,7 @@ MonoBehaviour:
         lockGameplay: 1
         allowSkip: 0
         skipKey: 32
+        guidanceAfterSceneReveal: 0
         coverColor: {r: 0, g: 0, b: 0, a: 1}
         cutsceneDimAmount: 0.55
         glitchBursts: 7
@@ -1092,6 +1215,7 @@ MonoBehaviour:
         lockGameplay: 1
         allowSkip: 0
         skipKey: 32
+        guidanceAfterSceneReveal: 0
         coverColor: {r: 0, g: 0, b: 0, a: 1}
         cutsceneDimAmount: 0.55
         glitchBursts: 7
@@ -1104,6 +1228,14 @@ MonoBehaviour:
         specificScene: 
         firstLevelFallback: 0
         eraseForwardProgressWhenSentBack: 0
+    ambience:
+      useOverride: 0
+      settings:
+        enabled: 1
+        clip: {fileID: 0}
+        volume: 0.65
+        loop: 1
+        crossfadeSeconds: 1
   - sceneName: Level11
     displayName: Map 12
     nextSceneOverride: 
@@ -1125,6 +1257,7 @@ MonoBehaviour:
         lockGameplay: 1
         allowSkip: 0
         skipKey: 32
+        guidanceAfterSceneReveal: 0
         coverColor: {r: 0, g: 0, b: 0, a: 1}
         cutsceneDimAmount: 0.55
         glitchBursts: 7
@@ -1147,6 +1280,7 @@ MonoBehaviour:
         lockGameplay: 1
         allowSkip: 0
         skipKey: 32
+        guidanceAfterSceneReveal: 0
         coverColor: {r: 0, g: 0, b: 0, a: 1}
         cutsceneDimAmount: 0.55
         glitchBursts: 7
@@ -1169,6 +1303,7 @@ MonoBehaviour:
         lockGameplay: 1
         allowSkip: 0
         skipKey: 32
+        guidanceAfterSceneReveal: 0
         coverColor: {r: 0, g: 0, b: 0, a: 1}
         cutsceneDimAmount: 0.55
         glitchBursts: 7
@@ -1191,6 +1326,7 @@ MonoBehaviour:
         lockGameplay: 1
         allowSkip: 0
         skipKey: 32
+        guidanceAfterSceneReveal: 0
         coverColor: {r: 0, g: 0, b: 0, a: 1}
         cutsceneDimAmount: 0.55
         glitchBursts: 7
@@ -1203,6 +1339,14 @@ MonoBehaviour:
         specificScene: 
         firstLevelFallback: 0
         eraseForwardProgressWhenSentBack: 0
+    ambience:
+      useOverride: 0
+      settings:
+        enabled: 1
+        clip: {fileID: 0}
+        volume: 0.65
+        loop: 1
+        crossfadeSeconds: 1
   - sceneName: Level12
     displayName: Map 13
     nextSceneOverride: 
@@ -1224,6 +1368,7 @@ MonoBehaviour:
         lockGameplay: 1
         allowSkip: 0
         skipKey: 32
+        guidanceAfterSceneReveal: 0
         coverColor: {r: 0, g: 0, b: 0, a: 1}
         cutsceneDimAmount: 0.55
         glitchBursts: 7
@@ -1248,6 +1393,7 @@ MonoBehaviour:
         lockGameplay: 1
         allowSkip: 0
         skipKey: 32
+        guidanceAfterSceneReveal: 0
         coverColor: {r: 0, g: 0, b: 0, a: 1}
         cutsceneDimAmount: 0.55
         glitchBursts: 7
@@ -1270,6 +1416,7 @@ MonoBehaviour:
         lockGameplay: 1
         allowSkip: 0
         skipKey: 32
+        guidanceAfterSceneReveal: 0
         coverColor: {r: 0, g: 0, b: 0, a: 1}
         cutsceneDimAmount: 0.55
         glitchBursts: 7
@@ -1292,6 +1439,7 @@ MonoBehaviour:
         lockGameplay: 1
         allowSkip: 0
         skipKey: 32
+        guidanceAfterSceneReveal: 0
         coverColor: {r: 0, g: 0, b: 0, a: 1}
         cutsceneDimAmount: 0.55
         glitchBursts: 7
@@ -1304,6 +1452,14 @@ MonoBehaviour:
         specificScene: 
         firstLevelFallback: 0
         eraseForwardProgressWhenSentBack: 0
+    ambience:
+      useOverride: 0
+      settings:
+        enabled: 1
+        clip: {fileID: 0}
+        volume: 0.65
+        loop: 1
+        crossfadeSeconds: 1
   - sceneName: Level13
     displayName: Map 14
     nextSceneOverride: 
@@ -1325,6 +1481,7 @@ MonoBehaviour:
         lockGameplay: 1
         allowSkip: 0
         skipKey: 32
+        guidanceAfterSceneReveal: 0
         coverColor: {r: 0, g: 0, b: 0, a: 1}
         cutsceneDimAmount: 0.55
         glitchBursts: 7
@@ -1347,6 +1504,7 @@ MonoBehaviour:
         lockGameplay: 1
         allowSkip: 0
         skipKey: 32
+        guidanceAfterSceneReveal: 0
         coverColor: {r: 0, g: 0, b: 0, a: 1}
         cutsceneDimAmount: 0.55
         glitchBursts: 7
@@ -1369,6 +1527,7 @@ MonoBehaviour:
         lockGameplay: 1
         allowSkip: 0
         skipKey: 32
+        guidanceAfterSceneReveal: 0
         coverColor: {r: 0, g: 0, b: 0, a: 1}
         cutsceneDimAmount: 0.55
         glitchBursts: 7
@@ -1391,6 +1550,7 @@ MonoBehaviour:
         lockGameplay: 1
         allowSkip: 0
         skipKey: 32
+        guidanceAfterSceneReveal: 0
         coverColor: {r: 0, g: 0, b: 0, a: 1}
         cutsceneDimAmount: 0.55
         glitchBursts: 7
@@ -1403,6 +1563,14 @@ MonoBehaviour:
         specificScene: 
         firstLevelFallback: 0
         eraseForwardProgressWhenSentBack: 0
+    ambience:
+      useOverride: 0
+      settings:
+        enabled: 1
+        clip: {fileID: 0}
+        volume: 0.65
+        loop: 1
+        crossfadeSeconds: 1
   - sceneName: Level14
     displayName: Map 15
     nextSceneOverride: 
@@ -1424,6 +1592,7 @@ MonoBehaviour:
         lockGameplay: 1
         allowSkip: 0
         skipKey: 32
+        guidanceAfterSceneReveal: 0
         coverColor: {r: 0, g: 0, b: 0, a: 1}
         cutsceneDimAmount: 0.55
         glitchBursts: 7
@@ -1446,6 +1615,7 @@ MonoBehaviour:
         lockGameplay: 1
         allowSkip: 0
         skipKey: 32
+        guidanceAfterSceneReveal: 0
         coverColor: {r: 0, g: 0, b: 0, a: 1}
         cutsceneDimAmount: 0.55
         glitchBursts: 7
@@ -1468,6 +1638,7 @@ MonoBehaviour:
         lockGameplay: 1
         allowSkip: 0
         skipKey: 32
+        guidanceAfterSceneReveal: 0
         coverColor: {r: 0, g: 0, b: 0, a: 1}
         cutsceneDimAmount: 0.55
         glitchBursts: 7
@@ -1490,6 +1661,7 @@ MonoBehaviour:
         lockGameplay: 1
         allowSkip: 0
         skipKey: 32
+        guidanceAfterSceneReveal: 0
         coverColor: {r: 0, g: 0, b: 0, a: 1}
         cutsceneDimAmount: 0.55
         glitchBursts: 7
@@ -1502,6 +1674,14 @@ MonoBehaviour:
         specificScene: 
         firstLevelFallback: 0
         eraseForwardProgressWhenSentBack: 0
+    ambience:
+      useOverride: 0
+      settings:
+        enabled: 1
+        clip: {fileID: 0}
+        volume: 0.65
+        loop: 1
+        crossfadeSeconds: 1
   menuToGame:
     enabled: 1
     style: 3
@@ -1518,6 +1698,7 @@ MonoBehaviour:
     lockGameplay: 0
     allowSkip: 0
     skipKey: 32
+    guidanceAfterSceneReveal: 0
     coverColor: {r: 0, g: 0, b: 0, a: 1}
     cutsceneDimAmount: 0.55
     glitchBursts: 0
@@ -1538,6 +1719,7 @@ MonoBehaviour:
     lockGameplay: 1
     allowSkip: 1
     skipKey: 32
+    guidanceAfterSceneReveal: 0
     coverColor: {r: 0, g: 0, b: 0, a: 1}
     cutsceneDimAmount: 0.55
     glitchBursts: 0
@@ -1558,6 +1740,7 @@ MonoBehaviour:
     lockGameplay: 0
     allowSkip: 0
     skipKey: 32
+    guidanceAfterSceneReveal: 0
     coverColor: {r: 0, g: 0, b: 0, a: 1}
     cutsceneDimAmount: 0.55
     glitchBursts: 7
@@ -1578,6 +1761,7 @@ MonoBehaviour:
     lockGameplay: 0
     allowSkip: 1
     skipKey: 32
+    guidanceAfterSceneReveal: 0
     coverColor: {r: 0, g: 0, b: 0, a: 1}
     cutsceneDimAmount: 0.55
     glitchBursts: 0
@@ -1598,6 +1782,7 @@ MonoBehaviour:
     lockGameplay: 0
     allowSkip: 0
     skipKey: 32
+    guidanceAfterSceneReveal: 0
     coverColor: {r: 0, g: 0, b: 0, a: 1}
     cutsceneDimAmount: 0.55
     glitchBursts: 7
@@ -1618,6 +1803,7 @@ MonoBehaviour:
     lockGameplay: 1
     allowSkip: 0
     skipKey: 32
+    guidanceAfterSceneReveal: 0
     coverColor: {r: 0, g: 0, b: 0, a: 1}
     cutsceneDimAmount: 0.55
     glitchBursts: 7
@@ -1638,10 +1824,39 @@ MonoBehaviour:
     lockGameplay: 1
     allowSkip: 0
     skipKey: 32
+    guidanceAfterSceneReveal: 0
     coverColor: {r: 0, g: 0, b: 0, a: 1}
     cutsceneDimAmount: 0.55
     glitchBursts: 0
     showLetterbox: 0
+  openingCutscene: {fileID: 0}
+  enableReturnToMenuHotkey: 1
+  returnToMenuKey: 112
+  levelChangeSound: {fileID: 0}
+  levelChangeSoundVolume: 1
+  playChangeSoundOnNextLevel: 1
+  playChangeSoundOnRestart: 1
+  playChangeSoundOnNewGame: 1
+  playChangeSoundOnMenu: 0
+  playChangeSoundOnWin: 1
+  menuAmbience:
+    enabled: 1
+    clip: {fileID: 0}
+    volume: 0.65
+    loop: 1
+    crossfadeSeconds: 1
+  defaultLevelAmbience:
+    enabled: 1
+    clip: {fileID: 8300000, guid: 02961e43f66cf5d419dba506ba4e27ff, type: 3}
+    volume: 0.65
+    loop: 1
+    crossfadeSeconds: 1
+  winAmbience:
+    enabled: 1
+    clip: {fileID: 0}
+    volume: 0.65
+    loop: 1
+    crossfadeSeconds: 1
   defaultDeathRule:
     destination: 0
     previousLevelChance: 0.35

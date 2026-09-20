@@ -35,6 +35,7 @@ namespace TimeEcho.Flow.Editor
             CreateExitPrefab();
             CreateSequenceTriggerPrefab();
             CreateMenuActionsPrefab();
+            CreateOpeningCutsceneAsset(config);
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
             Selection.activeObject = config;
@@ -135,6 +136,9 @@ namespace TimeEcho.Flow.Editor
             Configure(config.winning, FlowSequenceStyle.Glitch, "No... that was not supposed to happen.", 0.45f, 1.8f, 0.55f, false);
             Configure(config.returnToMenu, FlowSequenceStyle.Fade, string.Empty, 0.25f, 0.25f, 0.25f, false);
 
+            config.nextLevel.guidanceAfterSceneReveal = true;
+            config.restart.guidanceAfterSceneReveal = true;
+
             config.defaultDeathRule.destination = DeathDestinationMode.ChancePreviousOtherwiseRestart;
             config.defaultDeathRule.previousLevelChance = 0.35f;
             config.defaultDeathRule.firstLevelFallback = DeathDestinationMode.RestartCurrent;
@@ -204,6 +208,44 @@ namespace TimeEcho.Flow.Editor
             root.AddComponent<TimeEchoMenuActions>();
             PrefabUtility.SaveAsPrefabAsset(root, path);
             Object.DestroyImmediate(root);
+        }
+
+        private static void CreateOpeningCutsceneAsset(TimeEchoFlowConfig config)
+        {
+            string path = GeneratedFolder + "/OpeningCutscene.asset";
+            OpeningCutsceneAsset cutscene = AssetDatabase.LoadAssetAtPath<OpeningCutsceneAsset>(path);
+            if (cutscene == null)
+            {
+                cutscene = ScriptableObject.CreateInstance<OpeningCutsceneAsset>();
+                cutscene.slides.Add(new OpeningCutsceneSlide
+                {
+                    text = "Something is watching.",
+                    duration = 2.5f,
+                    backgroundColor = Color.black,
+                    textColor = Color.white
+                });
+                cutscene.slides.Add(new OpeningCutsceneSlide
+                {
+                    text = "The rules will not stay the same.",
+                    duration = 2.5f,
+                    backgroundColor = Color.black,
+                    textColor = Color.white
+                });
+                cutscene.slides.Add(new OpeningCutsceneSlide
+                {
+                    text = "Run.",
+                    duration = 1.5f,
+                    backgroundColor = Color.black,
+                    textColor = Color.white
+                });
+                AssetDatabase.CreateAsset(cutscene, path);
+            }
+
+            if (config.openingCutscene == null)
+            {
+                config.openingCutscene = cutscene;
+                EditorUtility.SetDirty(config);
+            }
         }
 
         private static void EnsureFolders()
