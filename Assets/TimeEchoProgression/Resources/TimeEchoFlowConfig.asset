@@ -1704,7 +1704,7 @@ MonoBehaviour:
     glitchBursts: 0
     showLetterbox: 0
   levelIntro:
-    enabled: 1
+    enabled: 0
     style: 2
     guidanceText: You made it this far. Don't get comfortable.
     voiceClip: {fileID: 0}
