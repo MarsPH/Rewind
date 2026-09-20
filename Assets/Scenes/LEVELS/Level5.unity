@@ -408,8 +408,8 @@ Transform:
   m_GameObject: {fileID: 206311720}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.9, y: -3.4525, z: 0}
-  m_LocalScale: {x: 11.0557575, y: 8.350781, z: 2.149}
+  m_LocalPosition: {x: 10.5605, y: -3.4525, z: 0}
+  m_LocalScale: {x: 16.376894, y: 8.350781, z: 2.149}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -557,6 +557,11 @@ MonoBehaviour:
   - {x: -3.2015567, y: -3.341505, z: 0}
   - {x: -2.4427688, y: -3.9923735, z: 0}
   - {x: -1.4193616, y: 3.717751, z: 0}
+--- !u!50 &273791021 stripped
+Rigidbody2D:
+  m_CorrespondingSourceObject: {fileID: 1020928476104874391, guid: c3d2431db2ff3b34ba083e8ba38b6cfd, type: 3}
+  m_PrefabInstance: {fileID: 1431832771}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &384855684
 GameObject:
   m_ObjectHideFlags: 0
@@ -2144,7 +2149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44f1c4cf7c5c1274b842474ab52145d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PushCircleTrigger
-  circleRb: {fileID: 0}
+  target: {fileID: 273791021}
   pushForce: 10
 --- !u!61 &1104105577
 BoxCollider2D:
@@ -2492,7 +2497,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8229492562514385368, guid: c3d2431db2ff3b34ba083e8ba38b6cfd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -14.730301
+      value: -7
       objectReference: {fileID: 0}
     - target: {fileID: 8229492562514385368, guid: c3d2431db2ff3b34ba083e8ba38b6cfd, type: 3}
       propertyPath: m_LocalRotation.w
