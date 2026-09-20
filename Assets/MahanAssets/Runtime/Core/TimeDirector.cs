@@ -29,8 +29,8 @@ namespace TimeEcho
         public float HistorySeconds => tuning != null ? tuning.rewind.historySeconds : 8f;
         public float AvailableHistory => Mathf.Max(0f, timeline - oldestAvailableTime);
         public float AvailableHistory01 => HistorySeconds <= 0f ? 0f : AvailableHistory / HistorySeconds;
-        public bool CanRewind => timeline > oldestAvailableTime + 0.001f &&
-                                 (vitality == null || tuning == null || vitality.Current >= tuning.rewind.minimumVitalityToStart);
+        // Rewind is free: historical availability is its only energy-related constraint.
+        public bool CanRewind => timeline > oldestAvailableTime + 0.001f;
 
         public event Action<TimeMode, TimeMode> ModeChanged;
         public event Action<float> TimelineChanged;
@@ -84,7 +84,6 @@ namespace TimeEcho
                 timeline = Mathf.Max(oldestAvailableTime, timeline - unscaledDelta * speed);
                 RewindRegistry.RestoreAll(timeline);
                 Physics2D.SyncTransforms();
-                SpendTemporalVitality(tuning != null ? tuning.rewind.vitalityCostPerSecond * unscaledDelta : 0f);
                 TimelineChanged?.Invoke(timeline);
 
                 if (timeline <= oldestAvailableTime + 0.0001f || (vitality != null && vitality.IsDead))
@@ -168,17 +167,6 @@ namespace TimeEcho
 
             ApplyTimeScale(next != TimeMode.Flowing);
             ModeChanged?.Invoke(previous, next);
-        }
-
-        private void SpendTemporalVitality(float amount)
-        {
-            if (vitality == null || amount <= 0f)
-            {
-                return;
-            }
-
-            bool canReachZero = tuning == null || tuning.vitality.rewindCanReduceToZero;
-            vitality.SpendTemporal(amount, canReachZero);
         }
 
         private void ApplyTimeScale(bool frozen)

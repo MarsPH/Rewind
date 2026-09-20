@@ -689,21 +689,29 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1625356542598426571, guid: b8001293bd6e8464991ddb686af26ac3, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -1.47
+    - target: {fileID: 1548618033415430688, guid: b8001293bd6e8464991ddb686af26ac3, type: 3}
+      propertyPath: boostCount
+      value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 1625356542598426571, guid: b8001293bd6e8464991ddb686af26ac3, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.25
+    - target: {fileID: 1548618033415430688, guid: b8001293bd6e8464991ddb686af26ac3, type: 3}
+      propertyPath: stasisCount
+      value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 5744266510362139119, guid: b8001293bd6e8464991ddb686af26ac3, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 6.0521965
+    - target: {fileID: 1548618033415430688, guid: b8001293bd6e8464991ddb686af26ac3, type: 3}
+      propertyPath: 'stasisIcons.Array.data[0]'
+      value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 5744266510362139119, guid: b8001293bd6e8464991ddb686af26ac3, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.47575444
+    - target: {fileID: 1548618033415430688, guid: b8001293bd6e8464991ddb686af26ac3, type: 3}
+      propertyPath: 'stasisIcons.Array.data[1]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1548618033415430688, guid: b8001293bd6e8464991ddb686af26ac3, type: 3}
+      propertyPath: 'stasisIcons.Array.data[2]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1548618033415430688, guid: b8001293bd6e8464991ddb686af26ac3, type: 3}
+      propertyPath: 'stasisIcons.Array.data[3]'
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6400640621937160834, guid: b8001293bd6e8464991ddb686af26ac3, type: 3}
       propertyPath: m_Name

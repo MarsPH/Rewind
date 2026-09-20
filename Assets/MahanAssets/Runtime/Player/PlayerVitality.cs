@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace TimeEcho
@@ -8,7 +9,7 @@ namespace TimeEcho
         bool ApplyDamage(float amount, Vector2 hitPoint, Vector2 hitDirection);
     }
 
-    public sealed class PlayerVitality : MonoBehaviour, IDamageable
+    public sealed class PlayerVitality : MonoBehaviour, IDamageable, IRewindable
     {
         [SerializeField] private GameTuning tuning;
         [SerializeField] private bool beginAtMaximum = true;
@@ -18,7 +19,25 @@ namespace TimeEcho
         public GameTuning Tuning => tuning;
         public float Maximum => tuning != null ? tuning.vitality.maximum : Mathf.Max(1f, startingVitality);
         public float Normalized => Maximum <= 0f ? 0f : Current / Maximum;
-        public bool IsDead => Current <= 0f;
+
+        // Running out of ability charges must NOT kill the player. Only lethal
+        // damage causes death; zero energy merely prevents another boost.
+        private bool killedByDamage;
+        public bool IsDead => killedByDamage;
+
+        // Only this PlayerVitality is registered, not arbitrary objects in the level.
+        private struct EnergyFrame
+        {
+            public float Time;
+            public float Energy;
+            public float PermanentPickupEnergyAtCapture;
+            public bool KilledByDamage;
+        }
+
+        private readonly List<EnergyFrame> energyHistory = new List<EnergyFrame>(512);
+        // Collectible.Heal() rewards stay earned even if the shard itself stays collected
+        // while the player rewinds to a moment before the pickup.
+        private float permanentPickupEnergy;
 
         public event Action<float, float> Changed;
         public event Action Died;
@@ -27,7 +46,36 @@ namespace TimeEcho
 
         private void Awake()
         {
+            killedByDamage = false;
+            if (tuning != null && tuning.vitality != null && tuning.aim != null)
+            {
+                float cost = Maximum * Mathf.Clamp01(tuning.aim.boostVitalityCostFraction);
+                if (cost > 0.0001f)
+                {
+                    int charges = Mathf.Max(0, tuning.vitality.startingBoostCharges);
+                    float initial = charges * cost;
+                    // If this project is configured to reserve 1 health point,
+                    // allow the requested number of boosts to be spent without
+                    // violating that rule.
+                    if (charges > 0 && !tuning.vitality.boostCanReduceToZero)
+                        initial += Mathf.Min(1f, Maximum);
+                    Current = Mathf.Clamp(initial, 0f, Maximum);
+                    return;
+                }
+            }
+
+            // No configured boost cost: preserve the original vitality setup.
             Current = beginAtMaximum ? Maximum : Mathf.Clamp(startingVitality, 0f, Maximum);
+        }
+
+        private void OnEnable()
+        {
+            RewindRegistry.Register(this);
+        }
+
+        private void OnDisable()
+        {
+            RewindRegistry.Unregister(this);
         }
 
         private void Start()
@@ -46,18 +94,19 @@ namespace TimeEcho
 
         public bool ApplyDamage(float amount, Vector2 hitPoint, Vector2 hitDirection)
         {
-            if (TimeDirector.Instance != null &&
-                TimeDirector.Instance.Mode == TimeMode.Rewinding)
+            // Rewinding is invulnerable. This also returns false to damage sources
+            // so they cannot apply knockback or impact sound during rewind.
+            if (TimeDirector.Instance != null && TimeDirector.Instance.Mode == TimeMode.Rewinding)
             {
                 return false;
             }
-            
+
             if (amount <= 0f || IsDead)
             {
                 return false;
             }
 
-            SetCurrent(Current - amount);
+            SetCurrent(Current - amount, true);
             Damaged?.Invoke(amount, hitDirection);
             return true;
         }
@@ -70,6 +119,10 @@ namespace TimeEcho
             }
 
             bool wasDead = IsDead;
+            // Only the energy actually received can become a permanent reward.
+            // Heal() is currently called by Time Shards; boost spending is NOT
+            // permanent and remains part of the rewindable timeline.
+            permanentPickupEnergy += Mathf.Max(0f, Mathf.Clamp(Current + amount, 0f, Maximum) - Current);
             SetCurrent(Current + amount);
             if (wasDead && !IsDead)
             {
@@ -120,16 +173,101 @@ namespace TimeEcho
             }
         }
 
-        private void SetCurrent(float value)
+        // Called by TimeDirector via the existing explicit RewindRegistry.
+        // Capture energy alongside the player's Rigidbody snapshots.
+        public void Capture(float timelineTime)
+        {
+            EnergyFrame frame = new EnergyFrame
+            {
+                Time = timelineTime,
+                Energy = Current,
+                PermanentPickupEnergyAtCapture = permanentPickupEnergy,
+                KilledByDamage = killedByDamage
+            };
+
+            if (energyHistory.Count > 0 &&
+                Mathf.Abs(energyHistory[energyHistory.Count - 1].Time - timelineTime) < 0.00001f)
+            {
+                energyHistory[energyHistory.Count - 1] = frame;
+            }
+            else
+            {
+                energyHistory.Add(frame);
+            }
+
+            float historySeconds = TimeDirector.Instance != null
+                ? TimeDirector.Instance.HistorySeconds : 8f;
+            float oldestAllowed = timelineTime - historySeconds;
+            int removeCount = 0;
+            while (removeCount < energyHistory.Count - 1 &&
+                   energyHistory[removeCount].Time < oldestAllowed)
+            {
+                removeCount++;
+            }
+            if (removeCount > 0)
+                energyHistory.RemoveRange(0, removeCount);
+        }
+
+        public void Restore(float timelineTime)
+        {
+            if (energyHistory.Count == 0) return;
+
+            // Energy is a discrete resource. Never interpolate it: a spent charge
+            // returns only after rewinding past the moment it was spent.
+            int index = 0;
+            for (int i = energyHistory.Count - 1; i >= 0; i--)
+            {
+                if (energyHistory[i].Time <= timelineTime + 0.00001f)
+                {
+                    index = i;
+                    break;
+                }
+            }
+
+            EnergyFrame frame = energyHistory[index];
+            bool wasDead = IsDead;
+            float rewardsEarnedAfterFrame = Mathf.Max(0f,
+                permanentPickupEnergy - frame.PermanentPickupEnergyAtCapture);
+            float restoredEnergy = Mathf.Clamp(frame.Energy + rewardsEarnedAfterFrame, 0f, Maximum);
+
+            // Don't call SetCurrent here: it infers death from Current and is for
+            // gameplay changes, not restoring historical state. No Died event is
+            // emitted while scrubbing back through the timeline.
+            bool changed = !Mathf.Approximately(Current, restoredEnergy) ||
+                           killedByDamage != frame.KilledByDamage;
+            Current = restoredEnergy;
+            killedByDamage = frame.KilledByDamage;
+            if (changed) Changed?.Invoke(Current, Maximum);
+            if (wasDead && !IsDead) Revived?.Invoke();
+        }
+
+        public void TrimFuture(float timelineTime)
+        {
+            for (int i = energyHistory.Count - 1; i >= 0; i--)
+            {
+                if (energyHistory[i].Time > timelineTime + 0.00001f)
+                    energyHistory.RemoveAt(i);
+            }
+            // Start recording the new branch with the restored charge count.
+            Capture(timelineTime);
+        }
+
+        public void BeginRewind() { }
+        public void EndRewind() { }
+
+        private void SetCurrent(float value, bool fromDamage = false)
         {
             bool wasDead = IsDead;
             Current = Mathf.Clamp(value, 0f, Maximum);
-            Changed?.Invoke(Current, Maximum);
 
+            if (fromDamage && Current <= 0f)
+                killedByDamage = true;
+            else if (Current > 0f)
+                killedByDamage = false;
+
+            Changed?.Invoke(Current, Maximum);
             if (!wasDead && IsDead)
-            {
                 Died?.Invoke();
-            }
         }
     }
 }
