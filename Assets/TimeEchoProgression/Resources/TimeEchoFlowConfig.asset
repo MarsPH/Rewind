@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1666a40eee70d2043b358761b713e72c, type: 3}
   m_Name: TimeEchoFlowConfig
   m_EditorClassIdentifier: Assembly-CSharp::TimeEcho.Flow.TimeEchoFlowConfig
-  menuScene: MainMenu
+  menuScene: MainMenu1
   winScene: Win
   levels:
-  - sceneName: Level1
+  - sceneName: Level0
     displayName: Map 1
     nextSceneOverride: 
     intro:
@@ -114,7 +114,7 @@ MonoBehaviour:
         specificScene: 
         firstLevelFallback: 0
         eraseForwardProgressWhenSentBack: 0
-  - sceneName: Level2
+  - sceneName: Level1
     displayName: Map 2
     nextSceneOverride: 
     intro:
@@ -213,7 +213,7 @@ MonoBehaviour:
         specificScene: 
         firstLevelFallback: 0
         eraseForwardProgressWhenSentBack: 0
-  - sceneName: Level3
+  - sceneName: Level2
     displayName: Map 3
     nextSceneOverride: 
     intro:
@@ -312,7 +312,7 @@ MonoBehaviour:
         specificScene: 
         firstLevelFallback: 0
         eraseForwardProgressWhenSentBack: 0
-  - sceneName: Level4
+  - sceneName: Level3
     displayName: Map 4
     nextSceneOverride: 
     intro:
@@ -411,7 +411,7 @@ MonoBehaviour:
         specificScene: 
         firstLevelFallback: 0
         eraseForwardProgressWhenSentBack: 0
-  - sceneName: Level5
+  - sceneName: Level4
     displayName: Map 5
     nextSceneOverride: 
     intro:
@@ -510,7 +510,7 @@ MonoBehaviour:
         specificScene: 
         firstLevelFallback: 0
         eraseForwardProgressWhenSentBack: 0
-  - sceneName: Level6
+  - sceneName: Level5
     displayName: Map 6
     nextSceneOverride: 
     intro:
@@ -609,7 +609,7 @@ MonoBehaviour:
         specificScene: 
         firstLevelFallback: 0
         eraseForwardProgressWhenSentBack: 0
-  - sceneName: Level7
+  - sceneName: Level6
     displayName: Map 7
     nextSceneOverride: 
     intro:
@@ -708,7 +708,7 @@ MonoBehaviour:
         specificScene: 
         firstLevelFallback: 0
         eraseForwardProgressWhenSentBack: 0
-  - sceneName: Level8
+  - sceneName: Level7
     displayName: Map 8
     nextSceneOverride: 
     intro:
@@ -807,7 +807,7 @@ MonoBehaviour:
         specificScene: 
         firstLevelFallback: 0
         eraseForwardProgressWhenSentBack: 0
-  - sceneName: Level9
+  - sceneName: Level8
     displayName: Map 9
     nextSceneOverride: 
     intro:
@@ -906,7 +906,7 @@ MonoBehaviour:
         specificScene: 
         firstLevelFallback: 0
         eraseForwardProgressWhenSentBack: 0
-  - sceneName: Level10
+  - sceneName: Level9
     displayName: Map 10
     nextSceneOverride: 
     intro:
@@ -1005,7 +1005,7 @@ MonoBehaviour:
         specificScene: 
         firstLevelFallback: 0
         eraseForwardProgressWhenSentBack: 0
-  - sceneName: Level11
+  - sceneName: Level10
     displayName: Map 11
     nextSceneOverride: 
     intro:
@@ -1104,7 +1104,7 @@ MonoBehaviour:
         specificScene: 
         firstLevelFallback: 0
         eraseForwardProgressWhenSentBack: 0
-  - sceneName: Level12
+  - sceneName: Level11
     displayName: Map 12
     nextSceneOverride: 
     intro:
@@ -1203,7 +1203,7 @@ MonoBehaviour:
         specificScene: 
         firstLevelFallback: 0
         eraseForwardProgressWhenSentBack: 0
-  - sceneName: Level13
+  - sceneName: Level12
     displayName: Map 13
     nextSceneOverride: 
     intro:
@@ -1302,7 +1302,7 @@ MonoBehaviour:
         specificScene: 
         firstLevelFallback: 0
         eraseForwardProgressWhenSentBack: 0
-  - sceneName: Level14
+  - sceneName: Level13
     displayName: Map 14
     nextSceneOverride: 
     intro:
@@ -1401,7 +1401,7 @@ MonoBehaviour:
         specificScene: 
         firstLevelFallback: 0
         eraseForwardProgressWhenSentBack: 0
-  - sceneName: Level15
+  - sceneName: Level14
     displayName: Map 15
     nextSceneOverride: 
     intro:
@@ -1500,7 +1500,7 @@ MonoBehaviour:
         specificScene: 
         firstLevelFallback: 0
         eraseForwardProgressWhenSentBack: 0
-  - sceneName: Level16
+  - sceneName: Level15
     displayName: Map 16
     nextSceneOverride: 
     intro:
@@ -1599,7 +1599,7 @@ MonoBehaviour:
         specificScene: 
         firstLevelFallback: 0
         eraseForwardProgressWhenSentBack: 0
-  - sceneName: Level17
+  - sceneName: Level16
     displayName: Map 17
     nextSceneOverride: 
     intro:
@@ -1698,7 +1698,7 @@ MonoBehaviour:
         specificScene: 
         firstLevelFallback: 0
         eraseForwardProgressWhenSentBack: 0
-  - sceneName: Level18
+  - sceneName: Level16
     displayName: Map 18
     nextSceneOverride: 
     intro:
@@ -1797,7 +1797,7 @@ MonoBehaviour:
         specificScene: 
         firstLevelFallback: 0
         eraseForwardProgressWhenSentBack: 0
-  - sceneName: Level19
+  - sceneName: Level17
     displayName: Map 19
     nextSceneOverride: 
     intro:
@@ -1896,7 +1896,106 @@ MonoBehaviour:
         specificScene: 
         firstLevelFallback: 0
         eraseForwardProgressWhenSentBack: 0
-  - sceneName: Level_20
+  - sceneName: Level18
+    displayName: Map 20
+    nextSceneOverride: 
+    intro:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    nextLevel:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    death:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    restart:
+      useOverride: 0
+      sequence:
+        enabled: 1
+        style: 4
+        guidanceText: 
+        voiceClip: {fileID: 0}
+        soundEffect: {fileID: 0}
+        voiceVolume: 1
+        effectVolume: 1
+        delayBefore: 0.1
+        fadeIn: 0.35
+        minimumHold: 0.7
+        fadeOut: 0.35
+        waitForVoiceToFinish: 1
+        lockGameplay: 1
+        allowSkip: 0
+        skipKey: 32
+        coverColor: {r: 0, g: 0, b: 0, a: 1}
+        cutsceneDimAmount: 0.55
+        glitchBursts: 7
+        showLetterbox: 1
+    deathRule:
+      useOverride: 0
+      rule:
+        destination: 2
+        previousLevelChance: 0.35
+        specificScene: 
+        firstLevelFallback: 0
+        eraseForwardProgressWhenSentBack: 0
+  - sceneName: Level19
     displayName: Map 20
     nextSceneOverride: 
     intro:
@@ -2147,7 +2246,7 @@ MonoBehaviour:
   playIntroAfterNextLevel: 1
   playIntroAfterRestart: 0
   playIntroAfterDeathSendsPlayerBack: 1
-  showGeneratedMainMenu: 1
+  showGeneratedMainMenu: 0
   gameTitle: TIME ECHO
   newGameLabel: NEW GAME
   continueLabel: CONTINUE
