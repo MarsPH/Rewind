@@ -18,7 +18,7 @@ namespace TimeEcho.Editor
             if (!Application.isPlaying)
             {
                 EditorGUILayout.HelpBox(
-                    "Add drop, push, appear, animation, audio, and custom operations on the Persistent Action Sequence 2D component.",
+                    "For a two-image lever, assign State Renderer, Inactive Sprite, and Active Sprite above. Add world operations on the Persistent Action Sequence 2D component.",
                     MessageType.None);
                 return;
             }

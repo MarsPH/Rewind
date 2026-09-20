@@ -57,6 +57,10 @@ namespace TimeEcho
         [SerializeField] private Vector2 activatedLocalOffset = new Vector2(0f, -0.08f);
         [SerializeField] private float activatedRotationDegrees;
         [SerializeField] private SpriteRenderer stateRenderer;
+        [Tooltip("Sprite shown while the trigger is inactive. Leave empty to use the renderer's original sprite.")]
+        [SerializeField] private Sprite inactiveSprite;
+        [Tooltip("Sprite shown while the trigger is activated. Leave empty to keep the inactive/original sprite.")]
+        [SerializeField] private Sprite activeSprite;
         [SerializeField] private Color inactiveColor = new Color(0.55f, 0.58f, 0.66f, 1f);
         [SerializeField] private Color activeColor = new Color(0.25f, 0.9f, 0.55f, 1f);
         [SerializeField] private Animator animator;
@@ -79,7 +83,9 @@ namespace TimeEcho
         private Collider2D triggerCollider;
         private Vector3 visualBaseLocalPosition;
         private Quaternion visualBaseLocalRotation;
+        private Sprite originalStateSprite;
         private bool visualBaseCaptured;
+        private bool stateSpriteCaptured;
         private bool isActivated;
         private int activationCount;
         private float holdElapsed;
@@ -522,6 +528,12 @@ namespace TimeEcho
 
         private void CaptureVisualBase()
         {
+            if (stateRenderer != null && !stateSpriteCaptured)
+            {
+                originalStateSprite = stateRenderer.sprite;
+                stateSpriteCaptured = true;
+            }
+
             if (movingVisual == null || movingVisual == transform)
             {
                 visualBaseCaptured = false;
@@ -545,6 +557,19 @@ namespace TimeEcho
 
             if (stateRenderer != null)
             {
+                Sprite requestedSprite = isActivated ? activeSprite : inactiveSprite;
+                if (requestedSprite == null)
+                {
+                    requestedSprite = inactiveSprite != null
+                        ? inactiveSprite
+                        : originalStateSprite;
+                }
+
+                if (requestedSprite != null)
+                {
+                    stateRenderer.sprite = requestedSprite;
+                }
+
                 stateRenderer.color = isActivated ? activeColor : inactiveColor;
             }
 
