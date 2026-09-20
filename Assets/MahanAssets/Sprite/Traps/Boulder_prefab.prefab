@@ -125,7 +125,6 @@ GameObject:
   - component: {fileID: 4141689567872545996}
   - component: {fileID: 4335829436191213282}
   - component: {fileID: 1020928476104874391}
-  - component: {fileID: 6100299821078636860}
   m_Layer: 0
   m_Name: Boulder_prefab
   m_TagString: Untagged
@@ -271,16 +270,3 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &6100299821078636860
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4015253638041872725}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8778ae521fbf0d74b929d7df259c7d42, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TimeEcho.RewindableRigidbody2D
-  historySecondsOverride: 0
