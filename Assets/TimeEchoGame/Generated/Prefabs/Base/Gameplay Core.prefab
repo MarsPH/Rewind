@@ -1897,6 +1897,7 @@ GameObject:
   - component: {fileID: 1089711024434609531}
   - component: {fileID: 6346651389377699152}
   - component: {fileID: 7098367319345883419}
+  - component: {fileID: 6796411466735844964}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -2191,6 +2192,38 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6796411466735844964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8177790001245982566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0609ed31b4cc9f842a8dd32c4bc81565, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TimeEcho.Visuals.SelectiveSpriteGlow2D
+  sourceRenderer: {fileID: 7011040341307253371}
+  targetColor: {r: 1, g: 1, b: 1, a: 1}
+  colorTolerance: 0.22
+  selectionSoftness: 0.06
+  brightnessThreshold: 0.72
+  glowColor: {r: 0.25, g: 0.9, b: 1, a: 1}
+  glowIntensity: 5
+  sortingOrderOffset: 1
+  pulse: 1
+  pulseSpeed: 2.2
+  pulseAmount: 0.18
+  suppressWhenSpriteNameContains:
+  - Death06
+  - Death07
+  - Death08
+  - Death09
+  configureBloomAtRuntime: 1
+  bloomIntensity: 1.15
+  bloomThreshold: 0.75
+  bloomScatter: 0.7
 --- !u!1 &8551516098523412668
 GameObject:
   m_ObjectHideFlags: 0
