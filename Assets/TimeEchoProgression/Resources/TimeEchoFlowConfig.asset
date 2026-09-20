@@ -2008,7 +2008,7 @@ MonoBehaviour:
     minimumHold: 0.25
     fadeOut: 0.3
     waitForVoiceToFinish: 1
-    lockGameplay: 1
+    lockGameplay: 0
     allowSkip: 0
     skipKey: 32
     coverColor: {r: 0, g: 0, b: 0, a: 1}
