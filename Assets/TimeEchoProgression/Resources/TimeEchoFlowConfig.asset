@@ -1841,7 +1841,7 @@ MonoBehaviour:
   playChangeSoundOnWin: 1
   menuAmbience:
     enabled: 1
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 529950243789a0c47a73a9b27feaac73, type: 3}
     volume: 0.65
     loop: 1
     crossfadeSeconds: 1
