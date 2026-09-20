@@ -1641,7 +1641,7 @@ MonoBehaviour:
     glitchBursts: 0
     showLetterbox: 0
   defaultDeathRule:
-    destination: 2
+    destination: 0
     previousLevelChance: 0.35
     specificScene: 
     firstLevelFallback: 0
