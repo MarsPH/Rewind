@@ -31,6 +31,12 @@ namespace TimeEcho
             if (runTimer == null) runTimer = FindObjectOfType<RunTimer>();
             if (session == null) session = FindObjectOfType<GameSession>();
             HideLegacyHistoryBar();
+            // Editable HUD lives as a serialized prefab child. Never create HUD objects at runtime.
+            // Existing projects without the prefab retain their original bar until installed.
+            if (GetComponentInChildren<AbilityChargeHud>(true) != null)
+            {
+                HideLegacyVitalityBar();
+            }
         }
 
         private void OnEnable()
@@ -221,6 +227,29 @@ namespace TimeEcho
 
             temporalOverlay.color = color;
             temporalOverlay.enabled = current != TimeMode.Flowing;
+        }
+
+        private void HideLegacyVitalityBar()
+        {
+            if (vitalityFill != null)
+            {
+                Transform barParent = vitalityFill.transform.parent;
+                // Never disable a Canvas or the GameHud root by mistake.
+                if (barParent != null && barParent != transform &&
+                    barParent.GetComponent<Canvas>() == null)
+                {
+                    barParent.gameObject.SetActive(false);
+                }
+                else
+                {
+                    vitalityFill.gameObject.SetActive(false);
+                }
+            }
+
+            if (vitalityText != null)
+            {
+                vitalityText.gameObject.SetActive(false);
+            }
         }
 
         private void HideLegacyHistoryBar()

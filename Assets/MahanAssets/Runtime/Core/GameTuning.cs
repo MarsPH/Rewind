@@ -161,12 +161,15 @@ namespace TimeEcho
     public sealed class VitalityTuning
     {
         [Min(1f)] public float maximum = 100f;
+        [Min(0), Tooltip("Number of boosts available when each level starts. Both Boost and Stasis share these charges. Each Time Shard restores energy as configured under Collectible.")]
+        public int startingBoostCharges = 1;
         public bool rewindCanReduceToZero = true;
         public bool boostCanReduceToZero = true;
 
         internal void Sanitize()
         {
             maximum = Mathf.Max(1f, maximum);
+            startingBoostCharges = Mathf.Max(0, startingBoostCharges);
         }
     }
 

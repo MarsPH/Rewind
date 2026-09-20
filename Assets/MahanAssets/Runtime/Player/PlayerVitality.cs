@@ -18,7 +18,11 @@ namespace TimeEcho
         public GameTuning Tuning => tuning;
         public float Maximum => tuning != null ? tuning.vitality.maximum : Mathf.Max(1f, startingVitality);
         public float Normalized => Maximum <= 0f ? 0f : Current / Maximum;
-        public bool IsDead => Current <= 0f;
+
+        // Running out of ability charges must NOT kill the player. Only lethal
+        // damage causes death; zero energy merely prevents another boost.
+        private bool killedByDamage;
+        public bool IsDead => killedByDamage;
 
         public event Action<float, float> Changed;
         public event Action Died;
@@ -27,6 +31,25 @@ namespace TimeEcho
 
         private void Awake()
         {
+            killedByDamage = false;
+            if (tuning != null && tuning.vitality != null && tuning.aim != null)
+            {
+                float cost = Maximum * Mathf.Clamp01(tuning.aim.boostVitalityCostFraction);
+                if (cost > 0.0001f)
+                {
+                    int charges = Mathf.Max(0, tuning.vitality.startingBoostCharges);
+                    float initial = charges * cost;
+                    // If this project is configured to reserve 1 health point,
+                    // allow the requested number of boosts to be spent without
+                    // violating that rule.
+                    if (charges > 0 && !tuning.vitality.boostCanReduceToZero)
+                        initial += Mathf.Min(1f, Maximum);
+                    Current = Mathf.Clamp(initial, 0f, Maximum);
+                    return;
+                }
+            }
+
+            // No configured boost cost: preserve the original vitality setup.
             Current = beginAtMaximum ? Maximum : Mathf.Clamp(startingVitality, 0f, Maximum);
         }
 
@@ -46,18 +69,19 @@ namespace TimeEcho
 
         public bool ApplyDamage(float amount, Vector2 hitPoint, Vector2 hitDirection)
         {
-            if (TimeDirector.Instance != null &&
-                TimeDirector.Instance.Mode == TimeMode.Rewinding)
+            // Rewinding is invulnerable. This also returns false to damage sources
+            // so they cannot apply knockback or impact sound during rewind.
+            if (TimeDirector.Instance != null && TimeDirector.Instance.Mode == TimeMode.Rewinding)
             {
                 return false;
             }
-            
+
             if (amount <= 0f || IsDead)
             {
                 return false;
             }
 
-            SetCurrent(Current - amount);
+            SetCurrent(Current - amount, true);
             Damaged?.Invoke(amount, hitDirection);
             return true;
         }
@@ -120,16 +144,19 @@ namespace TimeEcho
             }
         }
 
-        private void SetCurrent(float value)
+        private void SetCurrent(float value, bool fromDamage = false)
         {
             bool wasDead = IsDead;
             Current = Mathf.Clamp(value, 0f, Maximum);
-            Changed?.Invoke(Current, Maximum);
 
+            if (fromDamage && Current <= 0f)
+                killedByDamage = true;
+            else if (Current > 0f)
+                killedByDamage = false;
+
+            Changed?.Invoke(Current, Maximum);
             if (!wasDead && IsDead)
-            {
                 Died?.Invoke();
-            }
         }
     }
 }
