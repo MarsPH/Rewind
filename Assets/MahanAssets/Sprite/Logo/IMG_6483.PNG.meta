@@ -1,10 +1,22 @@
 fileFormatVersion: 2
-guid: 67786b59c24f4504f947f947670b2601
+guid: b6dc0f95858ea4343902f40670d5f541
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4724346785046492239
-    second: IMG_6454_0
+      213: 3785650736211393525
+    second: IMG_6483_0
+  - first:
+      213: 669957815898045134
+    second: IMG_6483_1
+  - first:
+      213: -3888723312543815774
+    second: IMG_6483_2
+  - first:
+      213: 7844070044572345047
+    second: IMG_6483_3
+  - first:
+      213: 5756160205140757313
+    second: IMG_6483_4
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +58,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -126,23 +138,111 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: IMG_6454_0
+      name: IMG_6483_0
       rect:
         serializedVersion: 2
-        x: 500
-        y: 0
-        width: 814
-        height: 1079
+        x: 77
+        y: 246
+        width: 724
+        height: 336
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f44747ece50409140800000000000000
-      internalID: 4724346785046492239
+      spriteID: 5fb739f8945598430800000000000000
+      internalID: 3785650736211393525
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IMG_6483_1
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 563
+        width: 480
+        height: 201
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eca791f751b2c4900800000000000000
+      internalID: 669957815898045134
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IMG_6483_2
+      rect:
+        serializedVersion: 2
+        x: 739
+        y: 485
+        width: 92
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2a7ab0620ca780ac0800000000000000
+      internalID: -3888723312543815774
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IMG_6483_3
+      rect:
+        serializedVersion: 2
+        x: 789
+        y: 277
+        width: 162
+        height: 307
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d26408552cbbdc60800000000000000
+      internalID: 7844070044572345047
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IMG_6483_4
+      rect:
+        serializedVersion: 2
+        x: 813
+        y: 249
+        width: 1030
+        height: 438
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 14b87a9853df1ef40800000000000000
+      internalID: 5756160205140757313
       vertices: []
       indices: 
       edges: []
@@ -151,7 +251,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 2db0e40e3b616f44cb4a5b41e52b175a
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -161,7 +261,11 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      IMG_6454_0: 4724346785046492239
+      IMG_6483_0: 3785650736211393525
+      IMG_6483_1: 669957815898045134
+      IMG_6483_2: -3888723312543815774
+      IMG_6483_3: 7844070044572345047
+      IMG_6483_4: 5756160205140757313
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
