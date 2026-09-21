@@ -2756,7 +2756,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1695712653160817733, guid: b8001293bd6e8464991ddb686af26ac3, type: 3}
       propertyPath: orthographic size
-      value: 4
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 2451369337581397243, guid: b8001293bd6e8464991ddb686af26ac3, type: 3}
       propertyPath: targetOffset.y

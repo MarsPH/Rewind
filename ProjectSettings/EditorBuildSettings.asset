@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/MainMenu1.unity
+    guid: 9abae822603251f47b18542e2c822cb3
+  - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
   - enabled: 1
@@ -37,7 +40,7 @@ EditorBuildSettings:
     guid: a3dc70c15272a904c8dea669fc98afe1
   - enabled: 1
     path: Assets/Scenes/LEVELS/Level7.unity
-    guid: 752b1fbf77220204d9ac6cf7dfc7fef2
+    guid: 28c47d54f8cef944ca338f6a2aea4ba2
   - enabled: 1
     path: Assets/Scenes/LEVELS/Level7.unity
     guid: 28c47d54f8cef944ca338f6a2aea4ba2
@@ -48,25 +51,25 @@ EditorBuildSettings:
     path: Assets/Scenes/LEVELS/Level9.unity
     guid: 3c765d5e05cb6a14f91f56ff41120b07
   - enabled: 1
-    path: Assets/Scenes/LEVELS/Level10.unity
-    guid: ed3efe9dcbc761546b9a2df7ba722695
-  - enabled: 1
-    path: Assets/Scenes/LEVELS/Level10.unity
+    path: Assets/Scenes/LEVELS/Level100.unity
     guid: 5e192217d4fd4234dbd5034df37affd5
   - enabled: 1
-    path: Assets/Scenes/LEVELS/Level10.unity
+    path: Assets/Scenes/LEVELS/Level100.unity
     guid: 5e192217d4fd4234dbd5034df37affd5
   - enabled: 1
-    path: Assets/Scenes/LEVELS/Level12.unity
-    guid: 63c2848192d492442ac58a4bafe42cc0
+    path: Assets/Scenes/LEVELS/Level100.unity
+    guid: 5e192217d4fd4234dbd5034df37affd5
   - enabled: 1
     path: Assets/Scenes/LEVELS/Level11.unity
-    guid: 977c9296d8582c54ca8abb295e0fbf94
+    guid: 63c2848192d492442ac58a4bafe42cc0
+  - enabled: 1
+    path: Assets/Scenes/LEVELS/Level10.unity
+    guid: 3eff1c10aef5ab34a90da4893932f653
   - enabled: 0
     path: Assets/Scenes/LEVELS/Level16.unity
     guid: 52283fcc34b877e4ca1d7e6c3f242f7a
   - enabled: 1
-    path: Assets/Scenes/LEVELS/Level12.unity
+    path: Assets/Scenes/LEVELS/Level11.unity
     guid: 63c2848192d492442ac58a4bafe42cc0
   - enabled: 0
     path: Assets/Scenes/LEVELS/Level18.unity
@@ -75,8 +78,8 @@ EditorBuildSettings:
     path: Assets/Scenes/LEVELS/Level19.unity
     guid: 141e57829e3e2e54da98412c111f9d43
   - enabled: 1
-    path: Assets/Scenes/MainMenu1.unity
-    guid: 9abae822603251f47b18542e2c822cb3
+    path: Assets/Scenes/Win1.unity
+    guid: de4030b64152c974e97c51cd60e3c96a
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
