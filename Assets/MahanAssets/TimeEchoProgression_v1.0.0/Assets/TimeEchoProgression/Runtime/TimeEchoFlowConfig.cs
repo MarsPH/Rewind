@@ -216,7 +216,7 @@ namespace TimeEcho.Flow
         public bool playIntroAfterDeathSendsPlayerBack = true;
 
         [Header("Placeholder screens")]
-        public bool showGeneratedMainMenu = true;
+        public bool showGeneratedMainMenu = false;
         public string gameTitle = "TIME ECHO";
         public string newGameLabel = "NEW GAME";
         public string continueLabel = "CONTINUE";

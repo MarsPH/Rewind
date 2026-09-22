@@ -1156,7 +1156,7 @@ MonoBehaviour:
       sequence:
         enabled: 1
         style: 4
-        guidanceText: FIREBALL!
+        guidanceText: Fine... You win... Come...
         voiceClip: {fileID: 0}
         soundEffect: {fileID: 0}
         voiceVolume: 1

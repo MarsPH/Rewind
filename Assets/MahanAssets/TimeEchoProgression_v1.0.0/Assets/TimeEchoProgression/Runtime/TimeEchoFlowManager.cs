@@ -763,8 +763,8 @@ namespace TimeEcho.Flow
             if (string.Equals(scene.name, config.winScene, StringComparison.Ordinal))
             {
                 ChangeState(FlowState.Won);
-                EnsureEventSystem();
-                overlay.ShowWin(true);
+                //EnsureEventSystem();
+                //overlay.ShowWin(true);
                 return;
             }
 
